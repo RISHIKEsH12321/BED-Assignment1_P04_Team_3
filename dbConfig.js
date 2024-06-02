@@ -1,11 +1,11 @@
 module.exports = {
-    user: "bed-db-admin", // Replace with your SQL Server login username
-    password: "R#p7zY!f2x", // Replace with your SQL Server login password
-    server: "localhost",
-    database: "bed_db",
-    trustServerCertificate: true,
-    options: {
-      port: 1433, // Default SQL Server port
-      connectionTimeout: 60000, // Connection timeout in milliseconds
-    },
+  user: "bed_assignment", // Replace with your SQL Server login username
+  password: "IlgFwi4*p0Ts!", // Replace with your SQL Server login password
+  server: "localhost",
+  database: "bed_assignment",
+  trustServerCertificate: true,
+  options: {
+    port: 1433, // Default SQL Server port
+    connectionTimeout: 60000, // Connection timeout in milliseconds
+  },
 };

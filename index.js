@@ -53,6 +53,28 @@ app.get("/home", (req, res) => {
     });
 });
 
+app.get("/", async  (req,res) =>{
+    try {
+        // Connect to the database
+        await sql.connect(dbConfig);
+        
+        // Create a new SQL request
+        const request = new sql.Request();
+        
+        // Execute the SQL query
+        const result = await request.query(`SELECT * FROM Test`);
+        
+        // Send the result as the response
+        res.send(result.recordset);
+    } catch (err) {
+        console.error("Error executing query:", err);
+        res.status(500).send("Internal Server Error");
+    } finally {
+        // Close the database connection
+        sql.close();
+    }
+});
+
 
 
 app.listen(port, async () => {
