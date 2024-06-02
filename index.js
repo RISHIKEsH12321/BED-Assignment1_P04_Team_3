@@ -6,10 +6,14 @@ const fs = require("fs");
 const path = require("path");
 const { JSDOM } = require("jsdom"); 
 
+//Controllers
+const industry_info_controller = require("./controller/industry_info_controller");
+
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
 
 app.use("/",express.static("public")); //Static Files start from public 
+app.use(express.json()); 
 
 const staticMiddleware = express.static("public");
 
@@ -52,6 +56,18 @@ app.get("/home", (req, res) => {
         res.send(modifiedContent);
     });
 });
+
+app.get("/users/industry/:id",industry_info_controller.getIndustryInfo);//Get Industry data
+
+app.post("/admin/industry",industry_info_controller.createNewChallenge); // Create new challenge
+
+app.put("/admin/industry",industry_info_controller.updateChallenge); // Update Challenge
+
+app.put("/admin/industry/:id", industry_info_controller.updateIndustryInfo); // Update Industry Introduction
+
+app.delete("/admin/industry/:id",industry_info_controller.deleteIndustryChallenge); // Delete Challenge
+
+
 
 app.get("/", async  (req,res) =>{
     try {
