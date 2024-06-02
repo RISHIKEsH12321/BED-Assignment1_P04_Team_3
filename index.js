@@ -4,14 +4,23 @@ const sql = require("mssql"); // Assuming you've installed mssql
 const dbConfig = require("./dbConfig");
 const fs = require("fs");
 const path = require("path");
-const { JSDOM } = require("jsdom"); 
+const { JSDOM } = require("jsdom");
+const User_Account_Controller = require("./controller/User_Account_Controller")
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
 
 app.use("/",express.static("public")); //Static Files start from public 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const staticMiddleware = express.static("public");
+
+app.post("/users/account/login", User_Account_Controller.userlogin);
+app.get("/users/account/:id", User_Account_Controller.getUserById); // get specific user
+app.post("/users/account", User_Account_Controller.createAccount); // Create user account
+app.put("/users/account/:id", User_Account_Controller.updateUser); // Update user
+app.delete("/users/account/:id", User_Account_Controller.deleteUser); // Delete user
 
 
 app.get("/home", (req, res) => {
