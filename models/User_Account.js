@@ -1,6 +1,5 @@
 const sql = require("mssql");
 const dbConfig = require("../dbConfig");
-const User = require("../../BED2024Apr_P04_s10262604/Week_06/books-api-mvc-db/models/user");
 
 class User_Account {
     constructor(user_id, username, user_email, user_phonenumber, user_password, user_role){
@@ -76,8 +75,7 @@ class User_Account {
         const result = await request.query(sqlQuery);
     
         connection.close();
-    
-        // Retrieve the newly created book using its ID
+
         return this.getUserById(result.recordset[0].user_id);
     }
 

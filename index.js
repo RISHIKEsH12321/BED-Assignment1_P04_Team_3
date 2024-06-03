@@ -6,6 +6,7 @@ const fs = require("fs");
 const path = require("path");
 const { JSDOM } = require("jsdom");
 const User_Account_Controller = require("./controller/User_Account_Controller")
+const Admin_Account_Controller = require("./controller/Admin_Account_Controller")
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
@@ -21,6 +22,13 @@ app.get("/users/account/:id", User_Account_Controller.getUserById); // get speci
 app.post("/users/account", User_Account_Controller.createAccount); // Create user account
 app.put("/users/account/:id", User_Account_Controller.updateUser); // Update user
 app.delete("/users/account/:id", User_Account_Controller.deleteUser); // Delete user
+
+app.post("/admin/account/login", Admin_Account_Controller.adminlogin);
+app.get("/admin/account", Admin_Account_Controller.getAllUsers); // Get all user
+app.get("/admin/account/:id", Admin_Account_Controller.getUserById); // Get specific user
+app.post("/admin/account", Admin_Account_Controller.AdmincreateAccount); // Create Admin Account
+app.put("/admin/account/:id", Admin_Account_Controller.AdminupdateUser); // Update Account
+app.delete("/admin/account/:id", Admin_Account_Controller.AdmindeleteUser); // Delete Account 
 
 
 app.get("/home", (req, res) => {
