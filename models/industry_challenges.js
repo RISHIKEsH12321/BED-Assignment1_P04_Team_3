@@ -9,6 +9,21 @@ class Industry_Challenges{
         this.description = description;
         this.content = content;
     }
+
+    static async getAllIndustryChallenges() {
+        const connection = await sql.connect(dbConfig);
+    
+        const sqlQuery = `SELECT * FROM Industry_Challenges`;
+    
+        const request = connection.request();
+
+        const result = await request.query(sqlQuery);
+    
+        connection.close();
+        return result.recordsets;
+    }
+
+
     static async getIndustryChallenges(id) {
         const connection = await sql.connect(dbConfig);
     

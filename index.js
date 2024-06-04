@@ -57,13 +57,19 @@ app.get("/home", (req, res) => {
     });
 });
 
-app.get("/users/industry/:id",industry_info_controller.getIndustryInfo);//Get Industry data
+
+//Industry Routes
+app.get("/user/industry/:id",industry_info_controller.getIndustryInfo);//Get Industry data
+
+app.get("/admin/industry",industry_info_controller.displayAdminPage); // Create new challenge
+
+app.get("/admin/api/industry",industry_info_controller.getAllIndustryInfo); // Create new challenge
 
 app.post("/admin/industry",industry_info_controller.createNewChallenge); // Create new challenge
 
-app.put("/admin/industry",industry_info_controller.updateChallenge); // Update Challenge
+app.put("/admin/industry/challenge",industry_info_controller.updateChallenge); // Update Challenge
 
-app.put("/admin/industry/:id", industry_info_controller.updateIndustryInfo); // Update Industry Introduction
+app.put("/admin/industry/intro", industry_info_controller.updateIndustryInfo); // Update Industry Introduction
 
 app.delete("/admin/industry/:id",industry_info_controller.deleteIndustryChallenge); // Delete Challenge
 

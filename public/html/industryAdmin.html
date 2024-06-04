@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Industry</title>
+    <link rel="stylesheet" href="../../css/index.css">
+    <script src="../../JavaScript/industryAdmin.js" defer></script>
+</head>
+<body>
+    <div class="navbar">
+        <img id="navbar_logo" src="../../images/AgricultureLogo.png" alt="Logo">
+  
+        <div class="dropdown">
+          <button class="dropbtn">Agriculture Industries 
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <h1>INDUSTRIES</h1>
+            <a href="./1">Agriculture</a>
+            <h1>SUB-INDUSTRIES</h1>
+            <a href="./2">Crop Production</a>
+            <a href="./3">Livestock Farming</a>
+            <a href="#">Horticulture</a>
+            <a href="#">Agrotechnology</a>
+          </div>
+        </div> 
+
+        <a href="#" class="navbarItem">Forum</a>
+        <a href="#" class="navbarItem">About Us</a>
+        <a href="#" class="navbarItem">Contact us</a>
+        <a href="#" class="navbarItem">Credits</a>
+        <img id="profile_pic_navbar" src="../../images/Navbar Profile Picture.png" alt="Logo">
+    </div>
+
+
+    <label for="IndustrySelection" style="display:block;">Industries</label>
+    <select name="Industry" id="IndustrySelection">
+      <option value="">Select Industry</option>
+      <!-- <option value="Agriculture">Agriculture</option>
+      <option value="Crop Production">Crop Production</option>
+      <option value="Livestock Farming">Livestock Farming</option>
+      <option value="Horticulture">Horticulture</option>
+      <option value="Agrotechnology">Agrotechnology</option> -->
+    </select>
+
+    <h1>Introduction</h1>
+
+    <label for="IndustryIntro" style="display:block;">IndustryIntro</label>
+    <textarea id="IndustryIntro"></textarea>
+    <button id="button_save_intro">Save Changes</button>
+
+    </textarea>
+
+    <h1>Challanges</h1>    
+    
+    <button id="button_add_challenge">Add New Challange</button>
+    <button id="button_delete_challenge">Delete Current Challange</button>
+
+    <label for="IndustryChallanges" style="display:block;">Challanges</label>
+    <select name="Industry" id="IndustryChallanges">
+      <option >Select Challange</option>
+    </select>
+    
+
+    <label for="ChallangeName" style="display:block;">Challange Name</label>
+    <textarea id="ChallangeName"></textarea>
+    
+    <label for="ChallangeDes" style="display:block;">Challange Desescription</label>
+    <textarea id="ChallangeDes"></textarea>
+
+    <label for="ChallangeContent" style="display:block;">Challange Content</label>
+    <textarea id="ChallangeContent"></textarea>
+
+
+  <button id="button_save_challenge">Save Changes</button>
+
+</body>
+</html>

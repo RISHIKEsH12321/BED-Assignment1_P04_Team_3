@@ -8,12 +8,28 @@ class Industry_Info{
         this.introduction = introduction;
     }
 
+    
+    static async getAllIndustryInfo() {
+        const connection = await sql.connect(dbConfig);
+    
+        const sqlQuery = `SELECT * FROM Industry_Info;`;
+    
+        const request = connection.request();
+        const result = await request.query(sqlQuery);
+    
+        connection.close();
+    
+        return result.recordset;
+    }
+
+
     static async getIndustryInfo(id) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `SELECT * FROM Industry_Info WHERE industry_id = ${id};`;
+        const sqlQuery = `SELECT * FROM Industry_Info WHERE industry_id = @id;`;
     
         const request = connection.request();
+        request.input("id",id)
         const result = await request.query(sqlQuery);
     
         connection.close();
