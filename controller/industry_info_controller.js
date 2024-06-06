@@ -60,7 +60,7 @@ const getAllIndustryInfo = async (req, res) => {
     if (!result) {
       return res.status(404).send("Industries not found");
     }
-    res.send(result);
+    res.status(200).send(result);
 
     
 
@@ -72,10 +72,11 @@ const getAllIndustryInfo = async (req, res) => {
 
 const getIndustryInfo = async (req, res) => {
     const industry_id = parseInt(req.params.id);
+    console.log(industry_id)
     try {
       const data = await Industry_Info.getIndustryInfo(industry_id);
       const challenge_data = await Industry_Challenges.getIndustryChallenges(industry_id);
-      if (!data && !challenge_data) {
+      if (!data || !challenge_data) {
         return res.status(404).send("Industry not found");
       }
       const result = {
@@ -99,6 +100,8 @@ const getIndustryInfo = async (req, res) => {
         // Access the document object
         const document = dom.window.document;
 
+
+
         // Populate Industry Name
         const industryName = document.getElementById("IndustryName");
         if (industryName) {
@@ -110,7 +113,7 @@ const getIndustryInfo = async (req, res) => {
           industryIntro.textContent = result.industry.introduction;
         }
 
-        console.log(result);
+        
         const ChallengeIntro = document.getElementById("ChallengeIntro");
         const ChallengeContainer = document.getElementById("ChallengeContainer");
         if (ChallengeIntro){
@@ -159,7 +162,7 @@ const getIndustryInfo = async (req, res) => {
         const modifiedContent = dom.serialize();
 
         // Send the modified content as the response
-        res.send(modifiedContent);
+        res.status(200).send(modifiedContent);
     });
    
     } catch (error) {
@@ -176,7 +179,7 @@ const createNewChallenge = async (req, res) => {
       if (!data) {
         return res.status(404).send("Challenge not found");
       }
-    res.json(data);
+    res.status(200).json(data);
 
     } catch (error) {
       console.error(error);
@@ -193,7 +196,7 @@ const updateChallenge = async (req, res) => {
       if (!data) {
         return res.status(404).send("Challenge not found");
       }
-    res.json(data);
+    res.status(200).json(data);
 
     } catch (error) {
       console.error(error);
@@ -209,7 +212,7 @@ const updateIndustryInfo = async (req, res) => {
       if (!data) {
         return res.status(404).send("Industry not found");
       }
-    res.json(data);
+    res.status(200).json(data);
 
     } catch (error) {
       console.error(error);
@@ -224,7 +227,7 @@ const deleteIndustryChallenge = async (req, res) => {
       if (!data) {
         return res.status(404).send("Challenge not found");
       }
-    res.json(data);
+    res.status(200).json(data);
 
     } catch (error) {
       console.error(error);
@@ -255,7 +258,7 @@ const displayAdminPage = async (req,res) =>{
       const modifiedContent = dom.serialize();
 
       // Send the modified content as the response
-      res.send(modifiedContent);
+      res.status(200).send(modifiedContent);
   });
 }
 

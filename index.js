@@ -8,6 +8,7 @@ const { JSDOM } = require("jsdom");
 
 //Controllers
 const industry_info_controller = require("./controller/industry_info_controller");
+const quiz_controller = require("./controller/quiz_controller")
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
@@ -73,6 +74,17 @@ app.put("/admin/industry/intro", industry_info_controller.updateIndustryInfo); /
 
 app.delete("/admin/industry/:id",industry_info_controller.deleteIndustryChallenge); // Delete Challenge
 
+//Quiz Routes
+
+app.get("/user/quiz/:id", quiz_controller.get15Questions);
+
+app.get("/admin/api/quiz")
+
+app.put("/admin/quiz/update", quiz_controller.updateQuestion);
+
+app.post("/admin/quiz/create", quiz_controller.createNewQuestion);
+
+app.delete("/admin/quiz", quiz_controller.deleteQuestion);
 
 
 app.get("/", async  (req,res) =>{

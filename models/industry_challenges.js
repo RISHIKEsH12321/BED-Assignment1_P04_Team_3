@@ -11,6 +11,7 @@ class Industry_Challenges{
     }
 
     static async getAllIndustryChallenges() {
+        try{
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `SELECT * FROM Industry_Challenges`;
@@ -21,10 +22,15 @@ class Industry_Challenges{
     
         connection.close();
         return result.recordsets;
+        }catch (err){
+            console.log(err);
+            throw err;
+        }
     }
 
 
     static async getIndustryChallenges(id) {
+        try{
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `SELECT * FROM Industry_Challenges WHERE industry_id = @id`;
@@ -37,9 +43,14 @@ class Industry_Challenges{
         connection.close();
     
         return result.recordsets;
+        }catch (err){
+            console.log(err);
+            throw err;
+        }
     }
 
     static async createNewChallenge(newChallenge) {
+        try{
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `INSERT INTO Industry_Challenges (industry_id, challenge_name, challenge_description, challenge_content)
@@ -65,9 +76,15 @@ class Industry_Challenges{
         connection.close();
     
         return result.rowsAffected; 
+
+        }catch (err){
+            console.log(err);
+            throw err;
+        }
     }    
 
     static async updateChallenge(newChallenge) {
+        try{
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `
@@ -96,9 +113,14 @@ class Industry_Challenges{
         connection.close();
     
         return result.rowsAffected; 
+        }catch (err){
+            console.log(err);
+            throw err;
+        }
     }    
 
     static async deleteIndustryChallenge(id) {
+        try{
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `DELETE FROM Industry_Challenges WHERE challenge_id = @id`;
@@ -110,6 +132,10 @@ class Industry_Challenges{
         connection.close();
     
         return result.rowsAffected; 
+        }catch (err){
+            console.log(err);
+            throw err;
+        }
     }    
 
 

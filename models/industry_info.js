@@ -10,6 +10,7 @@ class Industry_Info{
 
     
     static async getAllIndustryInfo() {
+        try{
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `SELECT * FROM Industry_Info;`;
@@ -20,24 +21,34 @@ class Industry_Info{
         connection.close();
     
         return result.recordset;
+        }catch (err){
+            console.log(err);
+            throw err;
+        }
     }
 
 
     static async getIndustryInfo(id) {
-        const connection = await sql.connect(dbConfig);
-    
-        const sqlQuery = `SELECT * FROM Industry_Info WHERE industry_id = @id;`;
-    
-        const request = connection.request();
-        request.input("id",id)
-        const result = await request.query(sqlQuery);
-    
-        connection.close();
-    
-        return result.recordset[0];
+        try{
+            const connection = await sql.connect(dbConfig);
+        
+            const sqlQuery = `SELECT * FROM Industry_Info WHERE industry_id = @id;`;
+        
+            const request = connection.request();
+            request.input("id",id)
+            const result = await request.query(sqlQuery);
+        
+            connection.close();
+            return result.recordset[0];
+
+        }catch(error){
+            console.log(error);
+            throw error;
+        }
     }
 
     static async updateIndustryInfo(id, introduction) {
+        try{
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `
@@ -55,6 +66,10 @@ class Industry_Info{
         connection.close();
     
         return result.rowsAffected;
+        }catch(error){
+            console.log(error);
+            throw error;
+        }
     }
 }
 module.exports = Industry_Info;
