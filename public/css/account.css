@@ -176,7 +176,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 130vh;
+    height: 160vh;
 }
 
 .header {
@@ -240,6 +240,15 @@ body {
 .form-group input[type="password"] {
     width: 150px;
 }
+
+.form-group input[type="country"] {
+    width: 150px;
+}
+
+.form-group input[type="position"] {
+    width: 150px;
+}
+
 
 .form-group textarea {
     padding: 10px;

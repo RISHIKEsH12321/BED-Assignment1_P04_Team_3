@@ -44,7 +44,7 @@ class User_Account {
         const result = await request.query(sqlQuery);
     
         connection.close();
-    
+
         return result.recordset[0]
           ? new User_Account(
               result.recordset[0].user_id,
@@ -73,6 +73,14 @@ class User_Account {
         request.input("user_role",newUserData.user_role || 'user'); // Default 'user'
     
         const result = await request.query(sqlQuery);
+
+        const userId = result.recordset[0].user_id;
+
+        const profileQuery = `INSERT INTO Profile (user_id) VALUES (@user_id); SELECT SCOPE_IDENTITY() AS profile_id`;
+
+        const profilerequest = connection.request();
+        profilerequest.input("user_id", userId);
+        await profilerequest.query(profileQuery)
     
         connection.close();
 

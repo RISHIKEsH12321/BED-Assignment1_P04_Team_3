@@ -101,7 +101,13 @@ class Admin_Account {
         adminRequest.input("user_phonenumber", newUserData.user_phonenumber);
         adminRequest.input("user_password", newUserData.user_password);
         adminRequest.input("user_role", newUserData.user_role || 'admin');
-        const admin_result = await adminRequest.query(adminInsertQuery)
+        const admin_result = await adminRequest.query(adminInsertQuery);
+
+        const profileQuery = `INSERT INTO Profile (user_id) VALUES (@user_id); SELECT SCOPE_IDENTITY() AS profile_id`;
+
+        const profilerequest = connection.request();
+        profilerequest.input("user_id", userId);
+        await profilerequest.query(profileQuery)
 
         connection.close();
     

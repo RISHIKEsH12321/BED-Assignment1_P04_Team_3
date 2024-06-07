@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('URL Parameter - id:', id);
     
     let originalValues = {};
+    let originalprofile = {}
 
     if (id) {
         try {
@@ -31,7 +32,36 @@ document.addEventListener('DOMContentLoaded', async () => {
                     password: account.user_password
                 };
             }
+
+
+            // Fetch profile information
+            const profileResponse = await fetch(`/account/profile/${id}`);
+            console.log('Fetch response status for profile:', profileResponse.status);
             
+            if (!profileResponse.ok) {
+                throw new Error('Network response for profile was not ok');
+            }
+            
+            const profile = await profileResponse.json();
+            console.log('Fetched profile:', profile);
+            
+            // Handle profile data as needed
+            if (profile) {
+                document.getElementById('about_me').value = profile.about_me;
+                document.getElementById('country').value = profile.country;
+                document.getElementById('position').value = profile.position;
+
+
+                // Store the original values
+                originalprofile = {
+                    about_me: profile.about_me,
+                    country: profile.country,
+                    position: profile.position,
+                };
+            }
+
+
+
             document.getElementById('updateForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
@@ -39,8 +69,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const user_email = document.getElementById('email').value;
                 const user_phonenumber = document.getElementById('phone').value;
                 const user_password = document.getElementById('password').value;
+                const about_me = document.getElementById('about_me').value;
+                const country = document.getElementById('country').value;
+                const position = document.getElementById('position').value;
                 
                 console.log('Updating account with:', { username, user_email, user_phonenumber, user_password });
+                console.log('Updating profile with:', { about_me, country, position });
                 
                 try {
                     const response = await fetch(`/admin/account/${id}`, {
@@ -51,11 +85,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                         body: JSON.stringify({ username, user_email, user_phonenumber, user_password }),
                     });
                     
-                    if (response.ok) {
+                    if (!response.ok) {
+                        throw new Error('Error updating account');
+                    }
+            
+                    // Update profile information
+                    const profileResponse = await fetch(`/account/profile/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ about_me, country, position }),
+                    });
+            
+                    if (profileResponse.ok) {
                         alert('Account updated successfully');
                     } else {
-                        alert('Error updating account');
-                        console.error('Error response:', await response.text());
+                        alert('Error updating profile');
+                        console.error('Error response:', await profileResponse.text());
                     }
                 } catch (error) {
                     console.error('Error updating account:', error);
@@ -89,6 +136,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 document.getElementById('email').value = originalValues.email;
                 document.getElementById('phone').value = originalValues.phone;
                 document.getElementById('password').value = originalValues.password;
+                document.getElementById('about_me').value = originalprofile.about_me;
+                document.getElementById('country').value = originalprofile.country;
+                document.getElementById('position').value = originalprofile.position;
             });
             
         } catch (error) {
