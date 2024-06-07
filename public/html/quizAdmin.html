@@ -3,32 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Admin</title>
+    <title>Edit Quiz</title>
+    <link rel="stylesheet" href="../../css/index.css">
+    <script src="../../JavaScript/quizAdmin.js" defer></script>
 </head>
 <body>
-    <div class="navbar">
-        <img id="navbar_logo" src="../images/AgricultureLogo.png" alt="Logo">
-  
-        <div class="dropdown">
-          <button class="dropbtn">Agriculture Industries 
-            <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-content">
-            <h1>INDUSTRIES</h1>
-            <a href="#">Agriculture</a>
-            <h1>SUB-INDUSTRIES</h1>
-            <a href="#">Crop Production</a>
-            <a href="#">Livestock Farming</a>
-            <a href="#">Horticulture</a>
-            <a href="#">Agrotechnology</a>
-          </div>
-        </div> 
+  <div class="navbar">
+    <img id="navbar_logo" src="../../images/AgricultureLogo.png" alt="Logo">
 
-        <a href="#" class="navbarItem">Forum</a>
-        <a href="#" class="navbarItem">About Us</a>
-        <a href="#" class="navbarItem">Contact us</a>
-        <a href="#" class="navbarItem">Credits</a>
-        <img id="profile_pic_navbar" src="../images/Navbar Profile Picture.png" alt="Logo">
-    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Agriculture Industries 
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <h1>INDUSTRIES</h1>
+        <a href="/user/industry/1">Agriculture</a>
+        <h1>SUB-INDUSTRIES</h1>
+        <a href="/user/industry/2">Crop Production</a>
+        <a href="/user/industry/3">Livestock Farming</a>
+        <a href="/user/industry/4">Horticulture</a>
+        <a href="/user/industry/5">Agrotechnology</a>
+      </div>
+    </div> 
+
+    <a href="#" class="navbarItem">Forum</a>
+    <a href="#" class="navbarItem">About Us</a>
+    <a href="#" class="navbarItem">Contact us</a>
+    <a href="#" class="navbarItem">Credits</a>
+    <img id="profile_pic_navbar" src="../../images/Navbar Profile Picture.png" alt="Logo">
+    
+</div>
+
+    <label for="IndustrySelection" style="display:block;">Industries</label>
+    <select name="Industry" id="IndustrySelection">
+      <option value="">Select Industry</option>
+      <!-- Use Populate Selectors method -->
+    </select>
+
+
+
+    <h1>Question</h1>    
+    
+    <button id="button_add_question">Add New Question</button>
+    <button id="button_delete_question">Delete Current Question</button>
+
+    <label for="Questions" style="display:block;">Questions</label>
+    <select name="Questions" id="Questions">
+      <option >Select Question</option>
+    </select>
+    
+
+    <label for="QuestionText" style="display:block;">Question Text</label>
+    <textarea id="QuestionText"></textarea>
+    
+    
+    <label for="Question_Option1" style="display:block;">Option 1</label>
+    <textarea id="Question_Option1"></textarea>
+    <input type="radio" id="Option1" name="CorrectOption">  <!-- Set option value in radio button -->
+    <label for="Option1">Option 1</label><br>
+
+    <label for="Question_Option2" style="display:block;">Option 2</label>
+    <textarea id="Question_Option2"></textarea>
+    <input type="radio" id="Option2" name="CorrectOption">  <!-- Set option value in radio button -->
+    <label for="Option2">Option 2</label><br>
+
+    <label for="Question_Option3" style="display:block;">Option 3</label>
+    <textarea id="Question_Option3"></textarea>
+    <input type="radio" id="Option3" name="CorrectOption">  <!-- Set option value in radio button -->
+    <label for="Option3">Option 3</label><br>
+
+    <label for="Question_Option4" style="display:block;">Option 4</label>
+    <textarea id="Question_Option4"></textarea>
+    <input type="radio" id="Option4" name="CorrectOption">  <!-- Set option value in radio button -->
+    <label for="Option4">Option 4</label><br>
+
+  <button id="button_save_question">Save Changes</button>
+
 </body>
 </html>

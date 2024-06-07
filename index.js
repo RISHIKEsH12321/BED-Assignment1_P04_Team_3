@@ -62,7 +62,7 @@ app.get("/home", (req, res) => {
 //Industry Routes
 app.get("/user/industry/:id",industry_info_controller.getIndustryInfo);//Get Industry data
 
-app.get("/admin/industry",industry_info_controller.displayAdminPage); // Create new challenge
+app.get("/admin/industry",industry_info_controller.displayAdminPage); // Dispaly Admin Page
 
 app.get("/admin/api/industry",industry_info_controller.getAllIndustryInfo); // Create new challenge
 
@@ -75,16 +75,19 @@ app.put("/admin/industry/intro", industry_info_controller.updateIndustryInfo); /
 app.delete("/admin/industry/:id",industry_info_controller.deleteIndustryChallenge); // Delete Challenge
 
 //Quiz Routes
+app.get("/user/quiz/checkAnswers", quiz_controller.checkAnswers); //Check Answers and return result
 
-app.get("/user/quiz/:id", quiz_controller.get15Questions);
+app.get("/user/quiz/:id", quiz_controller.get15Questions); // Get and show questions
 
-app.get("/admin/api/quiz")
+app.get("/admin/quiz", quiz_controller.displayAdminPage); //Dispaly Admin Page
 
-app.put("/admin/quiz/update", quiz_controller.updateQuestion);
+app.get("/admin/api/quiz", quiz_controller.getAllQuestions); //Get all questions
 
-app.post("/admin/quiz/create", quiz_controller.createNewQuestion);
+app.put("/admin/quiz/update", quiz_controller.updateQuestion); // Update a question's details
 
-app.delete("/admin/quiz", quiz_controller.deleteQuestion);
+app.post("/admin/quiz/create", quiz_controller.createNewQuestion); // Make a new Question
+
+app.delete("/admin/quiz/delete", quiz_controller.deleteQuestion); // Delete Question
 
 
 app.get("/", async  (req,res) =>{
