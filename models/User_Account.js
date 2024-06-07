@@ -81,18 +81,19 @@ class User_Account {
 
 
     static async updateUser(user_id, newUserData) {
+        const currentuser = await this.getUserById(user_id)
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `UPDATE User_Account SET username = @username, user_email = @user_email, user_phonenumber = @user_phonenumber, 
                             user_password = @user_password WHERE user_id = @user_id`; // Parameterized query
     
         const request = connection.request();
-        request.input("user_id",user_id);
-        request.input("username", newUserData.username);
-        request.input("user_email", newUserData.user_email);
-        request.input("user_phonenumber", newUserData.user_phonenumber);
-        request.input("user_password", newUserData.user_password);
-        request.input("user_role", newUserData.user_role);
+        request.input("user_id",user_id || currentuser.user_id);
+        request.input("username", newUserData.username || currentuser.username);
+        request.input("user_email", newUserData.user_email || currentuser.user_email);
+        request.input("user_phonenumber", newUserData.user_phonenumber || currentuser.user_phonenumber);
+        request.input("user_password", newUserData.user_password || currentuser.user_password);
+        request.input("user_role", newUserData.user_role || currentuser.user_role);
     
         await request.query(sqlQuery);
     

@@ -1,4 +1,8 @@
 const Admin_Account = require("../models/Admin_Account");
+const path = require("path");
+
+const fs = require("fs");
+const { JSDOM } = require("jsdom"); 
 
 const adminlogin = async (req,res) => {
     const { username, user_password } = req.body;
@@ -32,7 +36,7 @@ const getUserById = async (req,res) => {
         res.json(user);
     } catch (error) {
         console.error(error);
-        res.status(500).send("Error retrieving User");
+        res.status(500).send("Error retrieving User"); 
     }
 }
 
@@ -44,7 +48,7 @@ const getAllUsers = async (req,res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send("Error retrieving users");
-    }
+    } 
 }
 
 

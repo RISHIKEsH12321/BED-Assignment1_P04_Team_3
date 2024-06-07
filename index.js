@@ -26,7 +26,7 @@ app.delete("/users/account/:id", User_Account_Controller.deleteUser); // Delete 
 app.post("/admin/account/login", Admin_Account_Controller.adminlogin);
 app.get("/admin/account", Admin_Account_Controller.getAllUsers); // Get all user
 app.get("/admin/account/:id", Admin_Account_Controller.getUserById); // Get specific user
-app.post("/admin/account", Admin_Account_Controller.AdmincreateAccount); // Create Admin Account
+app.post("/admin/account/create", Admin_Account_Controller.AdmincreateAccount); // Create Admin Account
 app.put("/admin/account/:id", Admin_Account_Controller.AdminupdateUser); // Update Account
 app.delete("/admin/account/:id", Admin_Account_Controller.AdmindeleteUser); // Delete Account 
 
@@ -70,6 +70,31 @@ app.get("/home", (req, res) => {
     });
 });
 
+app.get("/registeruser", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "createuser.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+app.get("/registeradmin", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "createadmin.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+app.get("/viewUser", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "allUsers.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+})
+
+app.get("/account-profile/:id", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "editprofile.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+
 app.get("/", async  (req,res) =>{
     try {
         // Connect to the database
@@ -91,7 +116,6 @@ app.get("/", async  (req,res) =>{
         sql.close();
     }
 });
-
 
 
 app.listen(port, async () => {
