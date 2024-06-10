@@ -123,19 +123,30 @@ const getIndustryInfo = async (req, res) => {
             //Challenge Intro
             var ChallengeIntroNo  = document.createElement("div");
             ChallengeIntroNo.textContent= i + 1;
+            ChallengeIntroNo.id = "ChallengeIntroNo";
 
             var ChallengeIntroTitle = document.createElement("div");
             ChallengeIntroTitle.textContent = challengesArray[i].challenge_name;
-        
+            ChallengeIntroTitle.id = "ChallengeIntroTitle";
+
             var ChallengeIntroDescription = document.createElement("div");
             ChallengeIntroDescription.textContent = challengesArray[i].challenge_description;
-        
+            ChallengeIntroDescription.id = "ChallengeIntroDescription"
+
             var ChallengeIntroContainer = document.createElement("div");
+            ChallengeIntroContainer.id = "ChallengeIntroContainer";
+
+            var ChallengeNameDesContainer = document.createElement("div");
+            ChallengeNameDesContainer.id = "ChallengeNameDesContainer";
+            ChallengeNameDesContainer.appendChild(ChallengeIntroTitle);
+            ChallengeNameDesContainer.appendChild(ChallengeIntroDescription);
+
             ChallengeIntroContainer.appendChild(ChallengeIntroNo);
-            ChallengeIntroContainer.appendChild(ChallengeIntroTitle);
-            ChallengeIntroContainer.appendChild(ChallengeIntroDescription);
+            ChallengeIntroContainer.appendChild(ChallengeNameDesContainer);
+
             //Add to Challenge Intro Grid Layout
             ChallengeIntro.appendChild(ChallengeIntroContainer);
+
             
             //Challenge Content
             

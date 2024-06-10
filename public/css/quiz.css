@@ -1,0 +1,89 @@
+/* Container Styles */
+#question_container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding-left: 20px;
+    
+    width: 70%;
+    margin-top: 2%;
+    margin-right: 15%;
+    margin-left: 15%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+  
+/* Question Styles */
+.question {
+    margin-bottom: 20px;
+}
+  
+.question p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #555;
+}
+  
+/* Label and Radio Button Styles */
+label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    max-width: 80%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+}
+  
+input[type="radio"] {
+    margin-right: 10px;
+    
+}
+  
+
+/* Additional Styling for Hover Effect */
+label:hover {
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+  
+/* Add some spacing around the container */
+.container {
+    padding: 20px;
+}
+  
+#submit_quiz {
+    padding: 10px 20px;
+    margin-left: 15%;
+    margin-top: 1%;
+    font-size: 1em;
+    color: white;
+    background-color: #28A745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#submit_quiz:hover{
+    background-color: #218838;
+
+}
+/* Responsive Design */
+@media (max-width: 600px) {
+    #question_container {
+      padding: 15px;
+    }
+  
+    .question p {
+      font-size: 1.1em;
+    }
+  
+    label {
+      font-size: 0.9em;
+    }
+}

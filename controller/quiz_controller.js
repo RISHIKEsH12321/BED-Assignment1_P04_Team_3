@@ -33,10 +33,12 @@ const get15Questions = async (req,res) =>{
             //Question Container
             const container = document.getElementById("question_container");
 
-            //Populate Quiz Container
-            result.forEach(question => {
-              container.appendChild(createQuestionElement(document, question));
-            });
+            // //Populate Quiz Container
+            for(var i = 0; i<result.length; i++){
+              console.log(result.length)
+              console.log(result[i])
+              container.appendChild(createQuestionElement(document, result[i],i));
+            }
 
 
             // Serialize the modified document back to a string
@@ -90,13 +92,14 @@ const displayAdminPage = async (req,res) =>{
 
 
 const checkAnswers = async (req,res) =>{
-  const questionData = req.query;
-  const formattedData = questionData.question_id.map((question_id, index) => ({
-    question_id: parseInt(question_id),
-    option_id: parseInt(questionData.option_id[index])
-  }));
+
 
   try{
+    const questionData = req.query;
+    const formattedData = questionData.question_id.map((question_id, index) => ({
+      question_id: parseInt(question_id),
+      option_id: parseInt(questionData.option_id[index])
+    }));
     const result = await Quiz_Question.checkAnswer(formattedData);
     console.log(result)
     if (result >= 0){
@@ -162,13 +165,13 @@ const deleteQuestion = async (req,res) =>{
   
 }
 
-function createQuestionElement(document, question) {
+function createQuestionElement(document, question, index) {
   const questionDiv = document.createElement("div");
   questionDiv.classList.add("question");
   questionDiv.dataset.questionId = question.question_id;
   
   const questionText = document.createElement("p");
-  questionText.textContent = question.question_text;
+  questionText.textContent = `Q${index + 1}: ${question.question_text}`; 
   questionDiv.appendChild(questionText);
   
   question.options.forEach(option => {
@@ -177,7 +180,6 @@ function createQuestionElement(document, question) {
     optionInput.type = "radio";
     optionInput.name = `${question.question_id}`;
     optionInput.value = option.option_id;
-    // optionInput.dataset.correct = (option.option_id === question.correct_option_id).toString();
     optionLabel.appendChild(optionInput);
     optionLabel.appendChild(document.createTextNode(option.option_text));
     questionDiv.appendChild(optionLabel);
