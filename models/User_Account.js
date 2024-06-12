@@ -20,16 +20,16 @@ class User_Account {
         request.input('username', sql.VarChar, username);
         request.input('user_password', sql.VarChar, user_password);
 
-        const result = await request.query(sqlQuery);
+        const result = await request.query(sqlQuery); 
 
         connection.close();
 
         if (result.recordset.length > 0) {
             // login 
-            return true;
+            return result.recordset[0];
         } else {
             // not login
-            return false;
+            return null;
         }
     }   
 
@@ -54,7 +54,7 @@ class User_Account {
               result.recordset[0].user_password,
               result.recordset[0].user_role
             )
-          : null; // Handle book not found
+          : null;
     }
 
 
@@ -123,6 +123,30 @@ class User_Account {
         connection.close();
     
         return result.rowsAffected > 0; // Indicate success based on affected rows
+    }
+
+
+    static async userforgotpassword(user_email){
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `SELECT * FROM User_Account WHERE user_email = @user_email`;
+
+        const request = connection.request();
+        request.input('user_email', user_email);
+        const result = await request.query(sqlQuery);
+
+        connection.close();
+
+        return result.recordset[0]
+          ? new User_Account(
+              result.recordset[0].user_id,
+              result.recordset[0].username,
+              result.recordset[0].user_email,
+              result.recordset[0].user_phonenumber,
+              result.recordset[0].user_password,
+              result.recordset[0].user_role
+            )
+        : null;
     }
 }
 

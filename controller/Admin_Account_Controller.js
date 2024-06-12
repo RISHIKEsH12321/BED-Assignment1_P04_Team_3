@@ -12,15 +12,16 @@ const adminlogin = async (req,res) => {
         const isLoggedIn = await Admin_Account.adminlogin(username, user_password);
 
         if (isLoggedIn) {
-            // If login is successful
-            res.status(200).send("login Successful")
+            res.status(200).json({
+              message: "Login successful",
+              admin_id: isLoggedIn.admin_id
+            });
         } else {
-            // If login failed
-            res.status(401).send("Invalid username or password")
+            res.status(401).json({ message: "Invalid username or password" });
         }
     } catch (error) {
         console.error(error);
-        res.status(500).send("Internal server error")
+        res.status(500).json({ message: "Internal server error" });
     }
 };
 
@@ -96,11 +97,27 @@ const AdmindeleteUser = async (req,res) => {
     }
 }
 
+const adminforgotpassword = async (req,res) => {
+    const email = req.params.user_email;
+  
+    try {
+        const user = await Admin_Account.adminforgotpassword(email);
+        if (!user) {
+          return res.status(404).send("User not found");
+        }
+        res.json(user);
+      } catch (error) {
+        console.error(error);
+        res.status(500).send("Error retrieving User");
+      }
+  }
+
 module.exports = {
     adminlogin,
     getUserById,
     getAllUsers,
     AdmincreateAccount,
     AdminupdateUser,
-    AdmindeleteUser
+    AdmindeleteUser,
+    adminforgotpassword
 };

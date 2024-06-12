@@ -300,3 +300,29 @@ body {
     background-color: white;
     border: 1px solid #000000;
 }
+
+
+#password-strength-meter {
+    display:block;
+    width:200px;
+    margin-left:60px
+}
+
+#password-strength-text{
+    margin-bottom:10px;
+}
+
+#password-strength-meter,
+#password-strength-text {
+    display: none;
+}
+
+.show-password {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.show-password input[type="checkbox"] {
+    margin-right: 5px;
+}

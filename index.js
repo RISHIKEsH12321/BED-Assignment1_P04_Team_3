@@ -23,6 +23,7 @@ app.get("/users/account/:id", User_Account_Controller.getUserById); // get speci
 app.post("/users/account", User_Account_Controller.createAccount); // Create user account
 app.put("/users/account/:id", User_Account_Controller.updateUser); // Update user
 app.delete("/users/account/:id", User_Account_Controller.deleteUser); // Delete user
+app.get("/users/forgotpassword/:user_email", User_Account_Controller.userforgotpassword); // Forgot password
 
 app.post("/admin/account/login", Admin_Account_Controller.adminlogin);
 app.get("/admin/account", Admin_Account_Controller.getAllUsers); // Get all user
@@ -30,6 +31,7 @@ app.get("/admin/account/:id", Admin_Account_Controller.getUserById); // Get spec
 app.post("/admin/account/create", Admin_Account_Controller.AdmincreateAccount); // Create Admin Account
 app.put("/admin/account/:id", Admin_Account_Controller.AdminupdateUser); // Update Account
 app.delete("/admin/account/:id", Admin_Account_Controller.AdmindeleteUser); // Delete Account 
+app.get("/admin/forgotpassword/:user_email", Admin_Account_Controller.adminforgotpassword);
 
 app.get("/account/profile/:id", Profile_Controller.getUserProfile);
 app.put("/account/profile/:id", Profile_Controller.updateUserProfile);
@@ -85,6 +87,19 @@ app.get("/registeradmin", (req,res) => {
     console.log("File path is", filePath);
     res.sendFile(filePath);
 });
+
+app.get("/loginuser", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "loginuser.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+})
+
+app.get("/loginadmin", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "loginadmin.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+})
+
 
 app.get("/viewUser", (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "allUsers.html");

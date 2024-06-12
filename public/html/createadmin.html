@@ -14,7 +14,15 @@
                 <input type="text" id="username" name="username" placeholder="Username" required>
                 <input type="email" id="user_email" name="user_email" placeholder="Email" required>
                 <input type="text" id="user_phonenumber" name="user_phonenumber" placeholder="PhoneNumber" required>
-                <input type="password" id="user_password" name="user_password" placeholder="Password" required>
+                <!-- <input type="password" id="user_password" name="user_password" placeholder="Password" required oninput="updatePasswordStrength()"> -->
+                <div class="password-container">
+                    <input type="password" id="user_password" name="user_password" placeholder="Password" required oninput="updatePasswordStrength()">
+                    <input type="checkbox" id="show-password" onclick="togglePasswordVisibility()">
+                </div>
+                <div class="password-strength">
+                    <meter id="password-strength-meter" min="0" max="5" style="display:none;"></meter>
+                    <div id="password-strength-text" style="display:none;"></div>
+                </div>
                 <a href="index.html">
                     <button type="submit">Sign Up</button>
                 </a>
@@ -22,5 +30,7 @@
             <p>Already have an account? <a href="/login">Log In</a></p>
         </div>
     </div>
+
+    <script src="../JavaScript/indicator.js"></script>
 </body>
 </html>

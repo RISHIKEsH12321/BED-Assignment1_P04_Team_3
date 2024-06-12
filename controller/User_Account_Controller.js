@@ -8,15 +8,16 @@ const userlogin = async (req,res) => {
         const isLoggedIn = await User_Account.userlogin(username, user_password);
 
         if (isLoggedIn) {
-            // If login is successful
-            res.status(200).send("login Successful")
+            res.status(200).json({
+              message: "Login successful",
+              user_id: isLoggedIn.user_id // Return user_id along with a success message
+            });
         } else {
-            // If login failed
-            res.status(401).send("Invalid username or password")
+            res.status(401).json({ message: "Invalid username or password" });
         }
     } catch (error) {
         console.error(error);
-        res.status(500).send("Internal server error")
+        res.status(500).json({ message: "Internal server error" });
     }
 
 };
@@ -79,10 +80,27 @@ const deleteUser = async (req, res) => {
 };
 
 
+const userforgotpassword = async (req,res) => {
+  const email = req.params.user_email;
+
+  try {
+      const user = await User_Account.userforgotpassword(email);
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+      res.json(user);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error retrieving User");
+    }
+}
+
+
 module.exports = {
     userlogin,
     getUserById,
     createAccount,
     updateUser,
-    deleteUser
+    deleteUser,
+    userforgotpassword
 };

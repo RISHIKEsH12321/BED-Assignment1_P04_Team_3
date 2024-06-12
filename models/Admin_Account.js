@@ -28,10 +28,10 @@ class Admin_Account {
 
         if (result.recordset.length > 0) {
             // login 
-            return true;
+            return result.recordset[0];
         } else {
             // not login
-            return false;
+            return null;
         }
     }
 
@@ -186,6 +186,31 @@ class Admin_Account {
         connection.close();
     
         return result.rowsAffected > 0; // Indicate success based on affected rows
+    }
+
+
+    static async adminforgotpassword(user_email){
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `SELECT * FROM Admin_Account WHERE user_email = @user_email`;
+
+        const request = connection.request();
+        request.input('user_email', user_email);
+        const result = await request.query(sqlQuery);
+
+        connection.close();
+
+        return result.recordset[0]
+          ? new Admin_Account(
+              result.recordset[0].admin_id,
+              result.recordset[0].user_id,
+              result.recordset[0].username,
+              result.recordset[0].user_email,
+              result.recordset[0].user_phonenumber,
+              result.recordset[0].user_password,
+              result.recordset[0].user_role
+            )
+        : null;
     }
 
 }
