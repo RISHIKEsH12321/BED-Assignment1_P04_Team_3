@@ -45,13 +45,25 @@ class Profile {
         request.input("country", newprofile.country || currentprofile.country);
         request.input("position", newprofile.position || currentprofile.position);
         request.input("security_code", newprofile.security_code || currentprofile.security_code);
-        request.input("profile_picture_url", newprofile.profile_picture_url || currentprofile.profile_picture_url);
+        // request.input("profile_picture_url", newprofile.profile_picture_url || currentprofile.profile_picture_url);
+
+        if (newprofile.profile_picture_base64) {
+            const base64Data = newprofile.profile_picture_base64.replace(/^data:image\/jpeg;base64,/, "");
+            const buffer = Buffer.from(base64Data, 'base64');
+            request.input("profile_picture_url", buffer);
+        } else {
+            request.input("profile_picture_url", currentprofile.profile_picture_url);
+        }
 
         await request.query(sqlQuery);
         
         connection.close();
 
         return this.getUserProfile(user_id);
+    }
+
+    static async bufferToBase64(buffer) {
+        return buffer.toString('base64');
     }
 }
 

@@ -5,6 +5,8 @@ const dbConfig = require("./dbConfig");
 const fs = require("fs");
 const path = require("path");
 const { JSDOM } = require("jsdom");
+const fileUpload = require('express-fileupload');
+const multer = require('multer');
 const User_Account_Controller = require("./controller/User_Account_Controller")
 const Admin_Account_Controller = require("./controller/Admin_Account_Controller")
 const Profile_Controller = require("./controller/Profile_controller")
@@ -13,8 +15,11 @@ const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
 
 app.use("/",express.static("public")); //Static Files start from public 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(fileUpload());
 
 const staticMiddleware = express.static("public");
 
@@ -35,7 +40,6 @@ app.get("/admin/forgotpassword/:user_email", Admin_Account_Controller.adminforgo
 
 app.get("/account/profile/:id", Profile_Controller.getUserProfile);
 app.put("/account/profile/:id", Profile_Controller.updateUserProfile);
-
 
 app.get("/home", (req, res) => {
     const filePath = path.join(__dirname, "public", "html", "index.html");
@@ -136,6 +140,34 @@ app.get("/", async  (req,res) =>{
     }
 });
 
+
+// app.post('/uploadImage', (req, res) => {
+//     try {
+//         if (!req.files || !req.files.image) {
+//             return res.status(400).json({ error: 'No image uploaded' });
+//         }
+
+//         const image = req.files.image;
+//         const imageName = image.name;
+//         const imagePath = `../images/${imageName}`; // Construct the image path
+
+//         const uploadPath = path.join(__dirname, 'public', 'images', imageName);
+
+//         image.mv(uploadPath, (error) => {
+//             if (error) {
+//                 console.error('Error uploading image:', error);
+//                 return res.status(500).json({ error: 'Internal server error' });
+//             }
+
+//             console.log('Image uploaded successfully. Image path:', imagePath);
+
+//             return res.status(200).json({ imagePath: imagePath });
+//         });
+//     } catch (error) {
+//         console.error('Error uploading image:', error);
+//         return res.status(500).json({ error: 'Internal server error' });
+//     }
+// });
 
 app.listen(port, async () => {
     try {

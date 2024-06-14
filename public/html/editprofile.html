@@ -14,6 +14,11 @@
         </div>
         <div class="editcontainer">
             <form id="updateForm">
+                <div class="form-group profile-image-container">
+                    <img id="profileImagePreview" class="profile-image-preview" src="">
+                    <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                    <button type="button" id="attachButton">Attach</button>
+                </div>
                 <div class="form-group">
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" value="David Jose">
@@ -50,6 +55,18 @@
             </form>
         </div>
     </div>
+
+    <div id="securityCodeModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <form id="securityCodeForm">
+            <label for="security_code">Enter Security Code:</label>
+            <input type="text" id="security_code" name="security_code" required>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+    </div>
+    
     <script src="../JavaScript/editprofile.js"></script>
 </body>
 </html>

@@ -8,6 +8,10 @@ const getUserProfile = async (req,res) => {
         if (!user) {
           return res.status(404).send("User profile not found");
         }
+
+        if (user.profile_picture_url) {
+            user.profile_picture_url = await Profile.bufferToBase64(user.profile_picture_url);
+        }
         res.json(user);
     } catch (error){
         console.error(error);
@@ -31,7 +35,8 @@ const updateUserProfile = async (req,res) => {
     }
 }
 
+
 module.exports = {
     getUserProfile,
-    updateUserProfile
+    updateUserProfile,
 }

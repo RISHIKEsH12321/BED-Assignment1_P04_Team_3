@@ -14,7 +14,8 @@ const adminlogin = async (req,res) => {
         if (isLoggedIn) {
             res.status(200).json({
               message: "Login successful",
-              admin_id: isLoggedIn.admin_id
+              admin_id: isLoggedIn.admin_id,
+              user_id: isLoggedIn.user_id
             });
         } else {
             res.status(401).json({ message: "Invalid username or password" });
