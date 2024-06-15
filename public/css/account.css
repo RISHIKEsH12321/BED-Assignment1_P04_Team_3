@@ -383,3 +383,96 @@ body {
     border: 2px solid #ddd;
     margin-bottom: 10px;
 }
+
+.selection-container {
+    font-family: Arial, sans-serif;
+    background-color: #f2f9e9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    height:400px;
+    text-align: center;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+.card p {
+    margin-bottom: 20px;
+}
+
+.selection-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom:60px;
+    margin-top:20px;
+}
+
+.account-selection-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    font-size: 16px;
+}
+
+.account-selection-button i {
+    margin-right: 10px;
+}
+
+.account-selection-button.user {
+    color: #333;
+}
+
+.account-selection-button.user:hover {
+    background-color: #f2f2f2;
+    border-color: #aaa;
+}
+
+.account-selection-button.admin {
+    color: #333;
+}
+
+.account-selection-button.admin:hover {
+    background-color: #f2f2f2;
+    border-color: #aaa;
+}
+
+
+.ownprofile-button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+#ownprofile{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    padding:8px;
+    border-radius: 15px;
+    width:150px;
+    background-color:#000000;
+    color:white;
+}

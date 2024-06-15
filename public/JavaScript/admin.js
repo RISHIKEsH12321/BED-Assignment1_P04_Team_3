@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Username:', username);
 
                 setTimeout(() => {
-                    window.location.href = '../html/index.html';
+                    window.location.href = '/home';
                 }, 2000);
             } else {
                 modalMessage.textContent = result.message || 'Invalid username or password. Please try again.';

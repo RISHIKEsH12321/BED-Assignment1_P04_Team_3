@@ -80,6 +80,12 @@ app.get("/home", (req, res) => {
     });
 });
 
+app.get("/accountselection", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "accountselection.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
 app.get("/registeruser", (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "createuser.html");
     console.log("File path is", filePath);
@@ -117,6 +123,19 @@ app.get("/account-profile/:id", async (req,res) => {
     res.sendFile(filePath);
 });
 
+app.get("/account-personal/:id", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "editpersonal.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+
+app.get("/profile/:id", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "profile.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
 
 app.get("/", async  (req,res) =>{
     try {
@@ -139,35 +158,6 @@ app.get("/", async  (req,res) =>{
         sql.close();
     }
 });
-
-
-// app.post('/uploadImage', (req, res) => {
-//     try {
-//         if (!req.files || !req.files.image) {
-//             return res.status(400).json({ error: 'No image uploaded' });
-//         }
-
-//         const image = req.files.image;
-//         const imageName = image.name;
-//         const imagePath = `../images/${imageName}`; // Construct the image path
-
-//         const uploadPath = path.join(__dirname, 'public', 'images', imageName);
-
-//         image.mv(uploadPath, (error) => {
-//             if (error) {
-//                 console.error('Error uploading image:', error);
-//                 return res.status(500).json({ error: 'Internal server error' });
-//             }
-
-//             console.log('Image uploaded successfully. Image path:', imagePath);
-
-//             return res.status(200).json({ imagePath: imagePath });
-//         });
-//     } catch (error) {
-//         console.error('Error uploading image:', error);
-//         return res.status(500).json({ error: 'Internal server error' });
-//     }
-// });
 
 app.listen(port, async () => {
     try {

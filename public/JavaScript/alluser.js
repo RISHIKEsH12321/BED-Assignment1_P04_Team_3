@@ -1,4 +1,12 @@
 document.addEventListener("DOMContentLoaded", async function() {
+
+    const adminId = sessionStorage.getItem('admin_id');
+    if (!adminId) {
+        alert('Access denied. Only admins can view this page.');
+        window.location.href = '/home';
+        return;
+    }
+
     let users = [];
 
     try {
@@ -87,5 +95,17 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
 
         displayUsers(filteredUsers);
+    }
+});
+
+
+document.getElementById("ownprofile").addEventListener("click", function() {
+    let userId = sessionStorage.getItem("user_id");
+
+
+    if (userId){
+        window.location.href = `/profile/${userId}`; //simulating
+    } else{
+        window.location.href = "/loginadmin";
     }
 });
