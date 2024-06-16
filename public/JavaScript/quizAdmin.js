@@ -5,6 +5,7 @@ const getData = async () => {
       return result;
     } catch (error) {
       console.error('Error fetching data:', error);
+      showToast("Error retrieving data");
     }
 };
 
@@ -144,6 +145,21 @@ const populateSelectors = async () => {
         const questionId = parseInt(selectedOption.getAttribute('data-question-id'), 10);
         const industryId = parseInt(industry_selector.value, 10);
 
+        QuestionText.textContent = "";
+        QuestionText.value = null;
+        option_1.textContent = "";
+        option_1.value = null;
+        option_2.textContent = "";
+        option_2.value = null;
+        option_3.textContent = "";
+        option_3.value = null;
+        option_4.textContent = "";
+        option_4.value = null;
+        option_1_btn.checked = false;
+        option_2_btn.checked = false;
+        option_3_btn.checked = false;
+        option_4_btn.checked = false;
+
         // Find the selected question
         const industry = result.find(ind => ind.industry_id === industryId);
         if (industry) {
@@ -175,6 +191,7 @@ const populateSelectors = async () => {
 
     } else {
       console.error('Failed to load Question data.');
+      showToast("Failed to load Question data");
     }
 };
 
@@ -186,6 +203,7 @@ save_question_button.addEventListener("click", async () => {
   
     if (!selectedQuestionId) {
       console.log("Select a question");
+      showToast("Select a question");
       return;
     }
   
@@ -199,6 +217,7 @@ save_question_button.addEventListener("click", async () => {
     // Check if all fields are filled
     if (!newQuestionText || !newOption1 || !newOption2 || !newOption3 || !newOption4) {
       console.log("Enter values for all fields");
+      showToast("Enter values for all fields");
       return;
     }
     // Determine which option button is checked
@@ -213,6 +232,7 @@ save_question_button.addEventListener("click", async () => {
         correctOptionId = option_4_btn.value;
     } else {
         console.log("Select the correct option");
+        showToast("Select the correct option");
         return;
     }
     console.log(selectedQuestionId);
@@ -251,6 +271,7 @@ save_question_button.addEventListener("click", async () => {
       await populateSelectors();
     } catch (error) {
       console.error('Error updating question:', error);
+      showToast("Error updating question details.");
     }
 });
 
@@ -259,6 +280,7 @@ add_button.addEventListener("click", async () => {
     const selectedIndustryId = industry_selector.value;
     if (!selectedIndustryId) {
         console.log("Select an industry");
+        showToast("Select an industry");
         return;
     }
 
@@ -271,6 +293,7 @@ add_button.addEventListener("click", async () => {
     // Check if all fields are filled
     if (!newQuestionText || !newOption1 || !newOption2 || !newOption3 || !newOption4) {
         console.log("Enter values for all fields");
+        showToast("Enter values for all fields");
         return;
     }
 
@@ -286,6 +309,7 @@ add_button.addEventListener("click", async () => {
         correctOptionId = option_4_btn.value;
     } else {
         console.log("Select the correct option");
+        showToast("Select the correct option");
         return;
     }
 
@@ -316,6 +340,7 @@ add_button.addEventListener("click", async () => {
         await populateSelectors();
     } catch (error) {
         console.error('Error creating question:', error);
+        showToast("Error creating question");
     }
 });
 
@@ -326,6 +351,7 @@ delete_button.addEventListener("click", async () => {
 
     if (!selectedQuestionId) {
         console.log("Select a question");
+        showToast("Select a question");
         return;
     }
 
@@ -348,16 +374,9 @@ delete_button.addEventListener("click", async () => {
         await populateSelectors();
     } catch (error) {
         console.error('Error deleting question:', error);
+        showToast("Error deleting question");
     }
 });
-
-
-
-
-
-
-
-
 
 
 // Remove all child elements
@@ -365,4 +384,26 @@ function removeAllChildren(element) {
     while (element.firstChild) {
       element.removeChild(element.firstChild);
     }
+}
+
+function showToast(message) {
+  const toastContainer = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.classList.add('toast');
+  toast.textContent = message;
+  toastContainer.appendChild(toast);
+  
+  // Show the toast
+  setTimeout(() => {
+      toast.classList.add('show');
+  }, 100);
+
+  // Hide the toast after 3 seconds
+  setTimeout(() => {
+      toast.classList.remove('show');
+      // Remove the toast from the DOM after it fades out
+      setTimeout(() => {
+          toastContainer.removeChild(toast);
+      }, 500);
+  }, 3000);
 }

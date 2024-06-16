@@ -7,13 +7,19 @@ const { JSDOM } = require("jsdom");
 const get15Questions = async (req,res) =>{
     const industry_id = parseInt(req.params.id);
     try {
-        const result = await Quiz_Question.get15Questions(industry_id);
-
+        let result = await Quiz_Question.get15Questions(industry_id);
+        console.log(result.industryName)
         if (!result) {
           return res.status(404).send("Questions for industry not found");
         }
+        
+        const name = result.industryName;
+        //Get 15 random quesion
+        if (result.questions.length > 15) {
+          console.log(result.length)
+          result = getRandomSubset(result.questions, 15);
+        }
 
-        // res.send(result.industry.industry_name);
         const filePath = path.join(__dirname, "../public", "html", "quiz.html");
         console.log("File path is " + filePath);
         // Read the index.html file
@@ -33,10 +39,14 @@ const get15Questions = async (req,res) =>{
             //Question Container
             const container = document.getElementById("question_container");
 
+            //Header
+            const header = document.getElementById("QuizPageHeading");
+            header.textContent = `${name} Quiz`;
+
             // //Populate Quiz Container
             for(var i = 0; i<result.length; i++){
-              console.log(result.length)
-              console.log(result[i])
+              // console.log(result.length)
+              // console.log(result[i])
               container.appendChild(createQuestionElement(document, result[i],i));
             }
 
@@ -89,7 +99,6 @@ const displayAdminPage = async (req,res) =>{
   });
 
 }
-
 
 const checkAnswers = async (req,res) =>{
 
@@ -188,6 +197,10 @@ function createQuestionElement(document, question, index) {
   return questionDiv;
 }
 
+function getRandomSubset(array, n) {
+  const shuffled = array.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, n);
+}
 
 
 module.exports={

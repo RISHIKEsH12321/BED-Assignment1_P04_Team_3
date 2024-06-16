@@ -5,6 +5,7 @@ const getData = async () => {
     return result;
   } catch (error) {
     console.error('Error fetching data:', error);
+    showToast("Error Retrieving Data")
   }
 };
 
@@ -181,6 +182,7 @@ save_button.addEventListener("click", async () => {
   const selectedIndustryId = industry_selector.value;
   if (!selectedIndustryId) {
     console.log("Select an industry");
+    showToast("Select an industry");
     return;
   }
   const newIntroduction = intro_edit.value;
@@ -205,6 +207,7 @@ save_button.addEventListener("click", async () => {
     await populateSelectors();
   } catch (error) {
     console.error('Error updating industry introduction:', error);
+    showToast("Error updating industry introduction");
   }
 });
 
@@ -214,6 +217,7 @@ save_challenge_button.addEventListener("click", async () => {
 
   if (!selectedChallengeId) {
     console.log("Select a challenge");
+    showToast("Select a challenge");
     return;
   }
   const newName = challenge_name.value;
@@ -221,6 +225,7 @@ save_challenge_button.addEventListener("click", async () => {
   const newContent = challenge_content.value;
   if (newName === "" || newDes === "" || newContent === "") {
     console.log("Enter values for all fields");
+    showToast("Enter values for all fields");
     return;
   }
   console.log(newName + "\n" + newDes + "\n" + newContent);
@@ -247,6 +252,7 @@ save_challenge_button.addEventListener("click", async () => {
     await populateSelectors();
   } catch (error) {
     console.error('Error updating industry introduction:', error);
+    showToast('Error updating industry introduction:');
   }
 });
 
@@ -254,6 +260,7 @@ add_button.addEventListener("click", async () => {
   const selectedIndustryId = industry_selector.value;
   if (!selectedIndustryId) {
     console.log("Select an industry");
+    showToast("Select an industry");
     return;
   }
 
@@ -265,6 +272,7 @@ add_button.addEventListener("click", async () => {
 
     if (newName === "" || newDes === "" || newContent === "" || !newName || !newDes || !newContent) {
       console.log("Enter values for all fields");
+      showToast("Enter values for all fields");
       return;
     }
 
@@ -294,6 +302,7 @@ add_button.addEventListener("click", async () => {
     }
   } else {
     console.log("Invalid selector option");
+    showToast("Invalid selector option");
   }
 });
 
@@ -303,6 +312,7 @@ delete_button.addEventListener("click", async()=>{
 
   if (!selectedChallengeId) {
     console.log("Select a challenge");
+    showToast("Select a challenge");
     return;
   }
 
@@ -330,4 +340,27 @@ function removeAllChildren(element) {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
   }
+}
+
+
+function showToast(message) {
+  const toastContainer = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.classList.add('toast');
+  toast.textContent = message;
+  toastContainer.appendChild(toast);
+  
+  // Show the toast
+  setTimeout(() => {
+      toast.classList.add('show');
+  }, 100);
+
+  // Hide the toast after 3 seconds
+  setTimeout(() => {
+      toast.classList.remove('show');
+      // Remove the toast from the DOM after it fades out
+      setTimeout(() => {
+          toastContainer.removeChild(toast);
+      }, 500);
+  }, 3000);
 }

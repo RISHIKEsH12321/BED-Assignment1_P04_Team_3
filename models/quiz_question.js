@@ -21,14 +21,12 @@ class Quiz_Question{
             q.question_id, 
             q.question_text, 
             o.option_id, 
-            o.option_text, 
-            ca.correct_option_id 
+            o.option_text
+            
         FROM 
             Questions q
         LEFT JOIN 
             Options o ON q.question_id = o.question_id
-        LEFT JOIN 
-            Correct_Answers ca ON q.question_id = ca.question_id AND o.option_id = ca.correct_option_id
         WHERE 
             q.industry_id = @id
         ORDER BY 
@@ -39,6 +37,18 @@ class Quiz_Question{
         const request = connection.request();
         request.input("id", id);
         const result = await request.query(sqlQuery);
+
+        const nameQuery = `
+        SELECT industry_name
+        FROM Industry_Info
+        WHERE industry_id = @id_industry;
+        `;
+
+        const request2 = connection.request();
+        request2.input("id_industry", id);
+        const result2 = await request2.query(nameQuery);
+        const industryName = result2.recordset[0].industry_name;
+
     
         connection.close();
 
@@ -66,7 +76,11 @@ class Quiz_Question{
             // }
         });
 
-        return Array.from(questionsMap.values());
+        const returnData = {
+            questions: Array.from(questionsMap.values()),
+            industryName:industryName
+        }
+        return returnData;
 
         }catch (err){
             console.log(err);

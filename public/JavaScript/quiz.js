@@ -1,4 +1,8 @@
 const submitBtn = document.getElementById("submit_quiz");
+const redoBtn = document.getElementById("redo_quiz");
+const exitBtn = document.getElementById("exit");
+const heading = document.getElementById("QuizPageHeading");
+
 
 submitBtn.addEventListener("click", async () => {
     let data = [];
@@ -19,7 +23,9 @@ submitBtn.addEventListener("click", async () => {
     // Check if all questions have been answered before proceeding
     if (!allQuestionsAnswered) {
         console.log('Please answer all questions before submitting.');
-        return; // Stop the function if any question is not answered
+        showToast('Please answer all questions before submitting.');
+
+        return;
     }
     
     try {
@@ -34,9 +40,59 @@ submitBtn.addEventListener("click", async () => {
         
         const responseData = await response.json();
         console.log(responseData);
+        updateChart(responseData);
     } catch (err) {
         console.log("Error checking answers", err);
         throw err;
     }
 });
 
+
+
+function updateChart(fractionInput) {
+
+    const container = document.getElementById("resultsContainer");
+    const circle = document.getElementById("circle");
+    const percentage = document.getElementById("percentage");
+    
+    let fraction = parseFloat(fractionInput/15);
+    
+    
+    const percentageValue = (fraction * 100).toFixed(2) + '%';
+    percentage.textContent = percentageValue;
+    const degree = fraction * 360;
+    
+    circle.style.background = `conic-gradient(#007bff ${degree}deg, #eee ${degree}deg)`;
+    container.style.display = "flex";
+}
+
+redoBtn.addEventListener("click", () => {
+    location.reload();
+});
+
+exitBtn.addEventListener("click", () => {
+    window.location.href = "/home";
+});
+
+
+function showToast(message) {
+    const toastContainer = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.classList.add('toast');
+    toast.textContent = message;
+    toastContainer.appendChild(toast);
+    
+    // Show the toast
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+
+    // Hide the toast after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        // Remove the toast from the DOM after it fades out
+        setTimeout(() => {
+            toastContainer.removeChild(toast);
+        }, 500);
+    }, 3000);
+}

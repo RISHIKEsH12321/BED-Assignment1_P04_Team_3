@@ -34,8 +34,29 @@
         <img id="profile_pic_navbar" src="../../images/Navbar Profile Picture.png" alt="Logo">
     </div>
 
+    <h1 id="QuizPageHeading">Quiz</h1>
+    <div id="resultsContainer">
+      <h1>Thank You</h1> 
+      <p>Your answers have been saved</p>
+      <div class="circle-chart" id="circleChart">
+        <div class="circle" id="circle">
+            <span class="percentage" id="percentage">0%</span>
+        </div>
+      </div>
+      <div class="flexBox">
+        <button type="button" id="redo_quiz">Redo Quiz</button>
+        <button type="button" id="exit">Exit</button>
+      </div>
+      
+    </div>
+
+
+    </div>
     <form id="question_container"></form>
 
     <button type="button" id="submit_quiz">Submit</button>
+
+    <div id="toastContainer" class="toast-container"></div>
+
 </body>
 </html>
