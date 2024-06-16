@@ -72,48 +72,131 @@ class Admin_Account {
     }
 
 
-    static async AdmincreateAccount(newUserData) {
+    // static async AdmincreateAccount(newUserData) {
+    //     const connection = await sql.connect(dbConfig);
+    
+    //     const sqlQuery = `INSERT INTO User_Account (username, user_email, user_phonenumber, user_password, user_role) 
+    //                         VALUES (@username, @user_email, @user_phonenumber, @user_password, @user_role); 
+    //                         SELECT SCOPE_IDENTITY() AS user_id;`;
+    
+    //     const request = connection.request();
+    //     request.input("username",newUserData.username);
+    //     request.input("user_email",newUserData.user_email);
+    //     request.input("user_phonenumber",newUserData.user_phonenumber);
+    //     request.input("user_password",newUserData.user_password);
+    //     request.input("user_role",newUserData.user_role || 'admin'); // Default 'admin'
+    
+    //     const result = await request.query(sqlQuery);
+
+    //     const userId = result.recordset[0].user_id;
+
+    //     const adminInsertQuery = `INSERT INTO Admin_Account (user_id, username, user_email, user_phonenumber, user_password, user_role) 
+    //                                 VALUES (@user_id, @username, @user_email, @user_phonenumber, @user_password, @user_role);
+    //                                 SELECT SCOPE_IDENTITY() AS admin_id`;
+
+    //     const adminRequest = connection.request();
+    //     adminRequest.input("user_id", userId);
+    //     adminRequest.input("username", newUserData.username);
+    //     adminRequest.input("user_email", newUserData.user_email);
+    //     adminRequest.input("user_phonenumber", newUserData.user_phonenumber);
+    //     adminRequest.input("user_password", newUserData.user_password);
+    //     adminRequest.input("user_role", newUserData.user_role || 'admin');
+    //     const admin_result = await adminRequest.query(adminInsertQuery);
+
+    //     const profileQuery = `INSERT INTO Profile (user_id) VALUES (@user_id); SELECT SCOPE_IDENTITY() AS profile_id`;
+
+    //     const profilerequest = connection.request();
+    //     profilerequest.input("user_id", userId);
+    //     await profilerequest.query(profileQuery)
+
+    //     connection.close();
+    
+    //     return this.getUserById(admin_result.recordset[0].admin_id);
+    // }
+
+    static async AdmincreateAccount(newUserData, securityCode) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `INSERT INTO User_Account (username, user_email, user_phonenumber, user_password, user_role) 
-                            VALUES (@username, @user_email, @user_phonenumber, @user_password, @user_role); 
-                            SELECT SCOPE_IDENTITY() AS user_id;`;
+        try {
+            // Check if the security code exists and user_id is NULL
+            const checkCodeQuery = `
+                SELECT code_id FROM Codes 
+                WHERE security_code = @security_code AND user_id IS NULL`;
+            
+            const checkRequest = connection.request();
+            checkRequest.input("security_code", securityCode);
+            const checkResult = await checkRequest.query(checkCodeQuery);
     
-        const request = connection.request();
-        request.input("username",newUserData.username);
-        request.input("user_email",newUserData.user_email);
-        request.input("user_phonenumber",newUserData.user_phonenumber);
-        request.input("user_password",newUserData.user_password);
-        request.input("user_role",newUserData.user_role || 'admin'); // Default 'admin'
+            if (checkResult.recordset.length === 0) {
+                throw new Error("Invalid security code or already used.");
+            }
     
-        const result = await request.query(sqlQuery);
-
-        const userId = result.recordset[0].user_id;
-
-        const adminInsertQuery = `INSERT INTO Admin_Account (user_id, username, user_email, user_phonenumber, user_password, user_role) 
-                                    VALUES (@user_id, @username, @user_email, @user_phonenumber, @user_password, @user_role);
-                                    SELECT SCOPE_IDENTITY() AS admin_id`;
-
-        const adminRequest = connection.request();
-        adminRequest.input("user_id", userId);
-        adminRequest.input("username", newUserData.username);
-        adminRequest.input("user_email", newUserData.user_email);
-        adminRequest.input("user_phonenumber", newUserData.user_phonenumber);
-        adminRequest.input("user_password", newUserData.user_password);
-        adminRequest.input("user_role", newUserData.user_role || 'admin');
-        const admin_result = await adminRequest.query(adminInsertQuery);
-
-        const profileQuery = `INSERT INTO Profile (user_id) VALUES (@user_id); SELECT SCOPE_IDENTITY() AS profile_id`;
-
-        const profilerequest = connection.request();
-        profilerequest.input("user_id", userId);
-        await profilerequest.query(profileQuery)
-
-        connection.close();
+            // Insert into User_Account
+            const insertUserQuery = `
+                INSERT INTO User_Account (username, user_email, user_phonenumber, user_password, user_role) 
+                VALUES (@username, @user_email, @user_phonenumber, @user_password, @user_role); 
+                SELECT SCOPE_IDENTITY() AS user_id;`;
+        
+            const insertRequest = connection.request();
+            insertRequest.input("username", newUserData.username);
+            insertRequest.input("user_email", newUserData.user_email);
+            insertRequest.input("user_phonenumber", newUserData.user_phonenumber);
+            insertRequest.input("user_password", newUserData.user_password);
+            insertRequest.input("user_role", newUserData.user_role || 'admin');
+            const insertResult = await insertRequest.query(insertUserQuery);
     
-        return this.getUserById(admin_result.recordset[0].admin_id);
+            const userId = insertResult.recordset[0].user_id;
+    
+            // Update Codes table with user_id
+            const updateCodeQuery = `
+                UPDATE Codes
+                SET user_id = @user_id
+                WHERE security_code = @security_code`;
+            
+            const updateRequest = connection.request();
+            updateRequest.input("user_id", userId);
+            updateRequest.input("security_code", securityCode);
+            await updateRequest.query(updateCodeQuery);
+    
+            // Insert into Admin_Account
+            const insertAdminQuery = `
+                INSERT INTO Admin_Account (user_id, username, user_email, user_phonenumber, user_password, user_role) 
+                VALUES (@user_id, @username, @user_email, @user_phonenumber, @user_password, @user_role);
+                SELECT SCOPE_IDENTITY() AS admin_id`;
+            
+            const adminRequest = connection.request();
+            adminRequest.input("user_id", userId);
+            adminRequest.input("username", newUserData.username);
+            adminRequest.input("user_email", newUserData.user_email);
+            adminRequest.input("user_phonenumber", newUserData.user_phonenumber);
+            adminRequest.input("user_password", newUserData.user_password);
+            adminRequest.input("user_role", newUserData.user_role || 'admin');
+            const adminResult = await adminRequest.query(insertAdminQuery);
+    
+            // Insert into Profile (assuming this step is necessary)
+    
+            const profileQuery = `
+                INSERT INTO Profile (user_id, security_code) 
+                VALUES (@user_id, @security_code); 
+                SELECT SCOPE_IDENTITY() AS profile_id`;
+            
+            const profileRequest = connection.request();
+            profileRequest.input("user_id", userId);
+            profileRequest.input("security_code", securityCode);
+            await profileRequest.query(profileQuery);
+    
+            // Close connection
+            connection.close();
+    
+            // Return the newly created user
+            return this.getUserById(userId);
+        } catch (error) {
+            console.error("Error creating user:", error.message);
+            connection.close();
+            throw error;
+        }
     }
-
+    
 
     static async AdminupdateUser(user_id, newUserData) {
         const connection = await sql.connect(dbConfig);

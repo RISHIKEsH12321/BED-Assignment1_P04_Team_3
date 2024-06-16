@@ -60,4 +60,41 @@ document.addEventListener("DOMContentLoaded", function() {
     // Attach functions to the global scope if needed
     window.updatePasswordStrength = updatePasswordStrength;
     window.togglePasswordVisibility = togglePasswordVisibility;
+
+        
+    document.getElementById('signup-form').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        
+        const formData = new FormData(event.target);
+        const data = {
+            username: formData.get('username'),
+            user_email: formData.get('user_email'),
+            user_phonenumber: formData.get('user_phonenumber'),
+            user_password: formData.get('user_password'),
+            security_code: formData.get('security_code')
+        };
+
+        try {
+            const response = await fetch('/admin/account/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                // If account creation is successful, redirect to /loginadmin
+                window.location.href = '/loginadmin';
+            } else {
+                // If account creation fails, alert the user and redirect to /registeruser
+                alert('Unable to create admin account');
+                window.location.href = '/registeruser';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Unable to create admin account');
+            window.location.href = '/registeruser';
+        }
+    });
 });

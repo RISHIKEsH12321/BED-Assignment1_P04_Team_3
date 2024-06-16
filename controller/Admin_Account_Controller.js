@@ -54,16 +54,29 @@ const getAllUsers = async (req,res) => {
 }
 
 
-const AdmincreateAccount = async (req,res) => {
-    const newaccount = req.body;
+// const AdmincreateAccount = async (req,res) => {
+//     const newaccount = req.body;
+//     try {
+//         const createdAccount = await Admin_Account.AdmincreateAccount(newaccount);
+//         res.status(201).json(createdAccount);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send("Error creating User");
+//     }
+// }
+
+const AdmincreateAccount = async (req, res) => {
+    const { username, user_email, user_phonenumber, user_password, user_role, security_code } = req.body;
+    const newUserData = { username, user_email, user_phonenumber, user_password, user_role };
+
     try {
-        const createdAccount = await Admin_Account.AdmincreateAccount(newaccount);
+        const createdAccount = await Admin_Account.AdmincreateAccount(newUserData, security_code);
         res.status(201).json(createdAccount);
     } catch (error) {
         console.error(error);
-        res.status(500).send("Error creating User");
+        res.status(500).send("Error creating user");
     }
-}
+};
 
 
 const AdminupdateUser = async (req,res) => {
@@ -120,5 +133,5 @@ module.exports = {
     AdmincreateAccount,
     AdminupdateUser,
     AdmindeleteUser,
-    adminforgotpassword
+    adminforgotpassword,
 };
