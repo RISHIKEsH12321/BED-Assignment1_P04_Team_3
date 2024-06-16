@@ -13,13 +13,15 @@ const get15Questions = async (req,res) =>{
           return res.status(404).send("Questions for industry not found");
         }
         
+
         const name = result.industryName;
         //Get 15 random quesion
         if (result.questions.length > 15) {
-          console.log(result.length)
           result = getRandomSubset(result.questions, 15);
+        }else{
+          result = result.questions;
         }
-
+        
         const filePath = path.join(__dirname, "../public", "html", "quiz.html");
         console.log("File path is " + filePath);
         // Read the index.html file

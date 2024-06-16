@@ -198,11 +198,13 @@ class Quiz_Question{
                 WHERE question_id = @question_id;
             `;
 
+            console.log("data.correct_option_id"+ data.correct_option_id)
+            console.log("data.question_id" + data.question_id)
             const correctAnswerRequest = connection.request();
             correctAnswerRequest.input("correct_option_id", data.correct_option_id);
             correctAnswerRequest.input("question_id", data.question_id);
             var x= await correctAnswerRequest.query(updateCorrectAnswerQuery);
-    
+            
             connection.close();
     
             return true;
@@ -250,9 +252,12 @@ class Quiz_Question{
                     .query(insertOptionQuery);
                 const insertedOptionID = optionResult.recordset[0].option_id;
                 optionIDs.push(insertedOptionID);
-                // If this is the correct option, store its ID
-                if (index === data.correct_option_id) {
+                // If this is the correct option, store its ID                
+                if (index === data.correct_option_id - 1) {
                     data.correct_option_id = insertedOptionID;
+                    console.log("insertedOptionID", insertedOptionID);
+                    console.log("data.correct_option_id", data.correct_option_id);
+
                 }
             }
     
@@ -262,6 +267,12 @@ class Quiz_Question{
                 VALUES (@question_id, @correct_option_id);
             `;
             const correctAnswerRequest = connection.request();
+
+            console.log("Inserting Correct Answer:", {
+                question_id: question_id,
+                correct_option_id: data.correct_option_id
+            });
+            
             await correctAnswerRequest
                 .input("question_id", question_id)
                 .input("correct_option_id", data.correct_option_id)

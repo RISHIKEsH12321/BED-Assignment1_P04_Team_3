@@ -94,10 +94,10 @@ const validateCreateQuestion = (req, res, next) => {
           })
       ).length(4).required(),
       correct_option_id: Joi.number().integer().valid(1, 2, 3, 4).required()
-  });
+    });
 
   const { error } = schema.validate(req.body, { abortEarly: false });
-
+  console.log("Got called")
   if (error) {
       const errors = error.details.map(detail => detail.message);
       return res.status(400).json({ message: "Validation error", errors });

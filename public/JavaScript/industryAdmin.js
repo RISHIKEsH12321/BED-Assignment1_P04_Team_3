@@ -1,7 +1,8 @@
 const getData = async () => {
   try {
     const response = await fetch('/admin/api/industry');
-    const result = await response.json();
+    const result = await handleResponse(response, null);
+
     return result;
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -200,7 +201,7 @@ save_button.addEventListener("click", async () => {
       })
     });
 
-    const data = await response.json();
+    const data = await handleResponse(response, "Successfully Updated Introduction");
     console.log(data);
 
     // Update result variable request
@@ -245,7 +246,7 @@ save_challenge_button.addEventListener("click", async () => {
       })
     });
 
-    const data = await response.json();
+    const data = await handleResponse(response, "Successfully Updated Industry Introduction");
     console.log(data);
 
     // Update result variable request
@@ -292,13 +293,13 @@ add_button.addEventListener("click", async () => {
         })
       });
 
-      const data = await response.json();
+      const data = await handleResponse(response, "Successfully Adding Industry Challenge");
       console.log(data);
 
       // Update result variable request
       await populateSelectors();
     } catch (error) {
-      console.error('Error updating industry introduction:', error);
+      console.error('Error adding industry challenge:', error);
     }
   } else {
     console.log("Invalid selector option");
@@ -325,7 +326,7 @@ delete_button.addEventListener("click", async()=>{
       }
     });
 
-    const data = await response.json();
+    const data = await handleResponse(response,"Sucessfully Deleted Challenge");
     console.log(data);
 
     // Update result variable request
@@ -335,6 +336,26 @@ delete_button.addEventListener("click", async()=>{
   }
 });
 
+
+//Handles Bad And Good Requests
+async function handleResponse(response, successfulMsg) {
+  if (response.ok) {
+    if (successfulMsg){
+      showToast(successfulMsg);
+    }
+    
+    return await response.json();
+  } else if (response.status === 400) {
+    const errorData = await response.json();
+    console.error("Validation error:", errorData.errors);
+    showToast("Validation error: " + errorData.errors.join(", "));
+    throw new Error("Validation error");
+  } else {
+    console.error("Unexpected response status:", response.status);
+    showToast("Unexpected error occurred. Please try again.");
+    throw new Error("Unexpected error");
+  }
+}
 // Remove all child elements
 function removeAllChildren(element) {
   while (element.firstChild) {

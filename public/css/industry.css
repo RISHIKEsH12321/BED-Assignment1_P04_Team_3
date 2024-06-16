@@ -162,8 +162,40 @@ body{
   transform: translateY(-2px);
 }
 
-@media (min-width: 768px) {
-  #QuizButton {
-    padding: 10px 30px;
-  }
+@media only screen and (max-width: 420px){
+    #main_intro {
+        height: auto; 
+        text-align: center;
+        background-size: cover;
+        background-position: center;
+        overflow-x: hidden; 
+        width: 95%;
+        padding: 2.5%;
+    }
+
+    #IndustryName {
+        font-size: 30px; /* Decrease font size for smaller screens */
+    }
+
+    #IndustryIntro {
+        max-width: 90%; /* Ensure full width on smaller screens */
+        background-color: rgba(0, 0, 0, 0.5);
+
+    }
+
+    #ChallengeIntro {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr); /* Set the grid to have two columns */
+        gap: 10px; 
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    #QuizContainer{
+        margin-left: 18%;
+        margin-right: 18%;
+        margin-bottom: 5%;
+        padding-bottom: 5%;
+    }
 }
