@@ -141,6 +141,15 @@ input[type="password"] {
     font-size: inherit;
 }
 
+.admin-button-link {
+    background: none;
+    border: none;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: inherit;
+}
+
 .signup-link {
     margin-top: 20px;
 }
@@ -305,4 +314,45 @@ dotlottie-player {
 #enterPasswordText{
     font-size:22px;
     margin-top: 30px;
+}
+
+@media only screen and (max-width: 500px){
+    .left-column {
+        display:none;
+    }
+
+    .right-column {
+        width:300px;
+    }
+    
+    
+    .userusername{
+        width: 92%;
+    }
+    
+    .userpassword{
+        width: 92%;
+    }
+
+    .submitbtn{
+        width:250px;
+    }
+
+    .submitadminbtn{
+        width:325px;
+    }
+
+    .remember-me {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .button-link {
+        font-size:14px;
+    }
+
+    .remember-me label{
+        font-size: 14px;
+    }
 }

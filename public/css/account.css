@@ -476,3 +476,147 @@ body {
     background-color:#000000;
     color:white;
 }
+
+@media only screen and (max-width: 500px){
+    .card {
+        width: 300px;
+    }
+    
+    .filter-container {
+        width: 90%;
+        flex-direction: column;
+        gap: 10px;
+        margin: 10px auto;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-container select, .filter-container input {
+        width: 100%;
+        padding: 8px;
+    }
+
+    .filter-container select option {
+        text-align: left; 
+        margin-right: 0;
+    }
+
+    .search-container {
+        margin-top:25px;
+    }
+    
+    .search-container input {
+        padding: 10px;
+        width: 85%;
+    }
+
+    .account-header, .account-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .account-item span {
+        width: 100%;
+        margin: 5px 0;
+        text-align: left;
+    }
+
+    .account-header {
+        text-align: left;
+    }
+
+    .account-item span:nth-child(2),
+    .account-item span:nth-child(3),
+    .account-item span:nth-child(4),
+    .account-item span:nth-child(1) {
+        margin-left: 0;
+    }
+
+    .container {
+        max-width: fit-content;
+        padding: 40px 35px;
+    }
+
+    .signup-form input {
+        margin-bottom: 1rem;
+        padding: 0.5rem 40px;
+        padding-left: 10px;
+    }
+    #password-strength-meter {
+        margin-left:40px
+    }
+
+    .editbackground{
+        height: 210vh;
+    }
+
+    .header {
+        text-align:center;
+        margin-right:0px;
+    }
+    
+    .header h1 {
+        font-size:30px;
+    }
+    
+    .header p {
+        font-size:14px;
+    }
+    
+    .editcontainer {
+        width: 280px;
+    }
+    
+    .form-group {
+        flex-direction: column;
+        text-align: center;
+        margin-bottom:0px;
+    }
+    
+    .form-group label {
+        text-align: center;
+    }
+    
+    .form-group input {
+        margin-top:15px;
+        width: 200px;
+    }
+    
+    .form-group input[type="email"] {
+        width: 200px;
+    }
+    
+    .form-group input[type="tel"] {
+        width: 200px;
+    }
+    
+    .form-group input[type="password"] {
+        width: 200px;
+    }
+    
+    .form-group input[type="country"] {
+        width: 200px;
+    }
+    
+    .form-group input[type="position"] {
+        width: 200px;
+    }
+    
+    
+    .form-group textarea {
+        width: 80%;
+        height:150px;
+    }
+    
+    .form-actions {
+        justify-content: center;
+        margin-top: 30px;
+    }
+    
+    .btn {
+        padding: 10px 10px;
+        font-size: 14px;
+    }
+}   
