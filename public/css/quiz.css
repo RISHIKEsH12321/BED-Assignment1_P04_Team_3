@@ -4,6 +4,7 @@ body{
 }
 #QuizPageHeading{
     align-self: center;
+    text-align: center;
 }
 
 /* Container Styles */
@@ -87,7 +88,7 @@ label:hover {
 
 #resultsContainer{
     display: none;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -100,8 +101,6 @@ label:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-
 }
 
 .circle-chart {
@@ -111,17 +110,17 @@ label:hover {
 }
 
 .circle {
-    width: 100px; /* Set a fixed width */
-    height: 100px; /* Set a fixed height */
+    width: 100%; /* Use 100% to fill the container */
+    height: 100%; /* Use 100% to fill the container */
     border-radius: 50%;
-    position: relative; /* Changed to relative to contain the content */
-    background: conic-gradient(#007bff, #007bff, #eee); /* Simplified conic-gradient */
+    background: conic-gradient(#88C431 0%, #88C431 75%, #330000 0% 100%); /* Simplified conic-gradient */
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: center;
     font-size: 2em;
     color: #333;
-    transition: background 0.5s ease; /* Added ease timing function */
+    transition: all 0.5s ease; /* Added ease timing function */
 }
 
 .percentage {
@@ -183,7 +182,7 @@ label:hover {
 
 
 /* Responsive Design */
-@media only screen and (max-width: 420px){
+@media only screen and (max-width: 500px){
     #question_container {
       padding: 15px;
     }
@@ -200,6 +199,11 @@ label:hover {
         max-width: 35%;
         margin-left: 11%;
     }
+
+    #resultsContainer{
+        width: 80%;
+    }
+
 
     .toast-container {
         right: 0px;

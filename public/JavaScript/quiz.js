@@ -62,7 +62,7 @@ function updateChart(fractionInput) {
     percentage.textContent = percentageValue;
     const degree = fraction * 360;
     
-    circle.style.background = `conic-gradient(#007bff ${degree}deg, #eee ${degree}deg)`;
+    circle.style.background = `conic-gradient(#88C431 ${degree}deg, #F7FFEC ${degree}deg)`;
     container.style.display = "flex";
 }
 

@@ -68,8 +68,9 @@ textarea {
   height: 100px;
   resize: vertical;
   border-radius: 10px;
-
-padding: 10px;}
+  resize: none;
+  padding: 10px;
+}
 
 .form-select:focus,
 textarea:focus,
@@ -199,7 +200,7 @@ button:hover {
   opacity: 1;
 }
 
-@media only screen and (max-width: 420px){
+@media only screen and (max-width: 500px){
   .toast-container {
     right: 0px;
     margin-left: 1%;

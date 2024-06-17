@@ -162,7 +162,7 @@ body{
   transform: translateY(-2px);
 }
 
-@media only screen and (max-width: 420px){
+@media only screen and (max-width: 500px){
     #main_intro {
         height: auto; 
         text-align: center;
