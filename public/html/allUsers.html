@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/account.css">
+</head>
+<body>
+    <div class="filter-container">
+        <div class="filter-group">
+            <label for="Id">ID</label>
+            <select id="Id">
+                <option value="Id">Any</option>
+                <option value="1-10">1-10</option>
+                <option value="11-20">11-20</option>
+                <option value="21-30">21-30</option>
+                <option value="31-40">31-40</option>
+                <option value="41-50">41-50</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="userType">Role</label>
+            <select id="userType">
+                <option value="Role">Any</option>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="email">Email</label>
+            <select id="email">
+                <option value="email">Any</option>
+                <option value="gmail.com">gmail.com</option>
+                <option value="hotmail.com">hotmail.com</option>
+                <option value="yahoo.com">yahoo.com</option>
+                <option value="test.com">test.com</option>
+            </select>
+        </div>
+    </div>
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search for User......">
+    </div>
+    <div class="ownprofile-button-container">
+        <button id="ownprofile">View Own Profile</button>
+    </div>
+    <div id="userList" class="account-list">
+        <div class="account-header">
+            <span>ID</span>
+            <span>Name</span>
+            <span>Email</span>
+            <span>Phone</span>
+            <span>Role</span>
+        </div>
+    </div>
+    <script src="../JavaScript/alluser.js"></script>
+</body>
+</html>

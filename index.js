@@ -4,7 +4,12 @@ const sql = require("mssql"); // Assuming you've installed mssql
 const dbConfig = require("./dbConfig");
 const fs = require("fs");
 const path = require("path");
-const { JSDOM } = require("jsdom"); 
+const { JSDOM } = require("jsdom");
+const fileUpload = require('express-fileupload');
+const multer = require('multer');
+const User_Account_Controller = require("./controller/User_Account_Controller")
+const Admin_Account_Controller = require("./controller/Admin_Account_Controller")
+const Profile_Controller = require("./controller/Profile_controller")
 
 //Controllers
 const industry_info_controller = require("./controller/industry_info_controller");
@@ -17,10 +22,32 @@ const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
 
 app.use("/",express.static("public")); //Static Files start from public 
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(fileUpload());
 app.use(express.json()); 
 
 const staticMiddleware = express.static("public");
 
+app.post("/users/account/login", User_Account_Controller.userlogin);
+app.get("/users/account/:id", User_Account_Controller.getUserById); // get specific user
+app.post("/users/account", User_Account_Controller.createAccount); // Create user account
+app.put("/users/account/:id", User_Account_Controller.updateUser); // Update user
+app.delete("/users/account/:id", User_Account_Controller.deleteUser); // Delete user
+app.get("/users/forgotpassword/:user_email", User_Account_Controller.userforgotpassword); // Forgot password
+
+app.post("/admin/account/login", Admin_Account_Controller.adminlogin);
+app.get("/admin/account", Admin_Account_Controller.getAllUsers); // Get all user
+app.get("/admin/account/:id", Admin_Account_Controller.getUserById); // Get specific user
+app.post("/admin/account/create", Admin_Account_Controller.AdmincreateAccount); // Create Admin Account
+app.put("/admin/account/:id", Admin_Account_Controller.AdminupdateUser); // Update Account
+app.delete("/admin/account/:id", Admin_Account_Controller.AdmindeleteUser); // Delete Account 
+app.get("/admin/forgotpassword/:user_email", Admin_Account_Controller.adminforgotpassword);
+
+app.get("/account/profile/:id", Profile_Controller.getUserProfile);
+app.put("/account/profile/:id", Profile_Controller.updateUserProfile);
 
 app.get("/home", (req, res) => {
     const filePath = path.join(__dirname, "public", "html", "index.html");
@@ -62,6 +89,63 @@ app.get("/home", (req, res) => {
 });
 
 
+app.get("/accountselection", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "accountselection.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+app.get("/registeruser", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "createuser.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+app.get("/registeradmin", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "createadmin.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+app.get("/loginuser", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "loginuser.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+})
+
+app.get("/loginadmin", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "loginadmin.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+})
+
+
+app.get("/viewUser", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "allUsers.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+})
+
+app.get("/account-profile/:id", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "editprofile.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+app.get("/account-personal/:id", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "editpersonal.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+
+app.get("/profile/:id", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "profile.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+
 //Industry Routes
 app.get("/user/industry/:id", industry_info_controller.getIndustryInfo);//Get Industry data
 
@@ -93,6 +177,7 @@ app.post("/admin/quiz/create", validateIndustryAndQuiz.validateCreateQuestion,qu
 app.delete("/admin/quiz/delete", validateIndustryAndQuiz.validateDeleteQuestion, quiz_controller.deleteQuestion); // Delete Question
 
 
+
 app.get("/", async  (req,res) =>{
     try {
         // Connect to the database
@@ -114,8 +199,6 @@ app.get("/", async  (req,res) =>{
         sql.close();
     }
 });
-
-
 
 app.listen(port, async () => {
     try {
