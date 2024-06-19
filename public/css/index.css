@@ -8,12 +8,14 @@ body{
     overflow: hidden;
     justify-content: space-around;
     align-items: center;
-    
+    margin: 5px;
+    padding-top: 5px;
 }
 
 #navbar_logo{
     height: 65px;
     justify-self: start;
+    padding: 0%;
 }
 #profile_pic_navbar{
     height: 50px;
@@ -27,6 +29,9 @@ body{
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+
 }
 
 
@@ -45,11 +50,16 @@ body{
     background-color: inherit;
     font-family: inherit;
     margin: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
 }
 
-.navbar a:hover, .dropdown:hover .dropbtn {
+.navbarItem:hover, .dropdown:hover .dropbtn {
   background-color: #88C431;
   color: #F7FFEC;
+  
 }
 
 .dropdown-content {
@@ -70,6 +80,7 @@ body{
   text-decoration: none;
   display: block;
   text-align: left;
+  border-radius: 0%;
 }
 
 .dropdown-content h1 {
@@ -85,6 +96,7 @@ body{
 
 .dropdown-content a:hover {
   background-color: #88C431;
+  color: #fff;
 }
 
 .dropdown:hover .dropdown-content {
@@ -93,4 +105,18 @@ body{
 
 #TestSubject1{
   color: red;
+}
+
+
+@media only screen and (max-width: 420px){
+  .navbar{
+    overflow: visible;
+    flex-direction: column;
+  }
+
+  .toast-container {
+    right: 0px;
+    margin-left: 1%;
+    margin-right: 1%;
+  }
 }

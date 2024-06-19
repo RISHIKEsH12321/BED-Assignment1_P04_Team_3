@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Industry</title>
+    <link rel="stylesheet" href="../../css/index.css">
+    <link rel="stylesheet" href="../../css/industryAdmin.css">
+    <script src="../../JavaScript/industryAdmin.js" defer></script>
+    <link rel="icon" type="image/x-icon" href="../../images/Icon.png">
+
+</head>
+<body>
+    <div class="navbar">
+      <img id="navbar_logo" src="../../images/AgricultureLogo.png" alt="Logo">
+
+      <div class="dropdown">
+        <button class="dropbtn">Agriculture Industries 
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <h1>INDUSTRIES</h1>
+          <a href="/user/industry/1">Agriculture</a>
+          <h1>SUB-INDUSTRIES</h1>
+          <a href="/user/industry/2">Crop Production</a>
+          <a href="/user/industry/3">Livestock Farming</a>
+          <a href="/user/industry/4">Horticulture</a>
+          <a href="/user/industry/5">Agrotechnology</a>
+        </div>
+      </div> 
+
+      <a href="#" class="navbarItem">Forum</a>
+      <a href="#" class="navbarItem">About Us</a>
+      <a href="#" class="navbarItem">Contact us</a>
+      <a href="#" class="navbarItem">Credits</a>
+      <img id="profile_pic_navbar" src="../../images/Navbar Profile Picture.png" alt="Logo">
+      
+  </div>
+
+
+    <div class="FlexBox">
+
+    <label for="IndustrySelection" class="sr-only">Industries</label>
+    <select name="Industry" id="IndustrySelection" class="form-select" aria-label="Default select example" >
+      <option value="">Select Industry</option>
+    </select>
+
+    <div class="headerWithButtons">
+      <h1>Introduction</h1>    
+      <button id="button_save_intro">Save Changes</button>
+
+    </div>
+    <label for="IndustryIntro" >Industry Introduction</label>
+    <textarea id="IndustryIntro"></textarea>
+    
+    <!-- <label for="IndustryIntro" style="display:block;"></label> -->
+
+    </textarea>
+
+    <div class="headerWithButtons">
+      <h1>Challanges</h1>    
+      <button id="button_add_challenge">Add New Challange</button>
+      <button id="button_delete_challenge">Delete Current Challange</button>
+  
+    </div>
+    
+    <label for="IndustryChallanges" style="display:block;">Challanges</label>
+    <select name="Industry" id="IndustryChallanges">
+      <option >Select Challange</option>
+    </select>
+    
+
+    <label for="ChallangeName" style="display:block;">Challange Name</label>
+    <textarea id="ChallangeName"></textarea>
+    
+    <label for="ChallangeDes" style="display:block;">Challange Desescription</label>
+    <textarea id="ChallangeDes"></textarea>
+
+    <label for="ChallangeContent" style="display:block;">Challange Content</label>
+    <textarea id="ChallangeContent"></textarea>
+
+
+  <button id="button_save_challenge">Save Changes</button>
+
+  </div>
+  <div id="toastContainer" class="toast-container"></div>
+
+
+</body>
+</html>

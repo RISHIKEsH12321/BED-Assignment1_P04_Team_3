@@ -11,6 +11,13 @@ const User_Account_Controller = require("./controller/User_Account_Controller")
 const Admin_Account_Controller = require("./controller/Admin_Account_Controller")
 const Profile_Controller = require("./controller/Profile_controller")
 
+//Controllers
+const industry_info_controller = require("./controller/industry_info_controller");
+const quiz_controller = require("./controller/quiz_controller")
+
+//MiddleWare for each person
+const validateIndustryAndQuiz = require("./middleware/industryAndQuizValidation");
+
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
 
@@ -20,6 +27,7 @@ app.use("/",express.static("public")); //Static Files start from public
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(fileUpload());
+app.use(express.json()); 
 
 const staticMiddleware = express.static("public");
 
@@ -80,6 +88,7 @@ app.get("/home", (req, res) => {
     });
 });
 
+
 app.get("/accountselection", (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "accountselection.html");
     console.log("File path is", filePath);
@@ -135,6 +144,38 @@ app.get("/profile/:id", async (req,res) => {
     console.log("File path is", filePath);
     res.sendFile(filePath);
 });
+
+
+//Industry Routes
+app.get("/user/industry/:id", industry_info_controller.getIndustryInfo);//Get Industry data
+
+app.get("/admin/industry", industry_info_controller.displayAdminPage); // Dispaly Admin Page
+
+app.get("/admin/api/industry", industry_info_controller.getAllIndustryInfo); // Get All challenges
+
+app.post("/admin/industry", validateIndustryAndQuiz.validateAddChallenge, industry_info_controller.createNewChallenge); // Create new challenge
+
+app.put("/admin/industry/challenge", validateIndustryAndQuiz.validateSaveChallenge, industry_info_controller.updateChallenge); // Update Challenge
+
+app.put("/admin/industry/intro", validateIndustryAndQuiz.validateSaveIntro, industry_info_controller.updateIndustryInfo); // Update Industry Introduction
+
+app.delete("/admin/industry/:id",industry_info_controller.deleteIndustryChallenge); // Delete Challenge
+
+//Quiz Routes
+app.get("/user/quiz/checkAnswers", quiz_controller.checkAnswers); //Check Answers and return result
+
+app.get("/user/quiz/:id", quiz_controller.get15Questions); // Get and show questions
+
+app.get("/admin/quiz", quiz_controller.displayAdminPage); //Dispaly Admin Page
+
+app.get("/admin/api/quiz", quiz_controller.getAllQuestions); //Get all questions
+
+app.put("/admin/quiz/update", validateIndustryAndQuiz.validateUpdateQuestion, quiz_controller.updateQuestion); // Update a question's details
+
+app.post("/admin/quiz/create", validateIndustryAndQuiz.validateCreateQuestion,quiz_controller.createNewQuestion); // Make a new Question
+
+app.delete("/admin/quiz/delete", validateIndustryAndQuiz.validateDeleteQuestion, quiz_controller.deleteQuestion); // Delete Question
+
 
 
 app.get("/", async  (req,res) =>{

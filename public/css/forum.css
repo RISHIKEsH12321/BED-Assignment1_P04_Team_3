@@ -1,0 +1,13 @@
+body{
+    background-image: url(../images/ForumBackground.png);
+    background-size: cover;
+}
+
+#searchbar{
+    border: solid black 0.5px;
+    background-color: white;
+}
+
+#search{
+    width: 500px;
+}

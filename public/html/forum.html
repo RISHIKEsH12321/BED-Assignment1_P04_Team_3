@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/forum.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar"></div>
+    <br>
+    <!-- Searchbar -->
+    <div id="searchbar" class="container">
+        <div class="row navbar">
+            <div class="col-sm-7">
+                <form class="form-inline">
+                    <input id="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+            <div class="col-sm-2">
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Filter</option>
+                    <option value="1">Crop Production</option>
+                    <option value="2">Livestock Farming</option>
+                    <option value="3">Horticulture (Action)</option>
+                    <option value="3">Agrotechnology(Hover)</option>
+                  </select> 
+            </div>
+            <div class="col-sm-2">
+                <img src="../images/AddPost.png" alt="Create new post">
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- Forum -->
+    <div id="post" class="container">
+        <div class="card flex-md-row mb-4 box-shadow h-md-250">
+            <div class="card-body d-flex flex-column align-items-start">
+                <div style="display: flex;">
+                    <div>
+                        <b>Joe mama</b>
+                        <p>5 hours ago</p>
+                    </div>
+                    <img src="../images/EditBtn.png" alt="edit post" style="height: fit-content;">
+                </div>
+                <h2>Industrial Evolution: Navigating the Future of Agriculture.</h2>
+                <p>In augue ligula, feugiat ut nulla consequat. Ut est lacus, molestie in arcu no, iaculis vehicula ipsum. Nunc faucibus, nisl id dapibus finibus, enim diam interdum nulla, sed laoreet risus lectus. </p>
+                <div>
+                    <h5>comments</h5>
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Comment" aria-label="Search">
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Send</button>
+                    </form>
+                    <br>
+                    <div id="comment" style="border: 1;">
+                        <b>Joe mama</b>
+                        <p>5 hours ago</p>
+                        <p>nice idea man.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post Creation -->
+    <div class="container" style="background-color: white;">
+        <br>
+        <div class="row">
+            <div class="col">
+                <b>Joe mama</b>
+            </div>
+            <div class="col text-right" >
+                <img src="../images/addMedia.png" alt="add media">
+            </div>
+        </div>
+        <br>
+        <form>
+            <div class="form-group">
+              <input class="form-control" placeholder="Header">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" placeholder="title"></textarea>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <button type="button" class="btn btn-success">Post</button>
+                </div>
+            </div>
+        </form>
+        <br>
+    </div>
+    <br><br>
+    <!-- Update post -->
+    <div class="container" style="background-color: white;">
+        <br>
+        <div class="row">
+            <div class="col">
+                <b>Joe mama</b>
+            </div>
+            <div class="col text-right" >
+                <img src="../images/addMedia.png" alt="add media">
+            </div>
+        </div>
+        <br>
+        <form>
+            <div class="form-group">
+              <input class="form-control" placeholder="Header">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" placeholder="title"></textarea>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 text-center">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <button type="button" class="btn btn-danger">DELETE</button>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <button type="button" class="btn btn-success">Update</button>
+                </div>
+            </div>
+        </form>
+        <br>
+    </div>
+
+<br>
+    <!-- Footer -->
+    <div class="footer"></div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
