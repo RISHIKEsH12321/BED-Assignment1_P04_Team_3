@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings</title>
+    <link rel="stylesheet" href="../css/account.css">
+</head>
+<body>
+    <div class="editbackground">
+        <div class="header">
+            <h1>Account Settings</h1>
+            <p>Edit your profile according to your preference</p>
+        </div>
+        <div class="editcontainer">
+            <form id="updateForm">
+                <div class="form-group profile-image-container">
+                    <img id="profileImagePreview" class="profile-image-preview" src="">
+                    <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                    <button type="button" id="attachButton">Attach</button>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" value="David Jose">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="David@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="aboutMe">About Me:</label>
+                    <textarea id="about_me" name="aboutMe" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <input type="country" id="country" name="country">
+                </div>
+                <div class="form-group">
+                    <label for="position">Position:</label>
+                    <input type="position" id="position" name="position">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn reset-btn" id="resetButton">Reset</button>
+                    <button type="submit" class="btn save-btn">Save Changes</button>
+                    <button type="button" class="btn delete-btn" id="deleteButton">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="securityCodeModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <form id="securityCodeForm">
+            <label for="security_code">Enter Security Code:</label>
+            <input type="text" id="security_code" name="security_code" required>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+    </div>
+    
+    <script src="../JavaScript/editprofile.js"></script>
+</body>
+</html>

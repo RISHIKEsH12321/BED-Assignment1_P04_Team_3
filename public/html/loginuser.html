@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/user.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-column">
+            <div class="welcome-message">
+                <h1>Welcome To Our Website!</h1>
+            </div>
+        </div>
+        <div class="right-column">
+            <form id="loginForm" action="/users/account/login" method="POST">
+                <h2 style="text-align: center; font-size:40px;">Login</h2>
+                <p style="text-align: center;">Welcome back! Please login to your account</p>
+                <input type="text" id="username" name="username" placeholder="Username" class="userusername"required>
+                <input type="password" id="user_password" name="user_password" placeholder="Password" class="userpassword" required>
+                <div class="remember-me">
+                    <label>
+                        <input type="checkbox" name="remember" id="rememberMe"> Remember Me
+                    </label>
+                    <a href="#" id="forgotPasswordLink" class="button-link">Forgot password?</a>
+                </div>
+                <button class="submitbtn" type="submit">Login</button>
+            </form>
+            <div class="signup-link">
+                <p>Need an account? <a href="/registeruser">Sign Up!</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for forgot password -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="forgotPasswordModalMessage">Enter your email to reset password:</p>
+            <input type="email" id="forgotPasswordEmail" class="inputfield" placeholder="Your Email" required>
+            <button id="forgotPasswordSubmit">Submit</button>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modalMessage"></p>
+            <!--Tick lottie-->
+            <dotlottie-player id="successLottie" src="https://lottie.host/e9f6e220-25b8-4c12-bd54-1ae51caec5ac/9ou0cj49Gm.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+            <!--Fail lottie-->
+            <dotlottie-player id="failLottie" src="https://lottie.host/45f693fc-a607-477e-a633-f1c257b87c46/gEek1r14CH.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+    <script src="../JavaScript/user.js"></script>
+</body>
+</html>

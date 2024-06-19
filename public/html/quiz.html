@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="../../css/index.css">
+    <link rel="stylesheet" href="../../css/quiz.css">
+    <script src="../../JavaScript/quiz.js" defer></script>
+    <link rel="icon" type="image/x-icon" href="../../images/Icon.png">
+
+</head>
+<body>
+  <div class="navbar">
+    <img id="navbar_logo" src="../../images/AgricultureLogo.png" alt="Logo">
+
+    <div class="dropdown">
+      <button class="dropbtn">Agriculture Industries 
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <h1>INDUSTRIES</h1>
+        <a href="/users/industry/1">Agriculture</a>
+        <h1>SUB-INDUSTRIES</h1>
+        <a href="/users/industry/2">Crop Production</a>
+        <a href="/users/industry/3">Livestock Farming</a>
+        <a href="/users/industry/4">Horticulture</a>
+        <a href="/users/industry/5">Agrotechnology</a>
+      </div>
+    </div> 
+
+    <a href="#" class="navbarItem">Forum</a>
+    <a href="#" class="navbarItem">About Us</a>
+    <a href="#" class="navbarItem">Contact us</a>
+    <a href="#" class="navbarItem">Credits</a>
+    <img id="profile_pic_navbar" src="../../images/Navbar Profile Picture.png" alt="Logo">
+</div>
+
+    <h1 id="QuizPageHeading">Quiz</h1>
+    <div id="resultsContainer">
+      <h1>Thank You</h1> 
+      <p>Your answers have been saved</p>
+      <div class="circle-chart" id="circleChart">
+        <div class="circle" id="circle">
+            <span class="percentage" id="percentage">0%</span>
+        </div>
+      </div>
+      <div class="flexBox">
+        <button type="button" id="redo_quiz">Redo Quiz</button>
+        <button type="button" id="exit">Exit</button>
+      </div>
+      
+    </div>
+
+
+    </div>
+    <form id="question_container"></form>
+
+    <button type="button" id="submit_quiz">Submit</button>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+</body>
+</html>
