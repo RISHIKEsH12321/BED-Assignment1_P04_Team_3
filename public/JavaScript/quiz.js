@@ -31,7 +31,7 @@ submitBtn.addEventListener("click", async () => {
     try {
         const formattedData = data.map(({ question_id, option_id }) => `question_id=${question_id}&option_id=${option_id}`).join('&');
         console.log(formattedData)
-        const response = await fetch(`/user/quiz/checkAnswers?${formattedData}`, {
+        const response = await fetch(`/users/quiz/checkAnswers?${formattedData}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

@@ -11,7 +11,7 @@ if (industryIdMatch && industryIdMatch[1]) {
 
     // Set the button's href attribute
     quizBtn.addEventListener("click", function() {
-        window.location.href = `/user/quiz/${industryId}`;
+        window.location.href = `/users/quiz/${industryId}`;
     });
 }
 

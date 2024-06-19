@@ -147,7 +147,7 @@ app.get("/profile/:id", async (req,res) => {
 
 
 //Industry Routes
-app.get("/user/industry/:id", industry_info_controller.getIndustryInfo);//Get Industry data
+app.get("/users/industry/:id", industry_info_controller.getIndustryInfo);//Get Industry data
 
 app.get("/admin/industry", industry_info_controller.displayAdminPage); // Dispaly Admin Page
 
@@ -162,9 +162,9 @@ app.put("/admin/industry/intro", validateIndustryAndQuiz.validateSaveIntro, indu
 app.delete("/admin/industry/:id",industry_info_controller.deleteIndustryChallenge); // Delete Challenge
 
 //Quiz Routes
-app.get("/user/quiz/checkAnswers", quiz_controller.checkAnswers); //Check Answers and return result
+app.get("/users/quiz/checkAnswers", quiz_controller.checkAnswers); //Check Answers and return result
 
-app.get("/user/quiz/:id", quiz_controller.get15Questions); // Get and show questions
+app.get("/users/quiz/:id", quiz_controller.get15Questions); // Get and show questions
 
 app.get("/admin/quiz", quiz_controller.displayAdminPage); //Dispaly Admin Page
 
