@@ -6,10 +6,18 @@ const fs = require("fs");
 const path = require("path");
 const { JSDOM } = require("jsdom"); 
 
+//Controllers
+const industry_info_controller = require("./controller/industry_info_controller");
+const quiz_controller = require("./controller/quiz_controller")
+
+//MiddleWare for each person
+const validateIndustryAndQuiz = require("./middleware/industryAndQuizValidation");
+
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
 
 app.use("/",express.static("public")); //Static Files start from public 
+app.use(express.json()); 
 
 const staticMiddleware = express.static("public");
 
@@ -52,6 +60,38 @@ app.get("/home", (req, res) => {
         res.send(modifiedContent);
     });
 });
+
+
+//Industry Routes
+app.get("/user/industry/:id", industry_info_controller.getIndustryInfo);//Get Industry data
+
+app.get("/admin/industry", industry_info_controller.displayAdminPage); // Dispaly Admin Page
+
+app.get("/admin/api/industry", industry_info_controller.getAllIndustryInfo); // Get All challenges
+
+app.post("/admin/industry", validateIndustryAndQuiz.validateAddChallenge, industry_info_controller.createNewChallenge); // Create new challenge
+
+app.put("/admin/industry/challenge", validateIndustryAndQuiz.validateSaveChallenge, industry_info_controller.updateChallenge); // Update Challenge
+
+app.put("/admin/industry/intro", validateIndustryAndQuiz.validateSaveIntro, industry_info_controller.updateIndustryInfo); // Update Industry Introduction
+
+app.delete("/admin/industry/:id",industry_info_controller.deleteIndustryChallenge); // Delete Challenge
+
+//Quiz Routes
+app.get("/user/quiz/checkAnswers", quiz_controller.checkAnswers); //Check Answers and return result
+
+app.get("/user/quiz/:id", quiz_controller.get15Questions); // Get and show questions
+
+app.get("/admin/quiz", quiz_controller.displayAdminPage); //Dispaly Admin Page
+
+app.get("/admin/api/quiz", quiz_controller.getAllQuestions); //Get all questions
+
+app.put("/admin/quiz/update", validateIndustryAndQuiz.validateUpdateQuestion, quiz_controller.updateQuestion); // Update a question's details
+
+app.post("/admin/quiz/create", validateIndustryAndQuiz.validateCreateQuestion,quiz_controller.createNewQuestion); // Make a new Question
+
+app.delete("/admin/quiz/delete", validateIndustryAndQuiz.validateDeleteQuestion, quiz_controller.deleteQuestion); // Delete Question
+
 
 app.get("/", async  (req,res) =>{
     try {

@@ -1,0 +1,201 @@
+body{
+    margin: 0 !important;
+}
+
+#main_intro {
+    height: 470px;
+    width: 100%; 
+    display: flex;
+    background-size: cover;
+    background-position: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px; /* Adjust this value to control the vertical spacing */
+}
+
+#IndustryName {
+    color: white; 
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+    width: 100%;
+    margin-bottom: 10px; /* Adjust this value to fine-tune the spacing */
+}
+
+#IndustryIntro {
+    color: white; 
+    text-align: center; 
+    font-weight: bold;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    max-width: 50%;
+    margin-top: 10px; /* Adjust this value to fine-tune the spacing */
+}
+
+
+#MainChallangeHeader {
+    margin-left: 5%;
+    margin-top: 50px;
+    color: #BDBDBD;
+    font-size: 45px;
+    font-weight: bold;
+}
+
+#ChallengeIntroContainer {
+    display: grid;
+}
+
+#ChallengeIntro {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Set the grid to have two columns */
+    gap: 10px; 
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#ChallengeIntroContainer {
+    display: flex;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    justify-self: center;
+    align-items: center;
+    justify-self: self-start;
+}
+
+#ChallengeNameDesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: max-content;
+    align-items: flex-start;
+    align-content: flex-start;
+    padding-left: 10px;
+}
+
+#ChallengeIntroNo, #ChallengeIntroTitle, #ChallengeIntroDescription {
+    margin: 5px 0;
+}
+
+#ChallengeIntroNo {
+    font-size: 110px;
+    font-weight: bold;
+    color: #88C431;
+}
+
+#ChallengeIntroTitle {
+    font-size: 18px;
+    color: #BDBDBD;
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+#ChallengeIntroDescription {
+    font-size: 16px;
+    color: #555; 
+
+    text-align: left;
+}
+
+#OvercomingChallenges{
+    margin-top: 50px;
+    color: #BDBDBD;
+    font-size: 45px;
+    font-weight: bold;
+}
+
+#ChallengeContainer{
+    margin-bottom: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#ChallengeContainer div h1{
+    color: #BDBDBD;
+    font-size: 35px;
+}
+
+#QuizContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-bottom: 5%;
+    padding-bottom: 2%;
+    box-shadow: rgba(100, 100, 111, 0.5) 0px 7px 29px 0px;
+    border-radius: 10px;
+}
+
+#QuizContainer h1{
+    margin-bottom:0%;
+}
+
+#QuizButton {
+  background-color: #13aa52;
+  border: 1px solid #13aa52;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  outline: none;
+  outline: 0;
+  padding: 10px 25px;
+  text-align: center;
+  transform: translateY(0);
+  transition: transform 150ms, box-shadow 150ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+#QuizButton:hover {
+  box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+  transform: translateY(-2px);
+}
+
+@media only screen and (max-width: 500px){
+    #main_intro {
+        height: auto; 
+        text-align: center;
+        background-size: cover;
+        background-position: center;
+        overflow-x: hidden; 
+        width: 95%;
+        padding: 2.5%;
+    }
+
+    #IndustryName {
+        font-size: 30px; /* Decrease font size for smaller screens */
+    }
+
+    #IndustryIntro {
+        max-width: 90%; /* Ensure full width on smaller screens */
+        background-color: rgba(0, 0, 0, 0.5);
+
+    }
+
+    #ChallengeIntro {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr); /* Set the grid to have two columns */
+        gap: 10px; 
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    #QuizContainer{
+        margin-left: 18%;
+        margin-right: 18%;
+        margin-bottom: 5%;
+        padding-bottom: 5%;
+    }
+}
