@@ -1,4 +1,5 @@
 const express = require("express");
+const forumController = require("./controllers/forumController");
 const bodyParser = require("body-parser");
 const sql = require("mssql"); // Assuming you've installed mssql
 const dbConfig = require("./dbConfig");
@@ -74,6 +75,10 @@ app.get("/", async  (req,res) =>{
         sql.close();
     }
 });
+
+//Forum api
+// Route to handle creating a new post
+app.post('/forum', forumController.createPost);
 
 
 

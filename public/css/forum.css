@@ -11,3 +11,27 @@ body{
 #search{
     width: 500px;
 }
+
+#postCreation{
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: 25%;
+    left: 7.8%;
+    border-radius: 10px;
+    border: solid black 3px;
+}
+
+#postUpdate{
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: 25%;
+    left: 7.8%;
+    border-radius: 10px;
+    border: solid black 3px;
+}
+
+.blur{
+    filter: blur(8px);
+}
