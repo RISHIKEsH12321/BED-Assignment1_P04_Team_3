@@ -1,5 +1,5 @@
 const express = require("express");
-const forumController = require("./controllers/forumController");
+const forumController = require("./controller/forumController");
 const bodyParser = require("body-parser");
 const sql = require("mssql"); // Assuming you've installed mssql
 const dbConfig = require("./dbConfig");
@@ -203,6 +203,12 @@ app.get("/", async  (req,res) =>{
 
 
 //Forum api
+app.get("/forum", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "forum.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
 // Route to handle creating a new post
 app.post('/forum', forumController.createPost);
 
