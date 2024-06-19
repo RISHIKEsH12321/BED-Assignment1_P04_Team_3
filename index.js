@@ -203,6 +203,7 @@ app.get("/", async  (req,res) =>{
 
 
 //Forum api
+app.get('/posts', forumController.getAllPosts);
 app.get("/forum", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "forum.html");
     console.log("File path is", filePath);
@@ -210,7 +211,8 @@ app.get("/forum", async (req,res) => {
 });
 
 // Route to handle creating a new post
-app.post('/forum', forumController.createPost);
+
+app.post('/forum/post', forumController.createPost);
 
 app.listen(port, async () => {
     try {

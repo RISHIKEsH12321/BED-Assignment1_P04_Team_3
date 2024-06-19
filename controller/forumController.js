@@ -1,5 +1,5 @@
 const Post = require("../models/forum");
-const Comment = require("../models/forum")
+const Comment = require("../models/forum");
 
 const getAllPosts = async (req, res) => {
     try {
@@ -10,16 +10,21 @@ const getAllPosts = async (req, res) => {
       res.status(500).send("Error retrieving posts");
     }
   };
+
 const createPost = async (req, res) => {
-    const newPostData = req.body;
+    const { header, message } = req.body;
+    
     try {
-      const createdPost = await Post.createPost(newPostData);
-      res.status(201).json(createdPost);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Error creating post");
+      const result = await Post.createPost(header, message);
+      console.log('New post inserted successfully:', result);
+      res.redirect('/forum');
+      //res.status(200).send('Post submitted successfully'); 
+    } catch (err) {
+      console.error('Error submitting post:', err);
+      res.status(500).send('Error submitting post');
     }
   };
+
 const updatePost = async (req, res) => {
     const postId = parseInt(req.params.id);
     const newPostData = req.body;
