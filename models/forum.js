@@ -72,30 +72,4 @@ class Post{
     }
 }
 
-// class Comment{
-//     constructor(id, author, date, message){
-//         this.id = id;
-//         this.author = author;
-//         this.date = date;
-//         this.message = message;
-//     }
-
-//     static async getCommentById(id) {
-//         const connection = await sql.connect(dbConfig);
-    
-//         const sqlQuery = `SELECT * FROM Comments WHERE id = @id`; // Parameterized query
-    
-//         const request = connection.request();
-//         request.input("id", id);
-//         const result = await request.query(sqlQuery);
-    
-//         connection.close();
-    
-//         return result.recordset.map(
-//             (row) => new Comment(row.id, row.author, row.date, row.message)
-//           ); // Convert rows to post objects
-//       }
-// }
-
 module.exports = Post;
-//module.exports = Comment;

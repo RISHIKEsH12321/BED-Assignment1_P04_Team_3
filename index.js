@@ -1,5 +1,6 @@
 const express = require("express");
 const forumController = require("./controller/forumController");
+const commentsController = require("./controller/commentsController");
 const bodyParser = require("body-parser");
 const sql = require("mssql"); // Assuming you've installed mssql
 const dbConfig = require("./dbConfig");
@@ -203,16 +204,17 @@ app.get("/", async  (req,res) =>{
 
 
 //Forum api
-app.get('/posts', forumController.getAllPosts);
+app.get('/posts', forumController.getAllPosts); //Getting all post
 app.get("/forum", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "forum.html");
     console.log("File path is", filePath);
     res.sendFile(filePath);
 });
+app.post('/forum/post', forumController.createPost); // Route to handle creating a new post
 
-// Route to handle creating a new post
-
-app.post('/forum/post', forumController.createPost);
+//Comments api
+app.get('/comments/:postId', commentsController.getCommentById); //Route to get comments
+app.post('/comments', commentsController.createComment);// Post comments
 
 app.listen(port, async () => {
     try {
