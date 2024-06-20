@@ -1,5 +1,21 @@
 const Post = require("../models/forum");
 
+const getPostbyHeader = async (req, res) => {
+  const postHeader = req.params.header;
+  console.log("header " +postHeader);
+  try {
+    const post = await Post.getPostbyHeader(postHeader);
+    if (!post) {
+      return res.status(404).send("post not found");
+    }
+    res.json(post);
+    //res.redirect("/forum");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error retrieving post");
+  }
+};
+
 const getAllPosts = async (req, res) => {
     try {
       const posts = await Post.getAllPosts();
@@ -56,6 +72,7 @@ const deletePost = async (req, res) => {
   
 
 module.exports = {
+    getPostbyHeader,
     getAllPosts,
     createPost,
     updatePost,

@@ -9,6 +9,22 @@ class Post{
         this.message = message;
     }
 
+    static async getPostbyHeader(postHeader) {
+      const connection = await sql.connect(dbConfig);
+  
+      const sqlQuery = `SELECT * FROM Posts WHERE header LIKE @header`; // Parameterized query
+  
+      const request = connection.request();
+      request.input("header", `${postHeader}%`);
+      const result = await request.query(sqlQuery);
+  
+      connection.close();
+  
+      return result.recordset.map(
+        (row) => new Post(row.post_id, row.date_column, row.header, row.message)
+      ); // Convert rows to post objects
+  }
+
     static async getAllPosts() {
         const connection = await sql.connect(dbConfig);
     
