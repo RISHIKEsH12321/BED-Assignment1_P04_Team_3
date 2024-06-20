@@ -1,34 +1,34 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const postForm = document.getElementById('postForm');
-    postForm.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Prevent default form submission
+// document.addEventListener('DOMContentLoaded', () => {
+//     const postForm = document.getElementById('postForm');
+//     postForm.addEventListener('submit', async (event) => {
+//         event.preventDefault(); // Prevent default form submission
 
-        const formData = new FormData(postForm);
-        const header = formData.get('header');
-        const message = formData.get('message');
+//         const formData = new FormData(postForm);
+//         const header = formData.get('header');
+//         const message = formData.get('message');
 
-        try {
-            const response = await fetch('/forum', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ header, message })
-            });
+//         try {
+//             const response = await fetch('/forum', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify({ header, message })
+//             });
 
-            if (!response.ok) {
-                throw new Error('Failed to create post');
-            }
+//             if (!response.ok) {
+//                 throw new Error('Failed to create post');
+//             }
 
-            const createdPost = await response.json();
-            console.log('New post created:', createdPost);
-            // Optionally redirect or update UI to show the created post
-        } catch (error) {
-            console.error('Error creating post:', error);
-            // Handle error (e.g., show error message to the user)
-        }
-    });
-});
+//             const createdPost = await response.json();
+//             console.log('New post created:', createdPost);
+//             // Optionally redirect or update UI to show the created post
+//         } catch (error) {
+//             console.error('Error creating post:', error);
+//             // Handle error (e.g., show error message to the user)
+//         }
+//     });
+// });
 
 
 //Creating a new post
@@ -74,12 +74,14 @@ updateCancel.addEventListener("click",function(){
 //Display post
 async function fetchPosts() {
     try{
-        const response = await fetch("/books"); // Replace with your API endpoint
+        const response = await fetch("/posts"); // Replace with your API endpoint
         const data = await response.json();
       
         const forum = document.getElementById("post");
       
-        data.forEach((book) => {
+        data.forEach((post) => {
+            const dateObj = new Date(post.date_column);
+            const formattedDate = dateObj.toISOString().split('T')[0];
             const container = document.createElement("div");
             container.classList.add('card', 'flex-md-row', 'mb-4', 'box-shadow', 'h-md-250');// Add a CSS class for styling
             container.innerHTML = `
@@ -87,12 +89,12 @@ async function fetchPosts() {
                       <div style="display: flex;">
                           <div>
                               <b>Joe mama</b>
-                              <p>5 hours ago</p>
+                              <p>Posted on: ${formattedDate}</p>
                           </div>
                           <img src="../images/EditBtn.png" alt="edit post" id="editPost" style="height: fit-content;">
                       </div>
-                      <h2>Industrial Evolution: Navigating the Future of Agriculture.</h2>
-                      <p>In augue ligula, feugiat ut nulla consequat. Ut est lacus, molestie in arcu no, iaculis vehicula ipsum. Nunc faucibus, nisl id dapibus finibus, enim diam interdum nulla, sed laoreet risus lectus. </p>
+                      <h2>${post.header}</h2>
+                      <p>${post.message}</p>
                       <div>
                           <h5>comments</h5>
                           <form class="form-inline">
@@ -111,21 +113,22 @@ async function fetchPosts() {
             const pElements = container.querySelectorAll("p");
             
             bElements[0].textContent = "Name of user that posted"
-            pElements[0].textContent = "Time posted by user"
+            //pElements[0].textContent = "Time posted by user"
             const titleElement = container.querySelector("h2");
           
-            titleElement.textContent = `Header: ${post.header}`;
-            pElements[1].textContent = `bodymsg: ${post.message}`
+           // titleElement.textContent = `Header: ${post.header}`;
+            //pElements[1].textContent = `bodymsg: ${post.message}`
           
             // Fetch comments for each post
-            fetchComments(post.id);
+            //fetchComments(post.id);
         });
     }catch (error) {
         console.error('Error fetching posts:', error);
     }
   }
 
-fetchPosts(); // Call the function to fetch and display post data
+window.onload = fetchPosts();
+//fetchPosts(); // Call the function to fetch and display post data
 
 async function fetchComments(postId) {
     try {
