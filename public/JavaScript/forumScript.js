@@ -1,36 +1,3 @@
-// document.addEventListener('DOMContentLoaded', () => {
-//     const postForm = document.getElementById('postForm');
-//     postForm.addEventListener('submit', async (event) => {
-//         event.preventDefault(); // Prevent default form submission
-
-//         const formData = new FormData(postForm);
-//         const header = formData.get('header');
-//         const message = formData.get('message');
-
-//         try {
-//             const response = await fetch('/forum', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json'
-//                 },
-//                 body: JSON.stringify({ header, message })
-//             });
-
-//             if (!response.ok) {
-//                 throw new Error('Failed to create post');
-//             }
-
-//             const createdPost = await response.json();
-//             console.log('New post created:', createdPost);
-//             // Optionally redirect or update UI to show the created post
-//         } catch (error) {
-//             console.error('Error creating post:', error);
-//             // Handle error (e.g., show error message to the user)
-//         }
-//     });
-// });
-
-
 //Creating a new post
 const newPost = document.getElementById("newPost");
 const postCreation = document.getElementById("postCreation");
@@ -91,18 +58,19 @@ async function fetchPosts() {
                               <b>Joe mama</b>
                               <p>Posted on: ${formattedDate}</p>
                           </div>
-                          <img src="../images/EditBtn.png" alt="edit post" id="editPost" style="height: fit-content;">
+                          <img src="../images/EditBtn.png" alt="edit post" class="editPost" style="height: fit-content;">
                       </div>
                       <h2>${post.header}</h2>
                       <p>${post.message}</p>
                       <div>
                           <h5>comments</h5>
-                          <form class="form-inline">
-                              <input class="form-control mr-sm-2" type="search" placeholder="Comment" aria-label="Search">
+                          <form class="form-inline" action="/comments" method="POST">
+                              <input class="form-control mr-sm-2" name="comment" placeholder="Comment">
+                              <input type="hidden" name="post_id" value="${post.post_id}">
                               <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Send</button>
                           </form>
                           <br>
-                          <div id="comment" style="border: 1;"></div>
+                          <div id="comment${post.post_id}" style="border: 1;"></div>
                       </div>
                   </div>
             `;
@@ -120,7 +88,8 @@ async function fetchPosts() {
             //pElements[1].textContent = `bodymsg: ${post.message}`
           
             // Fetch comments for each post
-            //fetchComments(post.id);
+            //console.log(post.post_id);
+            fetchComments(post.post_id);
         });
     }catch (error) {
         console.error('Error fetching posts:', error);
@@ -132,17 +101,19 @@ window.onload = fetchPosts();
 
 async function fetchComments(postId) {
     try {
-        const response = await fetch(`/comments?postId=${postId}`); // Replace with your comments API endpoint
+        const response = await fetch(`/comments/${postId}`); // Replace with your comments API endpoint
         const comments = await response.json();
-
-        const commentSection = document.getElementById(`comment`);
+        
+        const commentSection = document.getElementById(`comment${postId}`);
 
         comments.forEach((comment) => {
+            const dateObj = new Date(comment.date_column);
+            const formattedDate = dateObj.toISOString().split('T')[0];
             const commentDiv = document.createElement('div');
             commentDiv.innerHTML = `
-                <b>${comment.commenter_name}</b>
-                <p>${comment.created_at}</p>
-                <p>${comment.comment}</p>
+                <b>${comment.author}</b>
+                <p>Commented on: ${formattedDate}</p>
+                <p>${comment.message}</p>
             `;
             commentSection.appendChild(commentDiv);
         });
@@ -167,8 +138,8 @@ const forum = document.getElementById("post");
             <p>In augue ligula, feugiat ut nulla consequat. Ut est lacus, molestie in arcu no, iaculis vehicula ipsum. Nunc faucibus, nisl id dapibus finibus, enim diam interdum nulla, sed laoreet risus lectus. </p>
             <div>
                 <h5>comments</h5>
-                <form class="form-inline">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Comment" aria-label="Search">
+                <form class="form-inline" action="/comments" method="POST">
+                    <input class="form-control mr-sm-2" name="comment" placeholder="Comment">
                     <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Send</button>
                 </form>
                 <br>
@@ -190,4 +161,4 @@ const forum = document.getElementById("post");
   pElements[1].textContent = `bodymsg: ${post.message}`
 
   // Fetch comments for each post
-  fetchComments(post.id);
+  //fetchComments(post.id);

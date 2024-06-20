@@ -1,5 +1,4 @@
 const Post = require("../models/forum");
-const Comment = require("../models/forum");
 
 const getAllPosts = async (req, res) => {
     try {
@@ -55,24 +54,10 @@ const deletePost = async (req, res) => {
     }
   };
   
-const getCommentById = async (req, res) => {
-    const postId = parseInt(req.params.id);
-    try {
-      const post = await Book.getCommentById(postId);
-      if (!post) {
-        return res.status(404).send("Post not found");
-      }
-      res.json(post);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Error retrieving Post");
-    }
-  };
 
 module.exports = {
     getAllPosts,
     createPost,
     updatePost,
     deletePost,
-    getCommentById,
   };
