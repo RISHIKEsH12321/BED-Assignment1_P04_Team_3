@@ -210,6 +210,7 @@ app.get("/forum", async (req,res) => {
     console.log("File path is", filePath);
     res.sendFile(filePath);
 });
+app.get('/posts/:header',forumController.getPostbyHeader); //Getting post by searching the header
 app.post('/forum/post', forumController.createPost); // Route to handle creating a new post
 
 //Comments api
