@@ -72,48 +72,6 @@ class Admin_Account {
     }
 
 
-    // static async AdmincreateAccount(newUserData) {
-    //     const connection = await sql.connect(dbConfig);
-    
-    //     const sqlQuery = `INSERT INTO User_Account (username, user_email, user_phonenumber, user_password, user_role) 
-    //                         VALUES (@username, @user_email, @user_phonenumber, @user_password, @user_role); 
-    //                         SELECT SCOPE_IDENTITY() AS user_id;`;
-    
-    //     const request = connection.request();
-    //     request.input("username",newUserData.username);
-    //     request.input("user_email",newUserData.user_email);
-    //     request.input("user_phonenumber",newUserData.user_phonenumber);
-    //     request.input("user_password",newUserData.user_password);
-    //     request.input("user_role",newUserData.user_role || 'admin'); // Default 'admin'
-    
-    //     const result = await request.query(sqlQuery);
-
-    //     const userId = result.recordset[0].user_id;
-
-    //     const adminInsertQuery = `INSERT INTO Admin_Account (user_id, username, user_email, user_phonenumber, user_password, user_role) 
-    //                                 VALUES (@user_id, @username, @user_email, @user_phonenumber, @user_password, @user_role);
-    //                                 SELECT SCOPE_IDENTITY() AS admin_id`;
-
-    //     const adminRequest = connection.request();
-    //     adminRequest.input("user_id", userId);
-    //     adminRequest.input("username", newUserData.username);
-    //     adminRequest.input("user_email", newUserData.user_email);
-    //     adminRequest.input("user_phonenumber", newUserData.user_phonenumber);
-    //     adminRequest.input("user_password", newUserData.user_password);
-    //     adminRequest.input("user_role", newUserData.user_role || 'admin');
-    //     const admin_result = await adminRequest.query(adminInsertQuery);
-
-    //     const profileQuery = `INSERT INTO Profile (user_id) VALUES (@user_id); SELECT SCOPE_IDENTITY() AS profile_id`;
-
-    //     const profilerequest = connection.request();
-    //     profilerequest.input("user_id", userId);
-    //     await profilerequest.query(profileQuery)
-
-    //     connection.close();
-    
-    //     return this.getUserById(admin_result.recordset[0].admin_id);
-    // }
-
     static async AdmincreateAccount(newUserData, securityCode) {
         const connection = await sql.connect(dbConfig);
     
