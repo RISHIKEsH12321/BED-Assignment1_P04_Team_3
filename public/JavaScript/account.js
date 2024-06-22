@@ -3,7 +3,7 @@ document.getElementById("profile_pic_navbar").addEventListener("click", function
     let adminId = sessionStorage.getItem("admin_id")
 
     if (userId && adminId) {
-        window.location.href = "/viewUser";
+        window.location.href = "/admin/viewUser";
     } else if (userId) {
         window.location.href = `/profile/${userId}`; //simulating
     } else {

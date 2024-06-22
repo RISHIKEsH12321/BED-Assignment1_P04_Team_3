@@ -120,7 +120,7 @@ app.get("/loginadmin", (req,res) => {
 })
 
 
-app.get("/viewUser", (req,res) => {
+app.get("/admin/viewUser", (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "allUsers.html");
     console.log("File path is", filePath);
     res.sendFile(filePath);
