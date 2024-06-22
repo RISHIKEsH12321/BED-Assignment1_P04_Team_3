@@ -9,11 +9,11 @@ const path = require("path");
 const { JSDOM } = require("jsdom");
 const fileUpload = require('express-fileupload');
 const multer = require('multer');
+
+//Controllers
 const User_Account_Controller = require("./controller/User_Account_Controller")
 const Admin_Account_Controller = require("./controller/Admin_Account_Controller")
 const Profile_Controller = require("./controller/Profile_controller")
-
-//Controllers
 const industry_info_controller = require("./controller/industry_info_controller");
 const quiz_controller = require("./controller/quiz_controller")
 
