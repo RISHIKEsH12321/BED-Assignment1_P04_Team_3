@@ -13,7 +13,6 @@ async function registerUser(req, res) {
     // }
 
     // Check for existing username
-    console.log(req.body);
     const existingUser = await User.getUserByUsername(username);
     if (existingUser) {
       return res.status(400).json({ message: "Username already exists" });
@@ -23,7 +22,12 @@ async function registerUser(req, res) {
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(passwordHash, salt);
 
-    await User.createUser(username, hashedPassword, role)
+    data = {
+      username:username,
+      passwordHash: hashedPassword,
+      role: role
+    }
+    await User.createUser(data)
 
     return res.status(201).json({ message: "User created successfully" });
   } catch (err) {

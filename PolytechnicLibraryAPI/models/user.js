@@ -12,7 +12,7 @@ class User{
 
     static async createUser(newUserData) {
         const connection = await sql.connect(dbConfig);
-    
+        // console.log(newUserData)
         const sqlQuery = `INSERT INTO Users (username, passwordHash, role) VALUES (@username, @passwordHash, @role); SELECT SCOPE_IDENTITY() AS user_id;`; // Retrieve ID of inserted record
     
         const request = connection.request();
@@ -25,7 +25,9 @@ class User{
         connection.close();
     
         // Retrieve the newly created user using its ID
-        return this.getUserByUsername(result.recordset[0].user_id);
+        console.log(result.recordset[0].user_id)
+        return this.getUserByUserID(result.recordset[0].user_id);
+        // return true;
     }
 
     static async getUserByUsername(username) {
@@ -43,6 +45,28 @@ class User{
           ? new User(
               result.recordset[0].user_id,
               result.recordset[0].username,
+              result.recordset[0].passwordHash,
+              result.recordset[0].role
+            )
+          : null; // Handle user not found
+    }
+    
+    static async getUserByUserID(user_id) {
+        const connection = await sql.connect(dbConfig);
+    
+        const sqlQuery = `SELECT * FROM Users WHERE user_id = @user_id`; // Parameterized query
+    
+        const request = connection.request();
+        request.input("user_id", user_id);
+        const result = await request.query(sqlQuery);
+    
+        connection.close();
+    
+        return result.recordset[0]
+          ? new User(
+              result.recordset[0].user_id,
+              result.recordset[0].username,
+              result.recordset[0].passwordHash,
               result.recordset[0].role
             )
           : null; // Handle user not found
