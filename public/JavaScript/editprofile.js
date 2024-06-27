@@ -243,10 +243,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // Delete button functionality
             document.getElementById('deleteButton').addEventListener('click', async () => {
-                if (userRole !== 'admin'){
+                const sessionid = sessionStorage.getItem("admin_id")
+                if (!sessionid){
                     alert('Only admins can delete accounts');
                     return
                 }
+                // if (userRole !== 'admin'){
+                //     alert('Only admins can delete accounts');
+                //     return
+                // }
                 if (confirm('Are you sure you want to delete this account?')) {
                     try {
                         const response = await fetch(`/admin/account/${id}`, {

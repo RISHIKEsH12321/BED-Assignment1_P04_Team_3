@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/forum.css">
 </head>
 <body>
+<div id="wholePage">
     <!-- Navbar -->
     <div class="navbar"></div>
     <br>
@@ -15,9 +16,9 @@
     <div id="searchbar" class="container">
         <div class="row navbar">
             <div class="col-sm-7">
-                <form class="form-inline">
-                    <input id="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <form id="searchForm" class="form-inline" action="/posts/header" method="get">
+                    <input id="search" class="form-control mr-sm-2" type="search" name="header" placeholder="Search">
+                    <button id="searchSubmitBtn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
             <div class="col-sm-2">
@@ -30,7 +31,7 @@
                   </select> 
             </div>
             <div class="col-sm-2">
-                <img src="../images/AddPost.png" alt="Create new post">
+                <img src="../images/AddPost.png" alt="Create new post" id="newPost">
             </div>
         </div>
     </div>
@@ -44,14 +45,14 @@
                         <b>Joe mama</b>
                         <p>5 hours ago</p>
                     </div>
-                    <img src="../images/EditBtn.png" alt="edit post" style="height: fit-content;">
+                    <img src="../images/EditBtn.png" alt="edit post" id="editPost" style="height: fit-content;">
                 </div>
                 <h2>Industrial Evolution: Navigating the Future of Agriculture.</h2>
                 <p>In augue ligula, feugiat ut nulla consequat. Ut est lacus, molestie in arcu no, iaculis vehicula ipsum. Nunc faucibus, nisl id dapibus finibus, enim diam interdum nulla, sed laoreet risus lectus. </p>
                 <div>
                     <h5>comments</h5>
-                    <form class="form-inline">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Comment" aria-label="Search">
+                    <form class="form-inline" action="/comments" method="POST">
+                        <input class="form-control mr-sm-2" name="comment" placeholder="Comment">
                         <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Send</button>
                     </form>
                     <br>
@@ -66,7 +67,7 @@
     </div>
 
     <!-- Post Creation -->
-    <div class="container" style="background-color: white;">
+    <div id="postCreation" class="container">
         <br>
         <div class="row">
             <div class="col">
@@ -77,19 +78,19 @@
             </div>
         </div>
         <br>
-        <form>
+        <form id="postForm" action="/forum/post" method="POST">
             <div class="form-group">
-              <input class="form-control" placeholder="Header">
+              <input class="form-control" name="header" placeholder="Header">
             </div>
             <div class="form-group">
-                <textarea class="form-control" placeholder="title"></textarea>
+                <textarea class="form-control" name="message" placeholder="message"></textarea>
             </div>
             <div class="row">
                 <div class="col-sm-6">
-                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="button" id="cancel" class="btn btn-primary">Cancel</button>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <button type="button" class="btn btn-success">Post</button>
+                    <button type="submit" class="btn btn-success">Post</button>
                 </div>
             </div>
         </form>
@@ -97,7 +98,7 @@
     </div>
     <br><br>
     <!-- Update post -->
-    <div class="container" style="background-color: white;">
+    <div id="postUpdate" class="container" style="background-color: white;">
         <br>
         <div class="row">
             <div class="col">
@@ -117,7 +118,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-4 text-center">
-                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="button" id="updateCancel" class="btn btn-primary">Cancel</button>
                 </div>
                 <div class="col-sm-4 text-center">
                     <button type="button" class="btn btn-danger">DELETE</button>
@@ -133,8 +134,11 @@
 <br>
     <!-- Footer -->
     <div class="footer"></div>
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="../JavaScript/forumScript.js"></script>
+</div>
 </body>
 </html>

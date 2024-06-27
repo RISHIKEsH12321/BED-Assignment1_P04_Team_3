@@ -1,4 +1,6 @@
 const express = require("express");
+const forumController = require("./controller/forumController");
+const commentsController = require("./controller/commentsController");
 const bodyParser = require("body-parser");
 const sql = require("mssql"); // Assuming you've installed mssql
 const dbConfig = require("./dbConfig");
@@ -7,11 +9,11 @@ const path = require("path");
 const { JSDOM } = require("jsdom");
 const fileUpload = require('express-fileupload');
 const multer = require('multer');
+
+//Controllers
 const User_Account_Controller = require("./controller/User_Account_Controller")
 const Admin_Account_Controller = require("./controller/Admin_Account_Controller")
 const Profile_Controller = require("./controller/Profile_controller")
-
-//Controllers
 const industry_info_controller = require("./controller/industry_info_controller");
 const quiz_controller = require("./controller/quiz_controller")
 
@@ -22,8 +24,6 @@ const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
 
 app.use("/",express.static("public")); //Static Files start from public 
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(fileUpload());
@@ -121,6 +121,13 @@ app.get("/loginadmin", (req,res) => {
     res.sendFile(filePath);
 })
 
+
+app.get("/admin/viewUser", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "allUsers.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+})
+
 app.get("/account-profile/:id", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "editprofile.html");
     console.log("File path is", filePath);
@@ -200,6 +207,21 @@ app.get("/", async  (req,res) =>{
         sql.close();
     }
 });
+
+
+//Forum api
+app.get('/posts', forumController.getAllPosts); //Getting all post
+app.get("/forum", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "forum.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+app.get('/posts/:header',forumController.getPostbyHeader); //Getting post by searching the header
+app.post('/forum/post', forumController.createPost); // Route to handle creating a new post
+
+//Comments api
+app.get('/comments/:postId', commentsController.getCommentById); //Route to get comments
+app.post('/comments', commentsController.createComment);// Post comments
 
 app.listen(port, async () => {
     try {
