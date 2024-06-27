@@ -1,6 +1,4 @@
 const express = require("express");
-const forumController = require("./controller/forumController");
-const commentsController = require("./controller/commentsController");
 const bodyParser = require("body-parser");
 const sql = require("mssql"); // Assuming you've installed mssql
 const dbConfig = require("./dbConfig");
@@ -8,7 +6,6 @@ const fs = require("fs");
 const path = require("path");
 const { JSDOM } = require("jsdom");
 const fileUpload = require('express-fileupload');
-const multer = require('multer');
 
 //Controllers
 const User_Account_Controller = require("./controller/User_Account_Controller")
@@ -16,6 +13,8 @@ const Admin_Account_Controller = require("./controller/Admin_Account_Controller"
 const Profile_Controller = require("./controller/Profile_controller")
 const industry_info_controller = require("./controller/industry_info_controller");
 const quiz_controller = require("./controller/quiz_controller")
+const forumController = require("./controller/forumController");
+const commentsController = require("./controller/commentsController");
 
 //MiddleWare for each person
 const validateIndustryAndQuiz = require("./middleware/industryAndQuizValidation");
