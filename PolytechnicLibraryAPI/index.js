@@ -3,11 +3,19 @@ const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
+const bodyParser = require("body-parser");
+
+
+//Controleller
+const booksController = require("./controllers/booksControlelr");
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
+app.use(bodyParser.json());
 
-
+app.get("/books", booksController.getAllBooks);
+app.put("/books/:bookId/availability", booksController.updateBookAvalibility);
+app.get("/books/:id", booksController.getBookById)
 
 
 
