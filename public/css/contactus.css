@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5fbe9;
+    color: #333;
+    text-align: center;
+    padding: 50px;
+}
+.contact-section {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.contact-section h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+.contact-method {
+    margin: 30px 0;
+}
+.contact-method span, .contact-method a {
+    display: block;
+    font-size: 20px;
+    color: #333;
+    text-decoration: none;
+    margin-top: 10px;
+}
+.contact-method a:hover {
+    text-decoration: underline;
+}
+.feedback-section {
+    margin-top: 30px;
+}
+.feedback-section span{
+    font-size: 20px;
+    color: #333;
+    text-decoration: none;
+    margin-top: 10px;
+}
+.feedback-button {
+    background-color: #17a2b8;
+    color: #ffffff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+}
+.feedback-button:hover {
+    background-color: #138496;
+}
