@@ -3,12 +3,15 @@ const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
+const bodyparser=require("body-parser")
+
+const usercontroller = require("./controllers/usercontroller")
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
+app.use(bodyparser.json())
 
-
-
+app.post('/register', usercontroller.registerUser)
 
 
 app.listen(port, async () => {
