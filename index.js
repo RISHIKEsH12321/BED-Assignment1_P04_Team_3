@@ -15,6 +15,7 @@ const industry_info_controller = require("./controller/industry_info_controller"
 const quiz_controller = require("./controller/quiz_controller")
 const forumController = require("./controller/forumController");
 const commentsController = require("./controller/commentsController");
+const feedbackController = require("./controller/feedbackController");
 
 //MiddleWare for each person
 const validateIndustryAndQuiz = require("./middleware/industryAndQuizValidation");
@@ -221,6 +222,11 @@ app.post('/forum/post', forumController.createPost); // Route to handle creating
 //Comments api
 app.get('/comments/:postId', commentsController.getCommentById); //Route to get comments
 app.post('/comments', commentsController.createComment);// Post comments
+
+
+//Feedback Routes
+app.get("/admin/allfeedback", feedbackController.getAllFeedback); // admin getting every feedback
+app.post("/users/feedback", feedbackController.createFeedback); // users post feedbacks
 
 app.listen(port, async () => {
     try {
