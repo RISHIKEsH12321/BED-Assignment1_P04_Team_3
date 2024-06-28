@@ -1,3 +1,7 @@
+//Getting id and username of user that logged in
+const user_id = sessionStorage.getItem("user_id");
+const username = sessionStorage.getItem("username");
+
 //Creating a new post
 const newPost = document.getElementById("newPost");
 const postCreation = document.getElementById("postCreation");
@@ -20,16 +24,16 @@ cancel.addEventListener("click",function(){
 });
 
 //Edit own post
-const editPost = document.getElementById("editPost");
+const editPost = document.getElementsByClassName("editPost");
 const postUpdate = document.getElementById("postUpdate")
 const updateCancel =  document.getElementById("updateCancel");
 
-editPost.addEventListener("click",function(){
-    postUpdate.style.display = "block";
-    body.style.backgroundColor = "rgba(0, 0, 0,0.5)";
-    post.classList.add("blur");
-    searchBar.classList.add("blur");
-});
+// editPost.addEventListener("click",function(){
+//     postUpdate.style.display = "block";
+//     body.style.backgroundColor = "rgba(0, 0, 0,0.5)";
+//     post.classList.add("blur");
+//     searchBar.classList.add("blur");
+// });
 
 updateCancel.addEventListener("click",function(){
     postUpdate.style.display = "none";
@@ -55,10 +59,10 @@ async function fetchPosts() {
             <div class="card-body d-flex flex-column align-items-start">
                       <div style="display: flex;">
                           <div>
-                              <b>Joe mama</b>
+                              <b>Name of user that posted</b>
                               <p>Posted on: ${formattedDate}</p>
                           </div>
-                          <img src="../images/EditBtn.png" alt="edit post" class="editPost" style="height: fit-content;">
+                          <img src="../images/EditBtn.png" alt="edit post" id="editPost${post.post_id}" style="height: fit-content;" type="button">
                       </div>
                       <h2>${post.header}</h2>
                       <p>${post.message}</p>
@@ -74,20 +78,11 @@ async function fetchPosts() {
                       </div>
                   </div>
             `;
-          
+
+            
           
             forum.appendChild(container);
-            const bElements = container.querySelectorAll("b");
-            const pElements = container.querySelectorAll("p");
-            
-            bElements[0].textContent = "Name of user that posted"
-            //pElements[0].textContent = "Time posted by user"
-            const titleElement = container.querySelector("h2");
-          
-           // titleElement.textContent = `Header: ${post.header}`;
-            //pElements[1].textContent = `bodymsg: ${post.message}`
-          
-            // Fetch comments for each post
+
             //console.log(post.post_id);
             fetchComments(post.post_id);
         });
@@ -141,10 +136,10 @@ async function fetchSearchedPosts(searchTerm) {
             <div class="card-body d-flex flex-column align-items-start">
                       <div style="display: flex;">
                           <div>
-                              <b>Joe mama</b>
+                              <b>Name of user that posted</b>
                               <p>Posted on: ${formattedDate}</p>
                           </div>
-                          <img src="../images/EditBtn.png" alt="edit post" class="editPost" style="height: fit-content;">
+                          <img src="../images/EditBtn.png" alt="edit post" id="editPost${post.post_id}" style="height: fit-content;" type="button">
                       </div>
                       <h2>${post.header}</h2>
                       <p>${post.message}</p>
@@ -163,15 +158,7 @@ async function fetchSearchedPosts(searchTerm) {
           
           
             forum.appendChild(container);
-            const bElements = container.querySelectorAll("b");
-            const pElements = container.querySelectorAll("p");
-            
-            bElements[0].textContent = "Name of user that posted"
-            //pElements[0].textContent = "Time posted by user"
-            const titleElement = container.querySelector("h2");
-          
-           // titleElement.textContent = `Header: ${post.header}`;
-            //pElements[1].textContent = `bodymsg: ${post.message}`
+
           
             // Fetch comments for each post
             //console.log(post.post_id);
@@ -189,5 +176,6 @@ searchForm.addEventListener("submit", function(event){
     const value = document.getElementById("search").value;
     fetchSearchedPosts(value)
 });
+
 
 

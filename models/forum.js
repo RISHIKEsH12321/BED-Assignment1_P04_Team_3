@@ -56,36 +56,36 @@ class Post{
         }
     }
      
-    static async updatePost(id, newPostData) {
-        const connection = await sql.connect(dbConfig);
+    // static async updatePost(id, newPostData) {
+    //     const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `UPDATE Posts SET header = @header, message = @message WHERE post_id = @post_id`; // Parameterized query
+    //     const sqlQuery = `UPDATE Posts SET header = @header, message = @message WHERE post_id = @post_id`; // Parameterized query
     
-        const request = connection.request();
-        request.input("post_id", post_id);
-        request.input("header", newPostData.header || null); // Handle optional fields
-        request.input("message", newPostData.message || null);
+    //     const request = connection.request();
+    //     request.input("post_id", post_id);
+    //     request.input("header", newPostData.header || null); // Handle optional fields
+    //     request.input("message", newPostData.message || null);
     
-        await request.query(sqlQuery);
+    //     await request.query(sqlQuery);
     
-        connection.close();
+    //     connection.close();
     
-        return this.getPostById(id); // returning the updated post data
-    }
+    //     return this.getPostById(id); // returning the updated post data
+    // }
 
-    static async deletePost(id) {
-        const connection = await sql.connect(dbConfig);
+    // static async deletePost(id) {
+    //     const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `DELETE FROM Posts WHERE id = @id`; // Parameterized query
+    //     const sqlQuery = `DELETE FROM Posts WHERE id = @id`; // Parameterized query
     
-        const request = connection.request();
-        request.input("id", id);
-        const result = await request.query(sqlQuery);
+    //     const request = connection.request();
+    //     request.input("id", id);
+    //     const result = await request.query(sqlQuery);
     
-        connection.close();
+    //     connection.close();
     
-        return result.rowsAffected > 0; // Indicate success based on affected rows
-    }
+    //     return result.rowsAffected > 0; // Indicate success based on affected rows
+    // }
 }
 
 module.exports = Post;

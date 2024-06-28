@@ -10,7 +10,30 @@
 <body>
 <div id="wholePage">
     <!-- Navbar -->
-    <div class="navbar"></div>
+    <div class="navbar" style="background-color: #F7FFEC; margin-top: 0;">
+        <img id="navbar_logo" src="../../images/AgricultureLogo.png" alt="Logo">
+    
+        <div class="dropdown">
+          <button class="dropbtn">Agriculture Industries 
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <h1>INDUSTRIES</h1>
+            <a href="/users/industry/1">Agriculture</a>
+            <h1>SUB-INDUSTRIES</h1>
+            <a href="/users/industry/2">Crop Production</a>
+            <a href="/users/industry/3">Livestock Farming</a>
+            <a href="/users/industry/4">Horticulture</a>
+            <a href="/users/industry/5">Agrotechnology</a>
+          </div>
+        </div> 
+    
+        <a href="/forum" class="navbarItem">Forum</a>
+        <a href="#" class="navbarItem">About Us</a>
+        <a href="#" class="navbarItem">Contact us</a>
+        <a href="#" class="navbarItem">Credits</a>
+        <img id="profile_pic_navbar" src="../../images/Navbar Profile Picture.png" alt="Logo">
+    </div>
     <br>
     <!-- Searchbar -->
     <div id="searchbar" class="container">
@@ -31,7 +54,7 @@
                   </select> 
             </div>
             <div class="col-sm-2">
-                <img src="../images/AddPost.png" alt="Create new post" id="newPost">
+                <img src="../images/AddPost.png" alt="Create new post" id="newPost" type="button">
             </div>
         </div>
     </div>
@@ -42,10 +65,10 @@
             <div class="card-body d-flex flex-column align-items-start">
                 <div style="display: flex;">
                     <div>
-                        <b>Joe mama</b>
-                        <p>5 hours ago</p>
+                        <b>Jonas</b>
+                        <p>Posted on: 2010-05-17</p>
                     </div>
-                    <img src="../images/EditBtn.png" alt="edit post" id="editPost" style="height: fit-content;">
+                    <img src="../images/EditBtn.png" alt="edit post" id="editPost" style="height: fit-content;"  type="button">
                 </div>
                 <h2>Industrial Evolution: Navigating the Future of Agriculture.</h2>
                 <p>In augue ligula, feugiat ut nulla consequat. Ut est lacus, molestie in arcu no, iaculis vehicula ipsum. Nunc faucibus, nisl id dapibus finibus, enim diam interdum nulla, sed laoreet risus lectus. </p>
@@ -57,8 +80,8 @@
                     </form>
                     <br>
                     <div id="comment" style="border: 1;">
-                        <b>Joe mama</b>
-                        <p>5 hours ago</p>
+                        <b>Jonas</b>
+                        <p>Commented on: 2010-05-18</p>
                         <p>nice idea man.</p>
                     </div>
                 </div>
@@ -71,7 +94,7 @@
         <br>
         <div class="row">
             <div class="col">
-                <b>Joe mama</b>
+                <b>Jonas</b>
             </div>
             <div class="col text-right" >
                 <img src="../images/addMedia.png" alt="add media">
@@ -102,7 +125,7 @@
         <br>
         <div class="row">
             <div class="col">
-                <b>Joe mama</b>
+                <b>Jonas</b>
             </div>
             <div class="col text-right" >
                 <img src="../images/addMedia.png" alt="add media">

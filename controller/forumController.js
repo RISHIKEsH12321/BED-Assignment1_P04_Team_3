@@ -40,41 +40,41 @@ const createPost = async (req, res) => {
     }
   };
 
-const updatePost = async (req, res) => {
-    const postId = parseInt(req.params.id);
-    const newPostData = req.body;
+// const updatePost = async (req, res) => {
+//     const postId = parseInt(req.params.id);
+//     const newPostData = req.body;
   
-    try {
-      const updatedPost = await Post.updatePost(postId, newPostData);
-      if (!updatedPost) {
-        return res.status(404).send("Post not found");
-      }
-      res.json(updatedPost);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Error updating post");
-    }
-  };
-const deletePost = async (req, res) => {
-    const postId = parseInt(req.params.id);
+//     try {
+//       const updatedPost = await Post.updatePost(postId, newPostData);
+//       if (!updatedPost) {
+//         return res.status(404).send("Post not found");
+//       }
+//       res.json(updatedPost);
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).send("Error updating post");
+//     }
+//   };
+// const deletePost = async (req, res) => {
+//     const postId = parseInt(req.params.id);
   
-    try {
-      const success = await Book.deletePost(postId);
-      if (!success) {
-        return res.status(404).send("Post not found");
-      }
-      res.status(204).send();
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Error deleting post");
-    }
-  };
+//     try {
+//       const success = await Book.deletePost(postId);
+//       if (!success) {
+//         return res.status(404).send("Post not found");
+//       }
+//       res.status(204).send();
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).send("Error deleting post");
+//     }
+//   };
   
 
 module.exports = {
     getPostbyHeader,
     getAllPosts,
     createPost,
-    updatePost,
-    deletePost,
+    // updatePost,
+    // deletePost,
   };
