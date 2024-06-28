@@ -9,11 +9,13 @@ const searchBar = document.getElementById("searchbar");
 const post = document.getElementById("post");
 const body = document.getElementById("wholePage");
 const cancel = document.getElementById("cancel");
+const navbar = document.getElementById("parentNav");
 newPost.addEventListener("click",function(){
     postCreation.style.display = "block";
     body.style.backgroundColor = "rgba(0, 0, 0,0.5)";
     post.classList.add("blur");
     searchBar.classList.add("blur");
+    navbar.classList.add("blur");
 });
 
 cancel.addEventListener("click",function(){
@@ -21,6 +23,7 @@ cancel.addEventListener("click",function(){
     body.style.backgroundColor = "rgba(0, 0, 0,0)";
     post.classList.remove("blur");
     searchBar.classList.remove("blur");
+    navbar.classList.remove("blur");
 });
 
 //Edit own post
@@ -62,7 +65,7 @@ async function fetchPosts() {
                               <b>Name of user that posted</b>
                               <p>Posted on: ${formattedDate}</p>
                           </div>
-                          <img src="../images/EditBtn.png" alt="edit post" id="editPost${post.post_id}" style="height: fit-content;" type="button">
+                          <img src="../images/EditBtn.png" alt="edit post" id="editPost${post.post_id}" style="height: fit-content;" type="button" onclick="fetchIdPost(${post.post_id})">
                       </div>
                       <h2>${post.header}</h2>
                       <p>${post.message}</p>
@@ -139,7 +142,7 @@ async function fetchSearchedPosts(searchTerm) {
                               <b>Name of user that posted</b>
                               <p>Posted on: ${formattedDate}</p>
                           </div>
-                          <img src="../images/EditBtn.png" alt="edit post" id="editPost${post.post_id}" style="height: fit-content;" type="button">
+                          <img src="../images/EditBtn.png" alt="edit post" id="editPost${post.post_id}" style="height: fit-content;" type="button" onclick="fetchIdPost(${post.post_id})">
                       </div>
                       <h2>${post.header}</h2>
                       <p>${post.message}</p>
@@ -177,5 +180,58 @@ searchForm.addEventListener("submit", function(event){
     fetchSearchedPosts(value)
 });
 
+
+async function fetchIdPost(searchTerm) {
+    try{
+        const response = await fetch(`/post/id/${searchTerm}`); // Replace with your API endpoint
+        const data = await response.json();
+
+        const postUpdate = document.getElementById("postUpdate");
+      
+        const dateObj = new Date(data.date_column);
+        const formattedDate = dateObj.toISOString().split('T')[0];
+        postUpdate.innerHTML = `
+        <br>
+        <div class="row">
+            <div class="col">
+                <b>Jonas</b>
+            </div>
+            <div class="col text-right" >
+                <img src="../images/addMedia.png" alt="add media">
+            </div>
+        </div>
+        <br>
+        <form>
+            <div class="form-group">
+              <input class="form-control" value="${data.header}">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control">${data.message}</textarea>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 text-center">
+                    <button type="button" id="updateCancel" class="btn btn-primary">Cancel</button>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <button type="button" class="btn btn-danger">DELETE</button>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <button type="button" class="btn btn-success">Update</button>
+                </div>
+            </div>
+        </form>
+        <br>
+        `;
+
+        postUpdate.style.display = "block";
+
+        const cancel = document.getElementById("updateCancel");
+        cancel.addEventListener("click",function(){
+            postUpdate.style.display = "none";
+        });
+    }catch (error) {
+        console.error('Error fetching posts:', error);
+    }
+}
 
 
