@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum</title>
+    <link rel="icon" type="image/x-icon" href="../images/Icon.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/forum.css">
 </head>
 <body>
 <div id="wholePage">
     <!-- Navbar -->
-    <div class="navbar" style="background-color: #F7FFEC; margin-top: 0;">
-        <img id="navbar_logo" src="../../images/AgricultureLogo.png" alt="Logo">
+    <div id="parentNav" class="navbar" style="background-color: #F7FFEC; margin-top: 0;">
+        <img id="navbar_logo" src="../images/AgricultureLogo.png" alt="Logo">
     
         <div class="dropdown">
           <button class="dropbtn">Agriculture Industries 
@@ -32,14 +33,14 @@
         <a href="#" class="navbarItem">About Us</a>
         <a href="#" class="navbarItem">Contact us</a>
         <a href="#" class="navbarItem">Credits</a>
-        <img id="profile_pic_navbar" src="../../images/Navbar Profile Picture.png" alt="Logo">
+        <img id="profile_pic_navbar" src="../images/Navbar Profile Picture.png" alt="Logo">
     </div>
     <br>
     <!-- Searchbar -->
     <div id="searchbar" class="container">
         <div class="row navbar">
             <div class="col-sm-7">
-                <form id="searchForm" class="form-inline" action="/posts/header" method="get">
+                <form id="searchForm" class="form-inline">
                     <input id="search" class="form-control mr-sm-2" type="search" name="header" placeholder="Search">
                     <button id="searchSubmitBtn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
