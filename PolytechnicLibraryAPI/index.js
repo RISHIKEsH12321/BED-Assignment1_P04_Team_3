@@ -7,14 +7,13 @@ const bodyparser=require("body-parser")
 
 const usercontroller = require("./controllers/usercontroller")
 const booksController = require("./controllers/booksControlelr")
-const Users = require("./models//user");
-const User = require("./models//user");
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
 app.use(bodyparser.json())
 
 app.post('/register', usercontroller.registerUser)
+app.get("/login", usercontroller.login);
 
 app.get("/books", booksController.getAllBooks);
 app.put("/books/:bookId/availability", booksController.updateBookAvalibility);

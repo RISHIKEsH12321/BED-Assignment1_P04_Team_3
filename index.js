@@ -16,6 +16,7 @@ const quiz_controller = require("./controller/quiz_controller")
 const forumController = require("./controller/forumController");
 const admin_forumController = require("./controller/admin_Forum_Controller");
 const commentsController = require("./controller/commentsController");
+const feedbackController = require("./controller/feedbackController");
 
 //MiddleWare for each person
 const validateIndustryAndQuiz = require("./middleware/industryAndQuizValidation");
@@ -232,6 +233,12 @@ app.get("/admin/forum", async (req,res) => {
     res.sendFile(filePath);
 });
 app.get('/admin/posts/:post_id',admin_forumController.getPostById);
+
+
+//Feedback Routes
+app.get("/admin/allfeedback", feedbackController.getAllFeedback); // admin getting every feedback
+app.post("/users/feedback", feedbackController.createFeedback); // users post feedbacks
+
 
 app.listen(port, async () => {
     try {
