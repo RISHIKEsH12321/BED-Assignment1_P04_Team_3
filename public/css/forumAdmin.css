@@ -1,0 +1,17 @@
+#post{
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: 25%;
+    left: 13%;
+    border-radius: 10px;
+    border: solid black 3px;
+}
+
+#post .card{
+    border: 0px;
+}
+
+/* .blur{
+    filter: blur(8px);
+} */

@@ -25,36 +25,57 @@ class Post{
       ); // Convert rows to post objects
   }
 
-    static async getAllPosts() {
-        const connection = await sql.connect(dbConfig);
-    
-        const sqlQuery = `SELECT * FROM Posts`; // Replace with your actual table name
-    
-        const request = connection.request();
-        const result = await request.query(sqlQuery);
-    
-        connection.close();
-    
-        return result.recordset.map(
-          (row) => new Post(row.post_id, row.date_column, row.header, row.message)
-        ); // Convert rows to post objects
-    } 
+  static async getPostById(post_id){
+    const connection = await sql.connect(dbConfig);
 
-    static async createPost(header, message) {
-        try {
-          await sql.connect(dbConfig);
-          const request = new sql.Request();
-          const query = `INSERT INTO Posts (date_column, Header, Message) VALUES (CONVERT(DATE, GETDATE()),@header, @message)`;
-          request.input('header', sql.NVarChar, header);
-          request.input('message', sql.NVarChar, message);
-          const result = await request.query(query);
-          return result;
-        } catch (err) {
-          throw new Error(`Error creating post: ${err.message}`);
-        } finally {
-          sql.close();
-        }
+    const sqlQuery = `SELECT * FROM Posts WHERE post_id = @post_id`; 
+
+    const request = connection.request();
+    request.input("post_id", post_id);
+    const result = await request.query(sqlQuery);
+
+    connection.close();
+
+    return result.recordset[0]
+      ? new Post(
+          result.recordset[0].post_id,
+          result.recordset[0].date_column,
+          result.recordset[0].header,
+          result.recordset[0].message
+        )
+      : null;
+  }
+
+  static async getAllPosts() {
+    const connection = await sql.connect(dbConfig);
+
+    const sqlQuery = `SELECT * FROM Posts`; // Replace with your actual table name
+
+    const request = connection.request();
+    const result = await request.query(sqlQuery);
+
+    connection.close();
+
+    return result.recordset.map(
+      (row) => new Post(row.post_id, row.date_column, row.header, row.message)
+    ); // Convert rows to post objects
+  } 
+
+  static async createPost(header, message) {
+    try {
+      await sql.connect(dbConfig);
+      const request = new sql.Request();
+      const query = `INSERT INTO Posts (date_column, Header, Message) VALUES (CONVERT(DATE, GETDATE()),@header, @message)`;
+      request.input('header', sql.NVarChar, header);
+      request.input('message', sql.NVarChar, message);
+      const result = await request.query(query);
+      return result;
+    } catch (err) {
+      throw new Error(`Error creating post: ${err.message}`);
+    } finally {
+      sql.close();
     }
+  }
      
     // static async updatePost(id, newPostData) {
     //     const connection = await sql.connect(dbConfig);

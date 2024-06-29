@@ -6,6 +6,8 @@ const fs = require("fs");
 const path = require("path");
 const { JSDOM } = require("jsdom");
 const fileUpload = require('express-fileupload');
+const bcryptjs = require("bcryptjs");
+const jsonwebtoken = require("jsonwebtoken");
 
 //Controllers
 const User_Account_Controller = require("./controller/User_Account_Controller")
@@ -14,6 +16,7 @@ const Profile_Controller = require("./controller/Profile_controller")
 const industry_info_controller = require("./controller/industry_info_controller");
 const quiz_controller = require("./controller/quiz_controller")
 const forumController = require("./controller/forumController");
+const admin_forumController = require("./controller/admin_Forum_Controller");
 const commentsController = require("./controller/commentsController");
 const feedbackController = require("./controller/feedbackController");
 
@@ -70,7 +73,7 @@ app.get("/home", (req, res) => {
     });
 });
 
-
+// Users Route (Yechyang)
 app.post("/users/account/login", User_Account_Controller.userlogin);
 app.get("/users/account/:id", User_Account_Controller.getUserById); // get specific user
 app.post("/users/account", User_Account_Controller.createAccount); // Create user account
@@ -78,6 +81,7 @@ app.put("/users/account/:id", User_Account_Controller.updateUser); // Update use
 app.delete("/users/account/:id", User_Account_Controller.deleteUser); // Delete user
 app.get("/users/forgotpassword/:user_email", User_Account_Controller.userforgotpassword); // Forgot password
 
+// Admin Routes (YeChyang)
 app.post("/admin/account/login", Admin_Account_Controller.adminlogin);
 app.get("/admin/account", Admin_Account_Controller.getAllUsers); // Get all user
 app.get("/admin/account/:id", Admin_Account_Controller.getUserById); // Get specific user
@@ -90,8 +94,8 @@ app.get("/account/profile/:id", Profile_Controller.getUserProfile);
 app.put("/account/profile/:id", Profile_Controller.updateUserProfile);
 
 
-
-app.get("/users/accountselection", (req,res) => {
+// Route for Users and Admin
+app.get("/accountselection", (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "accountselection.html");
     console.log("File path is", filePath);
     res.sendFile(filePath);
@@ -139,13 +143,6 @@ app.get("/account-personal/:id", async (req,res) => {
     console.log("File path is", filePath);
     res.sendFile(filePath);
 });
-
-app.get("/admin/viewUser", (req,res) => {
-    const filePath = path.join(__dirname, "public", "html", "allUsers.html");
-    console.log("File path is", filePath);
-    res.sendFile(filePath);
-})
-
 
 app.get("/profile/:id", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "profile.html");
@@ -209,7 +206,7 @@ app.get("/", async  (req,res) =>{
 });
 
 
-//Forum api
+//Forum routes
 app.get('/posts', forumController.getAllPosts); //Getting all post
 app.get("/forum", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "forum.html");
@@ -217,16 +214,27 @@ app.get("/forum", async (req,res) => {
     res.sendFile(filePath);
 });
 app.get('/posts/:header',forumController.getPostbyHeader); //Getting post by searching the header
+app.get('/post/id/:post_id', forumController.getPostById);
 app.post('/forum/post', forumController.createPost); // Route to handle creating a new post
 
-//Comments api
+//Comments routes
 app.get('/comments/:postId', commentsController.getCommentById); //Route to get comments
 app.post('/comments', commentsController.createComment);// Post comments
+
+//Admin forum routes
+app.get('/admin/posts', admin_forumController.getAllPosts); //Getting all post
+app.get("/admin/forum", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "adminForum.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+app.get('/admin/posts/:post_id',admin_forumController.getPostById);
 
 
 //Feedback Routes
 app.get("/admin/allfeedback", feedbackController.getAllFeedback); // admin getting every feedback
 app.post("/users/feedback", feedbackController.createFeedback); // users post feedbacks
+
 
 app.get("/contactus", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "contactus.html");
