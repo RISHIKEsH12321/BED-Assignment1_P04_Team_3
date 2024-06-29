@@ -22,20 +22,20 @@ h2 {
     color: #333;
 }
 
-.feedback-form {
+#feedback-form {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.feedback-form label {
+#feedback-form label {
     margin-bottom: 5px;
     font-weight: bold;
 }
 
-.feedback-form select,
-.feedback-form input,
-.feedback-form textarea {
+#feedback-form select,
+#feedback-form input,
+#feedback-form textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -43,7 +43,7 @@ h2 {
     border-radius: 4px;
 }
 
-.feedback-form button {
+#feedback-form button {
     background-color: #4ae3b5;
     color: #fff;
     border: none;
@@ -54,6 +54,6 @@ h2 {
     align-self: center;
 }
 
-.feedback-form button:hover {
+#feedback-form button:hover {
     background-color: #3baf8d;
 }

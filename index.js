@@ -16,7 +16,9 @@ const Profile_Controller = require("./controller/Profile_controller")
 const industry_info_controller = require("./controller/industry_info_controller");
 const quiz_controller = require("./controller/quiz_controller")
 const forumController = require("./controller/forumController");
+const admin_forumController = require("./controller/admin_Forum_Controller");
 const commentsController = require("./controller/commentsController");
+const feedbackController = require("./controller/feedbackController");
 
 //MiddleWare for each person
 const validateIndustryAndQuiz = require("./middleware/industryAndQuizValidation");
@@ -203,7 +205,7 @@ app.get("/", async  (req,res) =>{
 });
 
 
-//Forum api
+//Forum routes
 app.get('/posts', forumController.getAllPosts); //Getting all post
 app.get("/forum", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "forum.html");
@@ -211,11 +213,27 @@ app.get("/forum", async (req,res) => {
     res.sendFile(filePath);
 });
 app.get('/posts/:header',forumController.getPostbyHeader); //Getting post by searching the header
+app.get('/post/id/:post_id', forumController.getPostById);
 app.post('/forum/post', forumController.createPost); // Route to handle creating a new post
 
-//Comments api
+//Comments routes
 app.get('/comments/:postId', commentsController.getCommentById); //Route to get comments
 app.post('/comments', commentsController.createComment);// Post comments
+
+//Admin forum routes
+app.get('/admin/posts', admin_forumController.getAllPosts); //Getting all post
+app.get("/admin/forum", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "adminForum.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+app.get('/admin/posts/:post_id',admin_forumController.getPostById);
+
+
+//Feedback Routes
+app.get("/admin/allfeedback", feedbackController.getAllFeedback); // admin getting every feedback
+app.post("/users/feedback", feedbackController.createFeedback); // users post feedbacks
+
 
 app.listen(port, async () => {
     try {
