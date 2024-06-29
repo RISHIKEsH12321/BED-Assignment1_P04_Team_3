@@ -73,7 +73,7 @@ app.get("/home", (req, res) => {
     });
 });
 
-
+// Users Route (Yechyang)
 app.post("/users/account/login", User_Account_Controller.userlogin);
 app.get("/users/account/:id", User_Account_Controller.getUserById); // get specific user
 app.post("/users/account", User_Account_Controller.createAccount); // Create user account
@@ -81,6 +81,7 @@ app.put("/users/account/:id", User_Account_Controller.updateUser); // Update use
 app.delete("/users/account/:id", User_Account_Controller.deleteUser); // Delete user
 app.get("/users/forgotpassword/:user_email", User_Account_Controller.userforgotpassword); // Forgot password
 
+// Admin Routes (YeChyang)
 app.post("/admin/account/login", Admin_Account_Controller.adminlogin);
 app.get("/admin/account", Admin_Account_Controller.getAllUsers); // Get all user
 app.get("/admin/account/:id", Admin_Account_Controller.getUserById); // Get specific user
@@ -93,7 +94,7 @@ app.get("/account/profile/:id", Profile_Controller.getUserProfile);
 app.put("/account/profile/:id", Profile_Controller.updateUserProfile);
 
 
-
+// Route for Users and Admin
 app.get("/accountselection", (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "accountselection.html");
     console.log("File path is", filePath);
