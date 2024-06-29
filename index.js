@@ -6,6 +6,8 @@ const fs = require("fs");
 const path = require("path");
 const { JSDOM } = require("jsdom");
 const fileUpload = require('express-fileupload');
+const bcryptjs = require("bcryptjs");
+const jsonwebtoken = require("jsonwebtoken");
 
 //Controllers
 const User_Account_Controller = require("./controller/User_Account_Controller")
@@ -90,7 +92,7 @@ app.put("/account/profile/:id", Profile_Controller.updateUserProfile);
 
 
 
-app.get("/users/accountselection", (req,res) => {
+app.get("/accountselection", (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "accountselection.html");
     console.log("File path is", filePath);
     res.sendFile(filePath);
@@ -138,13 +140,6 @@ app.get("/account-personal/:id", async (req,res) => {
     console.log("File path is", filePath);
     res.sendFile(filePath);
 });
-
-app.get("/admin/viewUser", (req,res) => {
-    const filePath = path.join(__dirname, "public", "html", "allUsers.html");
-    console.log("File path is", filePath);
-    res.sendFile(filePath);
-})
-
 
 app.get("/profile/:id", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "profile.html");
