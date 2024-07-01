@@ -1,3 +1,4 @@
+// Done by Joseph
 //Getting id and username of user that logged in
 const user_id = sessionStorage.getItem("user_id");
 const username = sessionStorage.getItem("username");
@@ -224,10 +225,16 @@ async function fetchIdPost(searchTerm) {
         `;
 
         postUpdate.style.display = "block";
+        body.style.backgroundColor = "rgba(0, 0, 0,0.5)";
+        post.classList.add("blur");
+        searchBar.classList.add("blur");
 
         const cancel = document.getElementById("updateCancel");
         cancel.addEventListener("click",function(){
             postUpdate.style.display = "none";
+            body.style.backgroundColor = "rgba(0, 0, 0,0)";
+            post.classList.remove("blur");
+            searchBar.classList.remove("blur");
         });
     }catch (error) {
         console.error('Error fetching posts:', error);
