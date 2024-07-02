@@ -1,6 +1,7 @@
 // User controller (Ye Chyang)
 const User_Account = require("../models/User_Account");
 const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // const userlogin = async (req,res) => {
 //     const { username, user_password } = req.body;
@@ -36,13 +37,24 @@ const userlogin = async (req, res) => {
           const isMatch = await bcryptjs.compare(user_password, user.user_password);
 
           if (isMatch) {
+              // Define the payload
+              const payload = {
+                  user_id: user.user_id,
+                  username: user.username,
+              };
+
+              // Generate JWT token
+              const token = jwt.sign(payload, "your_secret_key", { expiresIn: "30s" });
               res.status(200).json({
                   message: "Login successful",
+                  token: token,
                   user_id: user.user_id // Return user_id along with a success message
               });
           } else {
               res.status(401).json({ message: "Invalid username or password" });
           }
+
+
       } else {
           res.status(401).json({ message: "Invalid username or password" });
       }

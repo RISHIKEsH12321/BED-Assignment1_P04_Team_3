@@ -682,7 +682,6 @@
 // });
 
 
-
 document.addEventListener('DOMContentLoaded', async () => {
     const pathParts = window.location.pathname.split('/');
     const id = pathParts[pathParts.length - 1];
@@ -793,7 +792,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('updateForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
             
-                const userId = sessionStorage.getItem('user_id');
+                const userId = localStorage.getItem('user_id');
             
                 if (!userId) {
                     alert("Not logged in");
@@ -1001,7 +1000,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // Delete button functionality
             document.getElementById('deleteButton').addEventListener('click', async () => {
-                const sessionid = sessionStorage.getItem("admin_id")
+                const sessionid = localStorage.getItem("admin_id")
                 if (!sessionid){
                     alert('Only admins can delete accounts');
                     return

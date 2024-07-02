@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (response.status === 200) {
                 const username = data.username;
+                const token = result.token;
                 modalMessage.textContent = `Login successful! Welcome, ${username}.`;
 
                 successLottie.style.display = 'block';
@@ -37,10 +38,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const admin_id = result.admin_id;
                 const user_id = result.user_id;
-                sessionStorage.setItem('admin_id', admin_id);
-                sessionStorage.setItem('user_id', user_id);
-                console.log('User ID:', user_id); 
+                // sessionStorage.setItem('admin_id', admin_id);
+                // sessionStorage.setItem('user_id', user_id);
+                localStorage.setItem('token', token);
 
+                console.log('User ID:', user_id); 
                 console.log('Admin ID:', admin_id);
                 console.log('Username:', username);
 

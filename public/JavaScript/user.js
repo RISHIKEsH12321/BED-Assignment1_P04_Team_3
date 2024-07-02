@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (response.status === 200) {
                 const username = data.username;
+                const token = result.token;
                 modalMessage.textContent = `Login successful! Welcome, ${username}.`;
 
                 successLottie.style.display = 'block';
@@ -40,11 +41,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
                 if (rememberMeCheckbox.checked) {
-                    localStorage.setItem('user_id', user_id);
-                    localStorage.setItem('username', username);
+                    localStorage.setItem('token', token);
+                    // localStorage.setItem('user_id', user_id);
+                    // localStorage.setItem('username', username);
+
                 } else {
-                    sessionStorage.setItem('user_id', user_id);
-                    sessionStorage.setItem('username', username);
+                    localStorage.setItem('token', token);
+                    // sessionStorage.setItem('user_id', user_id);
+                    // sessionStorage.setItem('username', username);
                 }
 
                 console.log('User ID:', user_id);

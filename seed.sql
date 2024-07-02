@@ -114,12 +114,12 @@ INSERT INTO Correct_Answers (question_id, correct_option_id) VALUES
 -- YeChyang Tables
 
 CREATE TABLE User_Account (
-user_id INT PRIMARY KEY IDENTITY(1,1),
-username VARCHAR(50) NOT NULL,
-user_email VARCHAR(100) NOT NULL UNIQUE,
-user_phonenumber VARCHAR(15),
-user_password VARCHAR(255) NOT NULL
-user_role VARCHAR(20) NOT NULL DEFAULT 'user'
+	user_id INT PRIMARY KEY IDENTITY(1,1),
+	username VARCHAR(50) NOT NULL,
+	user_email VARCHAR(100) NOT NULL UNIQUE,
+	user_phonenumber VARCHAR(15),
+	user_password VARCHAR(255) NOT NULL,
+	user_role VARCHAR(20) NOT NULL DEFAULT 'user'
 );
 
 CREATE TABLE Admin_Account (
@@ -138,11 +138,11 @@ CREATE TABLE Profile (
 	profile_id INT PRIMARY KEY IDENTITY(1,1),
 	user_id INT NOT NULL,
 	about_me VARCHAR(MAX), 
-country VARCHAR(100), 
-position VARCHAR(100), 
-security_code VARCHAR(50), 
-profile_picture_url VARBINARY(MAX), 
-FOREIGN KEY (user_id) REFERENCES User_Account(user_id)
+	country VARCHAR(100), 
+	position VARCHAR(100), 
+	security_code VARCHAR(50), 
+	profile_picture_url VARBINARY(MAX), 
+	FOREIGN KEY (user_id) REFERENCES User_Account(user_id)
 )
 
 
@@ -154,29 +154,28 @@ CREATE TABLE Codes (
 )
 
 
-INSERT INTO Codes (user_id, security_code) VALUES (
-	(NULL,	‘A1b2C3d4E5’),
-(NULL,	‘F6g7H8i9J0’),
-(NULL,	‘K1L2M3n4O5’),
-(NULL,	‘P6Q7R8s9T0’),
-(NULL,	‘U1V2W3x4Y5’),
-(NULL,	‘T7u8V9w0X1’),
-(NULL,	‘R4s5G6t7Y8’),
-(NULL,	‘W1z2F3x4H5’),
-(NULL,	‘Q9m0P1n2B3’),
-(NULL,	‘D6k7L8j9S0’),
-(NULL,	‘E3v4N5c6M7’),
-(NULL,	‘U8i9O0q1Z2’),
-(NULL,	‘J5h6R7t8A9’),
-(NULL,	‘K2f3G4w5V6’),
-(NULL,	‘L1x2P3y4B5’),
-(NULL,	‘A7s8C9d0E1’),
-(NULL,	‘F4n5H6m7J8’),
-(NULL,	‘V9u0T1w2X3’),
-(NULL,	‘N6l7Q8o9I0’),
-(NULL,	‘Y3z4K5x6F7’),
-(NULL,	‘O1r2E3p4U5’),
-)
+INSERT INTO Codes (user_id, security_code) VALUES 
+	(NULL,	'A1b2C3d4E5'),
+	(NULL,	'F6g7H8i9J0'),
+	(NULL,	'K1L2M3n4O5'),
+	(NULL,	'P6Q7R8s9T0'),
+	(NULL,	'U1V2W3x4Y5'),
+	(NULL,	'T7u8V9w0X1'),
+	(NULL,	'R4s5G6t7Y8'),
+	(NULL,	'W1z2F3x4H5'),
+	(NULL,	'Q9m0P1n2B3'),
+	(NULL,	'D6k7L8j9S0'),
+	(NULL,	'E3v4N5c6M7'),
+	(NULL,	'U8i9O0q1Z2'),
+	(NULL,	'J5h6R7t8A9'),
+	(NULL,	'K2f3G4w5V6'),
+	(NULL,	'L1x2P3y4B5'),
+	(NULL,	'A7s8C9d0E1'),
+	(NULL,	'F4n5H6m7J8'),
+	(NULL,	'V9u0T1w2X3'),
+	(NULL,	'N6l7Q8o9I0'),
+	(NULL,	'Y3z4K5x6F7'),
+	(NULL,	'O1r2E3p4U5'),
 
 --Joseph
 CREATE TABLE Posts(

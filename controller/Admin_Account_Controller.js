@@ -5,6 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // const adminlogin = async (req,res) => {
 //     const { username, user_password } = req.body;
@@ -40,8 +41,17 @@ const adminlogin = async (req, res) => {
             const isMatch = await bcryptjs.compare(user_password, admin.user_password);
 
             if (isMatch) {
+
+                const payload = {
+                    user_id: admin.user_id,
+                    username: admin.username,
+                    admin_id: admin.admin_id,
+                };
+
+                const token = jwt.sign(payload, "your_secret_key", { expiresIn: "30s" });
                 res.status(200).json({
                     message: "Login successful",
+                    token: token,
                     admin_id: admin.admin_id,
                     user_id: admin.user_id
                 });

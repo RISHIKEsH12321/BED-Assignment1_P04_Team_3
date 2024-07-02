@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function() {
 
-    const adminId = sessionStorage.getItem('admin_id');
+    const adminId = localStorage.getItem('admin_id');
     if (!adminId) {
         alert('Access denied. Only admins can view this page.');
         window.location.href = '/home';
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
 
 document.getElementById("ownprofile").addEventListener("click", function() {
-    let userId = sessionStorage.getItem("user_id");
+    let userId = localStorage.getItem("user_id");
 
 
     if (userId){
