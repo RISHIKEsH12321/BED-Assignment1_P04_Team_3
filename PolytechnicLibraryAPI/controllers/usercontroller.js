@@ -14,7 +14,7 @@ async function registerUser(req, res) {
     // }
 
     // Check for existing username
-    const existingUser = await User.getUserByUsername(username);
+    const existingUser = await User.getUserByUsername(username); 
     if (existingUser) {
       return res.status(400).json({ message: "Username already exists" });
     }

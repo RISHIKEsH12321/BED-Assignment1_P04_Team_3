@@ -73,15 +73,16 @@ app.get("/home", (req, res) => {
     });
 });
 
-// Users Route (Yechyang)
+// Users Route (Ye Chyang)
 app.post("/users/account/login", User_Account_Controller.userlogin);
 app.get("/users/account/:id", User_Account_Controller.getUserById); // get specific user
 app.post("/users/account", User_Account_Controller.createAccount); // Create user account
 app.put("/users/account/:id", User_Account_Controller.updateUser); // Update user
 app.delete("/users/account/:id", User_Account_Controller.deleteUser); // Delete user
 app.get("/users/forgotpassword/:user_email", User_Account_Controller.userforgotpassword); // Forgot password
+app.post("/users/check-password",User_Account_Controller.checkPassword)
 
-// Admin Routes (YeChyang)
+// Admin Routes (Ye Chyang)
 app.post("/admin/account/login", Admin_Account_Controller.adminlogin);
 app.get("/admin/account", Admin_Account_Controller.getAllUsers); // Get all user
 app.get("/admin/account/:id", Admin_Account_Controller.getUserById); // Get specific user
@@ -90,11 +91,12 @@ app.put("/admin/account/:id", Admin_Account_Controller.AdminupdateUser); // Upda
 app.delete("/admin/account/:id", Admin_Account_Controller.AdmindeleteUser); // Delete Account 
 app.get("/admin/forgotpassword/:user_email", Admin_Account_Controller.adminforgotpassword);
 
+// Profile Routes
 app.get("/account/profile/:id", Profile_Controller.getUserProfile);
 app.put("/account/profile/:id", Profile_Controller.updateUserProfile);
 
 
-// Route for Users and Admin
+// Route for Users and Admin account (Ye Chyang)
 app.get("/accountselection", (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "accountselection.html");
     console.log("File path is", filePath);

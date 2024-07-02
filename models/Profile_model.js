@@ -1,6 +1,7 @@
 const sql = require("mssql");
 const dbConfig = require("../dbConfig");
 
+// User Profile model (Ye Chyang)
 class Profile {
     constructor (profile_id, user_id, about_me, country, position, security_code, profile_picture_url){
         this.profile_id = profile_id;

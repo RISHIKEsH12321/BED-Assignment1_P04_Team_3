@@ -1,3 +1,4 @@
+//Profile Controller (Ye Chyang)
 const Profile = require("../models/Profile_model")
 
 const getUserProfile = async (req,res) => {

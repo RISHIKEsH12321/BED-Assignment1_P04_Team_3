@@ -1,6 +1,7 @@
 const sql = require("mssql");
 const dbConfig = require("../dbConfig");
 
+// User model (Ye Chyang)
 class User_Account {
     constructor(user_id, username, user_email, user_phonenumber, user_password, user_role){
         this.user_id = user_id;
@@ -14,11 +15,10 @@ class User_Account {
     static async userlogin(username, user_password){
         const connection = await sql.connect(dbConfig);
         
-        const sqlQuery = `SELECT * FROM User_Account WHERE username = @username AND user_password = @user_password`; // Replace with your actual table name
+        const sqlQuery = `SELECT * FROM User_Account WHERE username = @username`; // Replace with your actual table name
         const request = connection.request();
 
         request.input('username', sql.VarChar, username);
-        request.input('user_password', sql.VarChar, user_password);
 
         const result = await request.query(sqlQuery); 
 
@@ -109,7 +109,6 @@ class User_Account {
     
         return this.getUserById(user_id);
     }
-
 
     static async deleteUser(user_id) {
         const connection = await sql.connect(dbConfig);

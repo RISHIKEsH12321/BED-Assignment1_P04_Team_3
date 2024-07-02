@@ -1,6 +1,7 @@
 const sql = require("mssql");
 const dbConfig = require("../dbConfig");
 
+// Admin model (Ye Chyang)
 class Admin_Account {
     constructor(admin_id, user_id, username, user_email, user_phonenumber, user_password, user_role){
         this.admin_id = admin_id
@@ -16,11 +17,11 @@ class Admin_Account {
     static async adminlogin(username, user_password){
         const connection = await sql.connect(dbConfig);
         
-        const sqlQuery = `SELECT * FROM Admin_Account WHERE username = @username AND user_password = @user_password`; // Replace with your actual table name
+        const sqlQuery = `SELECT * FROM Admin_Account WHERE username = @username`; // Replace with your actual table name
         const request = connection.request();
 
         request.input('username', sql.VarChar, username);
-        request.input('user_password', sql.VarChar, user_password);
+        // request.input('user_password', sql.VarChar, user_password);
 
         const result = await request.query(sqlQuery);
 
@@ -156,44 +157,112 @@ class Admin_Account {
     }
     
 
+    // static async AdminupdateUser(user_id, newUserData) {
+    //     const connection = await sql.connect(dbConfig);
+
+    //     // Retrieve user's current role
+    //     const userRoleQuery = `SELECT user_role FROM User_Account WHERE user_id = @user_id`;
+    //     const roleRequest = connection.request();
+    //     roleRequest.input("user_id", user_id);
+    //     const { recordset: [{ user_role }] } = await roleRequest.query(userRoleQuery);
+    
+    //     // Update User_Account table
+    //     const userUpdateQuery = `
+    //         UPDATE User_Account 
+    //         SET username = @username, user_email = @user_email, user_phonenumber = @user_phonenumber, 
+    //             user_password = @user_password 
+    //         WHERE user_id = @user_id`;
+    
+    //     const userRequest = connection.request();
+    //     userRequest.input("user_id", user_id);
+    //     userRequest.input("username", newUserData.username);
+    //     userRequest.input("user_email", newUserData.user_email);
+    //     userRequest.input("user_phonenumber", newUserData.user_phonenumber);
+    //     userRequest.input("user_password", newUserData.user_password);
+    //     await userRequest.query(userUpdateQuery);
+    
+    //     // If user role is 'admin', update Admin_Account table
+    //     if (user_role === 'admin') {
+    //         const adminUpdateQuery = `
+    //             UPDATE Admin_Account 
+    //             SET username = @username, user_email = @user_email, user_phonenumber = @user_phonenumber, 
+    //                 user_password = @user_password 
+    //             WHERE user_id = @user_id`;
+    
+    //         const adminRequest = connection.request();
+    //         adminRequest.input("user_id", user_id);
+    //         adminRequest.input("username", newUserData.username);
+    //         adminRequest.input("user_email", newUserData.user_email);
+    //         adminRequest.input("user_phonenumber", newUserData.user_phonenumber);
+    //         adminRequest.input("user_password", newUserData.user_password);
+    //         await adminRequest.query(adminUpdateQuery);
+    //     }
+    
+    //     connection.close();
+    
+    //     return this.getUserById(user_id);
+    // }
+    
     static async AdminupdateUser(user_id, newUserData) {
         const connection = await sql.connect(dbConfig);
-
+    
         // Retrieve user's current role
         const userRoleQuery = `SELECT user_role FROM User_Account WHERE user_id = @user_id`;
         const roleRequest = connection.request();
         roleRequest.input("user_id", user_id);
         const { recordset: [{ user_role }] } = await roleRequest.query(userRoleQuery);
     
-        // Update User_Account table
-        const userUpdateQuery = `
-            UPDATE User_Account 
-            SET username = @username, user_email = @user_email, user_phonenumber = @user_phonenumber, 
-                user_password = @user_password 
-            WHERE user_id = @user_id`;
-    
+        // Build the update query dynamically
+        let userUpdateQuery = 'UPDATE User_Account SET ';
+        const userUpdateFields = [];
         const userRequest = connection.request();
         userRequest.input("user_id", user_id);
-        userRequest.input("username", newUserData.username);
-        userRequest.input("user_email", newUserData.user_email);
-        userRequest.input("user_phonenumber", newUserData.user_phonenumber);
-        userRequest.input("user_password", newUserData.user_password);
+    
+        if (newUserData.username) {
+            userUpdateFields.push('username = @username');
+            userRequest.input("username", newUserData.username);
+        }
+        if (newUserData.user_email) {
+            userUpdateFields.push('user_email = @user_email');
+            userRequest.input("user_email", newUserData.user_email);
+        }
+        if (newUserData.user_phonenumber) {
+            userUpdateFields.push('user_phonenumber = @user_phonenumber');
+            userRequest.input("user_phonenumber", newUserData.user_phonenumber);
+        }
+        if (newUserData.user_password) {
+            userUpdateFields.push('user_password = @user_password');
+            userRequest.input("user_password", newUserData.user_password);
+        }
+    
+        userUpdateQuery += userUpdateFields.join(', ') + ' WHERE user_id = @user_id';
         await userRequest.query(userUpdateQuery);
     
         // If user role is 'admin', update Admin_Account table
         if (user_role === 'admin') {
-            const adminUpdateQuery = `
-                UPDATE Admin_Account 
-                SET username = @username, user_email = @user_email, user_phonenumber = @user_phonenumber, 
-                    user_password = @user_password 
-                WHERE user_id = @user_id`;
-    
+            let adminUpdateQuery = 'UPDATE Admin_Account SET ';
+            const adminUpdateFields = [];
             const adminRequest = connection.request();
             adminRequest.input("user_id", user_id);
-            adminRequest.input("username", newUserData.username);
-            adminRequest.input("user_email", newUserData.user_email);
-            adminRequest.input("user_phonenumber", newUserData.user_phonenumber);
-            adminRequest.input("user_password", newUserData.user_password);
+    
+            if (newUserData.username) {
+                adminUpdateFields.push('username = @username');
+                adminRequest.input("username", newUserData.username);
+            }
+            if (newUserData.user_email) {
+                adminUpdateFields.push('user_email = @user_email');
+                adminRequest.input("user_email", newUserData.user_email);
+            }
+            if (newUserData.user_phonenumber) {
+                adminUpdateFields.push('user_phonenumber = @user_phonenumber');
+                adminRequest.input("user_phonenumber", newUserData.user_phonenumber);
+            }
+            if (newUserData.user_password) {
+                adminUpdateFields.push('user_password = @user_password');
+                adminRequest.input("user_password", newUserData.user_password);
+            }
+    
+            adminUpdateQuery += adminUpdateFields.join(', ') + ' WHERE user_id = @user_id';
             await adminRequest.query(adminUpdateQuery);
         }
     
@@ -201,8 +270,6 @@ class Admin_Account {
     
         return this.getUserById(user_id);
     }
-    
-    
 
 
     static async AdmindeleteUser(user_id) {
@@ -218,15 +285,21 @@ class Admin_Account {
             connection.close();
             return false;
         }
+
+        const deleteProfileQuery = `DELETE FROM Profile WHERE user_id = @user_id`;
+        const deleteProfileRequest = connection.request();
+        deleteProfileRequest.input("user_id", user_id);
+        const deleteProfileResult = await deleteProfileRequest.query(deleteProfileQuery);
         
         const deleteQuery = `DELETE FROM User_Account WHERE user_id = @user_id`;
         const deleteRequest = connection.request();
         deleteRequest.input("user_id", user_id);
         const deleteResult = await deleteRequest.query(deleteQuery);
 
+
         connection.close();
-    
-        return result.rowsAffected > 0; // Indicate success based on affected rows
+
+        return deleteResult.rowsAffected > 0;
     }
 
 
