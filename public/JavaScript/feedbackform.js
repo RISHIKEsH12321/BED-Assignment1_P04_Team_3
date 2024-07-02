@@ -9,7 +9,26 @@ document.getElementById('feedback-form').addEventListener('submit', async functi
         comment: document.getElementById('comments').value
     };
 
-    try {
+    // Send form data to API endpoint
+    fetch('/users/feedback', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        alert('Feedback submitted successfully!');
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('An error occurred while submitting your feedback.');
+    });
+    
+
+    /* try {
         const response = await fetch('/users/feedback', {
             method: 'POST',
             headers: {
@@ -27,5 +46,6 @@ document.getElementById('feedback-form').addEventListener('submit', async functi
 
     } catch (error) {
         console.error('Error:', error);
-    }
+    } */
+
 });

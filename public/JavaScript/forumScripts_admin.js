@@ -1,3 +1,4 @@
+// Done by Joseph
 async function fetchPosts() {
     try{
         const response = await fetch("/admin/posts"); // Replace with your API endpoint

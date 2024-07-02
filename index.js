@@ -238,6 +238,19 @@ app.get("/admin/allfeedback", feedbackController.getAllFeedback); // admin getti
 app.post("/users/feedback", feedbackController.createFeedback); // users post feedbacks
 
 
+app.get("/contactus", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "contactus.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+app.get("/feedbackform", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "feedbackform.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+
 app.listen(port, async () => {
     try {
         // Connect to the database
