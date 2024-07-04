@@ -1,3 +1,7 @@
+:root{
+    --green:#88C431;
+}
+
 body{
     margin: 0 !important;
 }
@@ -5,6 +9,7 @@ body{
 #main_intro {
     height: 470px;
     width: 100%; 
+    height: 90vh;
     display: flex;
     background-size: cover;
     background-position: center;
@@ -12,14 +17,18 @@ body{
     flex-direction: column;
     justify-content: center;
     gap: 20px; /* Adjust this value to control the vertical spacing */
+    background-attachment: fixed
 }
 
 #IndustryName {
     color: white; 
     text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow effect */
     width: 100%;
-    margin-bottom: 10px; /* Adjust this value to fine-tune the spacing */
+    font-size: 10vh; /* Relative font size */
+    font-weight: bold; /* Bold font */
+    margin-bottom: 10px; /* Adjust spacing */
+    max-width: 100%;
 }
 
 #IndustryIntro {
@@ -44,12 +53,20 @@ body{
 
 #ChallengeIntroContainer {
     display: grid;
+    border: 2px solid var(--green);
+    transition: all 0.1s ease-in-out;
+    width: 90%;
+}
+
+#ChallengeIntroContainer:hover {
+    transform: scale(1.05);
+    cursor: pointer;
 }
 
 #ChallengeIntro {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Set the grid to have two columns */
-    gap: 10px; 
+    gap: 10px 0px; 
     width: 80%;
     margin: 0 auto;
     padding: 20px;
@@ -82,7 +99,7 @@ body{
 #ChallengeIntroNo {
     font-size: 110px;
     font-weight: bold;
-    color: #88C431;
+    color: var(--green);
 }
 
 #ChallengeIntroTitle {
@@ -152,8 +169,8 @@ body{
   text-align: center;
   transform: translateY(0);
   transition: transform 150ms, box-shadow 150ms;
-  user-select: none;
   -webkit-user-select: none;
+  user-select: none;
   touch-action: manipulation;
 }
 

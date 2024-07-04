@@ -16,6 +16,25 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Failed to decode token');
         }
     }
+
+    const profilePic = document.getElementById("profile_pic_navbar");
+
+    profilePic.addEventListener("mouseenter", () => {
+      profilePic.classList.add("fade-out");
+      setTimeout(() => {
+        profilePic.src = "../../images/profile-user-brown.png";
+        profilePic.classList.remove("fade-out");
+      }, 100); // Match this duration with the CSS transition duration
+    });
+  
+    profilePic.addEventListener("mouseleave", () => {
+      profilePic.classList.add("fade-out");
+      setTimeout(() => {
+        profilePic.src = "../../images/profile-user.png";
+        profilePic.classList.remove("fade-out");
+      }, 100); // Match this duration with the CSS transition duration
+    });
+    
 });
 
 

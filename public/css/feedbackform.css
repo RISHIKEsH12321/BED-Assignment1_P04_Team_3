@@ -2,9 +2,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f5fbe9;
     color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
     height: 100vh;
     margin: 0;
 }
@@ -14,6 +12,9 @@ body {
     border-radius: 8px;
     width: 400px;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
 }
 
 h2 {

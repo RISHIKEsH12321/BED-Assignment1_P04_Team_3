@@ -3,13 +3,13 @@ body {
     background-color: #f5fbe9;
     color: #333;
     text-align: center;
-    padding: 50px;
 }
 .contact-section {
     max-width: 600px;
     margin: 0 auto;
     background-color: #ffffff;
     padding: 40px;
+    margin-top: 40px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
