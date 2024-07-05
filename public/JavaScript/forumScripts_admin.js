@@ -51,7 +51,7 @@ async function fetchSearchedPosts(searchTerm) {
                         <button type="button" class="btn btn-primary" id="cancel">Close</button>
                     </div>
                     <div class="col text-right">
-                        <button type="button" class="btn btn-danger">Delete</button>
+                        <button type="button" class="btn btn-danger" id="adminDelete">Delete</button>
                     </div>
                 </div>
             </div>          
@@ -67,6 +67,15 @@ async function fetchSearchedPosts(searchTerm) {
             adminPost.style.display = "none";
             document.body.style.backgroundColor = "#F7FFEC";
         });
+
+        const deletePost = document.getElementById("adminDelete");
+        deletePost.addEventListener("click",function(){
+            //Add function to delete post and sql database
+            console.log(data.post_id);
+            postDelete(data.post_id)
+            adminPost.style.display = "none";
+            document.body.style.backgroundColor = "#F7FFEC";
+        });
     }catch (error) {
         console.error('Error fetching posts:', error);
     }
@@ -79,3 +88,12 @@ searchForm.addEventListener("submit", function(event){
     const value = document.getElementById("search").value;
     fetchSearchedPosts(value)
 });
+
+async function postDelete(post_id){
+    try {
+        await fetch(`/admin/forum/delete/${post_id}`,{method: `DELETE`})
+        location.reload();
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+    }
+}

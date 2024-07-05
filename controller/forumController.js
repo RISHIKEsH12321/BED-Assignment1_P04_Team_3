@@ -29,7 +29,6 @@ const getAllPosts = async (req, res) => {
 
 const createPost = async (req, res) => {
   const { header, message } = req.body;
-  
   try {
     const result = await Post.createPost(header, message);
     console.log('New post inserted successfully:', result);
@@ -55,35 +54,36 @@ const getPostById = async (req, res) => {
   }
 };
 
-// const updatePost = async (req, res) => {
-//     const postId = parseInt(req.params.id);
-//     const newPostData = req.body;
-  
-//     try {
-//       const updatedPost = await Post.updatePost(postId, newPostData);
-//       if (!updatedPost) {
-//         return res.status(404).send("Post not found");
-//       }
-//       res.json(updatedPost);
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).send("Error updating post");
-//     }
-//   };
-// const deletePost = async (req, res) => {
-//     const postId = parseInt(req.params.id);
-  
-//     try {
-//       const success = await Book.deletePost(postId);
-//       if (!success) {
-//         return res.status(404).send("Post not found");
-//       }
-//       res.status(204).send();
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).send("Error deleting post");
-//     }
-//   };
+const updatePost = async (req, res) => {
+    const postId = parseInt(req.params.id);
+    const newPostData = req.body;
+
+    try {
+      const updatedPost = await Post.updatePost(postId, newPostData);
+      if (!updatedPost) {
+        return res.status(404).send("Post not found");
+      }
+      res.json(updatedPost);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error updating post");
+    }
+  };
+
+const deletePost = async (req, res) => {
+    const postId = parseInt(req.params.post_id);
+
+    try {
+      const success = await Post.deletePost(postId);
+      if (!success) {
+        return res.status(404).send("Post not found");
+      }
+      res.status(204).send();
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error deleting post");
+    }
+  };
   
 
 module.exports = {
@@ -91,6 +91,6 @@ module.exports = {
     getAllPosts,
     createPost,
     getPostById,
-    // updatePost,
-    // deletePost,
+    updatePost,
+    deletePost,
   };

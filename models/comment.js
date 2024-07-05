@@ -13,7 +13,7 @@ class Comment{
     static async getCommentById(post_id) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `SELECT * FROM Comments WHERE post_id = @post_id`; // Parameterized query
+        const sqlQuery = `SELECT * FROM Comments WHERE post_id = @post_id ORDER BY comment_id DESC, date_column DESC;`; // Parameterized query
     
         const request = connection.request();
         request.input("post_id", post_id);

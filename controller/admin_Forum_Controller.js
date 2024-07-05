@@ -26,24 +26,24 @@ const getPostById = async (req, res) => {
     }
 };
 
-// const deletePost = async (req, res) => {
-//     const postId = parseInt(req.params.post_id);
-  
-//     try {
-//       const success = await Admin_Forum.deletePost(postId);
-//       if (!success) {
-//         return res.status(404).send("post not found");
-//       }
-//       res.status(204).send();
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).send("Error deleting post");
-//     }
-// };
+const deletePost = async (req, res) => {
+  const postId = parseInt(req.params.post_id);
+
+  try {
+    const success = await Admin_Forum.deletePost(postId);
+    if (!success) {
+      return res.status(404).send("Post not found");
+    }
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error deleting post");
+  }
+};
 
 
 module.exports = {
     getAllPosts,
     getPostById,
-    // deletePost,
+    deletePost,
   };
