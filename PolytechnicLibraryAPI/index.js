@@ -9,9 +9,11 @@ const fs = require("fs");
 
 const usercontroller = require("./controllers/usercontroller")
 const booksController = require("./controllers/booksControlelr")
+const verifyJWT = require("./middlewares/authmiddleware");
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
+
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -40,9 +42,9 @@ app.get("/registerPage", (req,res) => {
 app.post("/register", usercontroller.registerUser);
 app.post("/login", usercontroller.login);
 
-app.get("/books", booksController.getAllBooks);
-app.put("/books/:bookId/availability", booksController.updateBookAvalibility);
-app.get("/books/:id", booksController.getBookById)
+app.get("/books", verifyJWT, booksController.getAllBooks);
+app.put("/books/:bookId/availability", verifyJWT, booksController.updateBookAvalibility);
+app.get("/books/:id", verifyJWT, booksController.getBookById);
 
 
 app.listen(port, async () => {
