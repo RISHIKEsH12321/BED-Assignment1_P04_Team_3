@@ -1,0 +1,32 @@
+.header{
+    margin: 5% 30% 0 30%;
+}
+.header2{
+    margin: 5% 30% 0 10%;
+}
+
+#registerBtn{
+    margin-top: 1%;
+}
+
+#loginContainer{
+    margin: 2% 30% 0 30%;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: flex-start; /* Align items to the start vertically */
+}
+
+#booksContainer {
+    margin: 2% 10% 0 10%; /* Adjust margins as needed */
+    display: grid;
+    width: max-content;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.card{
+    width: 25vw !important; 
+}
+

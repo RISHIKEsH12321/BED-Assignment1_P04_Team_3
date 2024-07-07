@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+
+    <link href="../../css/login.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <h1 class="header2">Books</h1>
+    <div class="flexContainer">
+        
+        <div id="booksContainer"></div>
+    </div>
+    
+    <script>
+        async function fetchData() {
+            try {
+                // Fetch JWT token from localStorage
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('No token found');
+                }
+
+                // Fetch books data with Authorization header
+                const response = await fetch('/books', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+
+                const data = await response.json();
+                const booksContainer = document.getElementById("booksContainer");
+
+                data.forEach(book => {
+                    booksContainer.appendChild(createBooks(book, "librarian"));
+                });
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                // Handle error or display message to user
+            }
+        }
+
+        // Call fetchData function to initiate data fetching
+        fetchData();
+
+        const createBooks = (data, role) =>{
+            var book = document.createElement("div");
+            book.classList.add("card");
+
+            var body = document.createElement("div");
+            body.classList.add("card-body");
+            
+            var title = document.createElement("h5");
+            title.classList.add("card-title");
+            title.textContent = data.title;
+            
+            var text = document.createElement("p");
+            text.classList.add("card-text");
+            let textString = `Author: ${data.author}`
+            text.textContent = textString;
+
+            const ul = document.createElement('ul');
+            ul.classList.add('list-group', 'list-group-flush');
+            
+            const availability = document.createElement('li');
+            availability.classList.add('list-group-item');
+            availability.textContent = ` Availability: ${data.availability}`;
+
+            const id = document.createElement('li');
+            id.classList.add('list-group-item');
+            id.textContent = `ID: ${data.id}`;
+
+            ul.appendChild(availability);
+            ul.appendChild(id);
+            if(role === "librarian"){
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.classList.add('btn', 'btn-primary');
+                button.textContent = 'Update Availability'; // Set the text of the button
+
+                // Add the data attribute
+                button.setAttribute('data-id', data.id);
+                button.setAttribute('data-available', data.availability);
+
+                // Add onclick listener
+                button.onclick = async () => {
+                    const newAvailability = prompt("Enter new availability:");
+                    if (newAvailability !== null) {
+                        try {
+                            const response = await fetch(`/books/${data.id}/availability`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${localStorage.getItem('token')}` // Assuming token is stored in localStorage
+                                },
+                                body: JSON.stringify({ newAvailability })
+                            });
+
+                            if (response.ok) {
+                                const updatedBook = await response.json();
+                                availability.textContent = `Availability: ${updatedBook.availability}`;
+                                alert("Book availability updated successfully.");
+                            } else {
+                                alert("Failed to update book availability.");
+                            }
+                        } catch (error) {
+                            console.error('Error updating book availability:', error);
+                            alert("Error updating book availability.");
+                        }
+                    }
+                };
+
+                ul.appendChild(button);
+            };
+            
+            body.appendChild(title);
+            body.appendChild(text);
+            body.appendChild(ul);
+            book.appendChild(body)
+
+
+            
+            return book;
+        }
+
+
+        
+    </script>
+
+</body>
+</html>

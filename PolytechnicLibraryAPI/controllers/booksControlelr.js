@@ -2,6 +2,13 @@ const Book = require("../models/book");
 
 const getAllBooks = async (req, res) => {
   try {
+
+    //Need middleware for this
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+  
     const books = await Book.getAllBooks();
     res.json(books);
   } catch (error) {
