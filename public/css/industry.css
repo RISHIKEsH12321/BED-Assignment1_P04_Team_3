@@ -17,7 +17,8 @@ body{
     flex-direction: column;
     justify-content: center;
     gap: 20px; /* Adjust this value to control the vertical spacing */
-    background-attachment: fixed
+    background-attachment: fixed;
+    transition: all 1s ease-in;
 }
 
 #IndustryName {
@@ -25,7 +26,7 @@ body{
     text-align: center;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow effect */
     width: 100%;
-    font-size: 10vh; /* Relative font size */
+    font-size: 90px; /* Relative font size */
     font-weight: bold; /* Bold font */
     margin-bottom: 10px; /* Adjust spacing */
     max-width: 100%;
@@ -54,13 +55,14 @@ body{
 #ChallengeIntroContainer {
     display: grid;
     border: 2px solid var(--green);
-    transition: all 0.1s ease-in-out;
+
     width: 90%;
 }
 
 #ChallengeIntroContainer:hover {
     transform: scale(1.05);
     cursor: pointer;
+    transition: all 0.1s ease-in-out;
 }
 
 #ChallengeIntro {
@@ -74,12 +76,13 @@ body{
 
 #ChallengeIntroContainer {
     display: flex;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 10px;
     text-align: center;
     justify-self: center;
     align-items: center;
     justify-self: self-start;
+    /* background-color: #13aa52; */
 }
 
 #ChallengeNameDesContainer {
@@ -93,7 +96,7 @@ body{
 }
 
 #ChallengeIntroNo, #ChallengeIntroTitle, #ChallengeIntroDescription {
-    margin: 5px 0;
+    margin: 5px 0px 5px 10px;
 }
 
 #ChallengeIntroNo {
@@ -123,15 +126,41 @@ body{
     font-weight: bold;
 }
 
+.hidden{
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateX(-100%);
+    transition: all 0.8s ease-in !important;
+}
+
+.show{
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+    transition: all 0.8s ease !important;
+}
+
 #ChallengeContainer{
     margin-bottom: 5%;
     margin-left: 5%;
     margin-right: 5%;
 }
 
+#ChallengeContentContainer{
+    margin-bottom: 5%;
+
+}
 #ChallengeContainer div h1{
-    color: #BDBDBD;
-    font-size: 35px;
+    color: #059212;
+    font-size: 40px;
+}
+
+#ChallengeContainer div h2{
+    font-size: 30px;
+}
+
+#ChallengeContainer p{
+    font-size: 3vh;
 }
 
 #QuizContainer{
@@ -181,7 +210,7 @@ body{
 
 @media only screen and (max-width: 500px){
     #main_intro {
-        height: auto; 
+        height: 80vh; 
         text-align: center;
         background-size: cover;
         background-position: center;

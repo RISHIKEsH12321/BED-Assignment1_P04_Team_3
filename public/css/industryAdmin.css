@@ -19,20 +19,36 @@
 }
 
 #IndustrySelection{
-  width: 20%;
-  padding: 10px 15px;
+  width: 20vw;
+  min-width: 180px;
+}
+
+#IndustryChallanges{
+  width: 50vw;
+  min-width: 200px;
+}
+
+#IndustrySelection, #IndustryChallanges {
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"%3E%3Cpath fill="%23999" d="M2 0L0 2h4zm0 5L0 3h4z"/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px 10px;
+  appearance: none;
   font-size: 120%;
-  color: #333;
-  border: 2px solid #27AE60;
+  cursor: pointer;
   border-radius: 5px;
   margin-bottom: 20px;
+  border: 2px solid #27AE60;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  color: #333;
+  padding: 10px 15px;
 }
+
+
 #IndustrySelection option {
   padding: 10px;
   background-color: white;
   color: #333;
-
 }
 
 /* Change the background color of options on hover */
@@ -41,17 +57,6 @@
   color: white;
 }
 
-#IndustryChallanges{
-  width: 65%;
-  padding: 10px 15px;
-  font-size: 1em;
-  color: #333;
-  border: 2px solid #27AE60;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-
-}
 
 /* Label Styles */
 label {
@@ -63,13 +68,14 @@ label {
   display: block;
 }
 
-
 textarea {
   height: 100px;
   resize: vertical;
   border-radius: 10px;
   resize: none;
   padding: 10px;
+  width: 80vw;
+  min-width: 150px;
 }
 
 .form-select:focus,
@@ -97,6 +103,23 @@ select:focus {
   align-items: center;
 }
 
+
+/* Button Styles */
+button {
+  padding: 10px 20px;
+  font-size: 1em;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  /* cursor: pointer; */
+  /* transition: background-color 0.3s ease; */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
 .headerWithButtons button{
   font-size: 1em;
   color: white;
@@ -106,49 +129,36 @@ select:focus {
   cursor: pointer;
   transition: background-color 0.3s ease;
   height: fit-content;
-
-}
-/* Button Styles */
-button {
-  padding: 10px 20px;
-  font-size: 1em;
-  color: white;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  text-align: left;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
-#button_save_intro {
+ /* {
   background-color: #28A745;
 }
 
-#button_save_intro:hover {
+ {
   background-color: #218838;
-}
+} */
 
-#button_save_challenge {
-  width: -moz-max-content; /* Firefox */
-  width: -webkit-max-content; /* Safari */
-  width: max-content; /* Standard */
+#button_save_intro, #button_save_challenge {
+  width: -moz-max-content; 
+  width: -webkit-max-content;
+  width: max-content;
   margin-top: 1%;
+  margin-bottom: 2vh;
   background-color: #28a745;
-  color: white; /* Ensure text color is visible */
-  padding: 10px 20px; /* Add some padding for better appearance */
-  border: none; /* Remove default border */
-  border-radius: 5px; /* Round the corners */
-  cursor: pointer; /* Change cursor to pointer */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  color: white;
+  padding: 10px 20px;
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
 }
 
-#button_save_challenge:hover {
+#button_save_intro:hover, #button_save_challenge:hover {
   background-color: #218838; /* Darker green on hover */
 }
+
 #button_add_challenge {
   background-color: #17a2b8;
 }
@@ -159,20 +169,13 @@ button:hover {
 
 #button_delete_challenge {
   background-color: #dc3545;
+  min-width: 150px;
 }
 
 #button_delete_challenge:hover {
   background-color: #c82333;
 }
 
-#IndustrySelection, #IndustryChallanges {
-  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"%3E%3Cpath fill="%23999" d="M2 0L0 2h4zm0 5L0 3h4z"/%3E%3C/svg%3E');
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 10px 10px;
-  appearance: none;
-  font-size: 120%;
-}
 
 
 .toast-container {
@@ -207,17 +210,11 @@ button:hover {
     margin-right: 1%;
   }
 
-  #IndustrySelection{
-    width: 80%;
-    margin-bottom: 0%;
-  }
-
   .headerWithButtons{
     flex-direction: column;
     row-gap: 10px;
     align-items: start;
     margin-bottom: 5%;
-
   }
 
   .headerWithButtons h1{
@@ -229,10 +226,10 @@ button:hover {
     margin-top: 5%;
   }
 
-  #IndustryChallanges{
+  /* #IndustryChallanges{
     width: 80%;
     margin-bottom: 5%
-  }
+  } */
 
   #button_save_challenge{
     margin-top: 5%;
