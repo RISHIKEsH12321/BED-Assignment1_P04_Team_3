@@ -78,15 +78,15 @@ class Post{
     }
   }
     
-  static async updatePost(post_id, newPostData) {
+  static async updatePost(post_id, header, message) {
       const connection = await sql.connect(dbConfig);
   
       const sqlQuery = `UPDATE Posts SET header = @header, message = @message WHERE post_id = @post_id`; // Parameterized query
   
       const request = connection.request();
       request.input("post_id", post_id);
-      request.input("header", newPostData.header || null); // Handle optional fields
-      request.input("message", newPostData.message || null);
+      request.input("header", header || null); // Handle optional fields
+      request.input("message", message || null);
   
       await request.query(sqlQuery);
   

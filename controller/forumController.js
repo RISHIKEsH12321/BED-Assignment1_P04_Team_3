@@ -55,11 +55,12 @@ const getPostById = async (req, res) => {
 };
 
 const updatePost = async (req, res) => {
-    const postId = parseInt(req.params.id);
-    const newPostData = req.body;
+    const postId = parseInt(req.params.post_id);
+    const header = req.body.header;
+    const message = req.body.message;
 
     try {
-      const updatedPost = await Post.updatePost(postId, newPostData);
+      const updatedPost = await Post.updatePost(postId, header, message);
       if (!updatedPost) {
         return res.status(404).send("Post not found");
       }

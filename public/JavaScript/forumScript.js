@@ -221,10 +221,43 @@ async function fetchIdPost(searchTerm) {
         });
 
         const update = document.getElementById("updatePost");
-        update.addEventListener("click",function(){
+        // update.addEventListener("click",function(){
+        //     //Add function to update text and sql database
+        //     const header = document.getElementById("headerInput").value;
+        //     const message = document.getElementById("messageTextarea").value;
+        //     console.log(data.post_id + "," + header + "," + message);
+        //     updatePost(data.post_id, header, message);
+        //     postUpdate.style.display = "none";
+        //     body.style.backgroundColor = "rgba(0, 0, 0,0)";
+        //     post.classList.remove("blur");
+        //     searchBar.classList.remove("blur");
+        // });
+        update.addEventListener("click",async()=>{
             //Add function to update text and sql database
-            console.log(data.post_id);
-            updatePost(data.post_id)
+            const header = document.getElementById("headerInput").value;
+            const message = document.getElementById("messageTextarea").value;
+            console.log(data.post_id + "," + header + "," + message);
+            try {
+                const response = await fetch(`/forum/update/${data.post_id}`, {
+                    method: 'PUT',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                      header: header,
+                      message: message
+                    })
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+        
+                console.log('Post updated successfully!');
+                location.reload();
+            }catch (error) {
+                console.error('Error fetching posts:', error);
+            }
+
             postUpdate.style.display = "none";
             body.style.backgroundColor = "rgba(0, 0, 0,0)";
             post.classList.remove("blur");
@@ -242,14 +275,6 @@ async function fetchIdPost(searchTerm) {
             searchBar.classList.remove("blur");
         });
     }catch (error) {
-        console.error('Error fetching posts:', error);
-    }
-}
-
-async function updatePost(post_id){
-    try {
-        await fetch(`/forum/update/${post_id}`, {method: `PUT`})
-    } catch (error) {
         console.error('Error fetching posts:', error);
     }
 }
