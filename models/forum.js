@@ -13,7 +13,7 @@ class Post{
     static async getPostbyHeader(postHeader) {
       const connection = await sql.connect(dbConfig);
   
-      const sqlQuery = `SELECT * FROM Posts WHERE header LIKE @header`; // Parameterized query
+      const sqlQuery = `SELECT * FROM Posts WHERE header LIKE @header ORDER BY post_id DESC, date_column DESC;`; // Parameterized query
   
       const request = connection.request();
       request.input("header", `${postHeader}%`);
@@ -50,7 +50,7 @@ class Post{
   static async getAllPosts() {
     const connection = await sql.connect(dbConfig);
 
-    const sqlQuery = `SELECT * FROM Posts`; // Replace with your actual table name
+    const sqlQuery = `Select * from Posts ORDER BY post_id DESC, date_column DESC;`; // Replace with your actual table name
 
     const request = connection.request();
     const result = await request.query(sqlQuery);
@@ -77,37 +77,38 @@ class Post{
       sql.close();
     }
   }
-     
-    // static async updatePost(id, newPostData) {
-    //     const connection = await sql.connect(dbConfig);
     
-    //     const sqlQuery = `UPDATE Posts SET header = @header, message = @message WHERE post_id = @post_id`; // Parameterized query
-    
-    //     const request = connection.request();
-    //     request.input("post_id", post_id);
-    //     request.input("header", newPostData.header || null); // Handle optional fields
-    //     request.input("message", newPostData.message || null);
-    
-    //     await request.query(sqlQuery);
-    
-    //     connection.close();
-    
-    //     return this.getPostById(id); // returning the updated post data
-    // }
+  static async updatePost(post_id, header, message) {
+      const connection = await sql.connect(dbConfig);
+  
+      const sqlQuery = `UPDATE Posts SET header = @header, message = @message WHERE post_id = @post_id`; // Parameterized query
+  
+      const request = connection.request();
+      request.input("post_id", post_id);
+      request.input("header", header || null); // Handle optional fields
+      request.input("message", message || null);
+  
+      await request.query(sqlQuery);
+  
+      connection.close();
+  
+      return this.getPostById(post_id); // returning the updated post data
+  }
 
-    // static async deletePost(id) {
-    //     const connection = await sql.connect(dbConfig);
-    
-    //     const sqlQuery = `DELETE FROM Posts WHERE id = @id`; // Parameterized query
-    
-    //     const request = connection.request();
-    //     request.input("id", id);
-    //     const result = await request.query(sqlQuery);
-    
-    //     connection.close();
-    
-    //     return result.rowsAffected > 0; // Indicate success based on affected rows
-    // }
+  static async deletePost(id) {
+      const connection = await sql.connect(dbConfig);
+  
+      const sqlQuery = `DELETE FROM Comments WHERE post_id =@id;
+                        DELETE FROM Posts WHERE post_id = @id`; // Parameterized query
+  
+      const request = connection.request();
+      request.input("id", id);
+      const result = await request.query(sqlQuery);
+  
+      connection.close();
+  
+      return result.rowsAffected > 0; // Indicate success based on affected rows
+  }
 }
 
 module.exports = Post;

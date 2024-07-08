@@ -27,24 +27,6 @@ cancel.addEventListener("click",function(){
     navbar.classList.remove("blur");
 });
 
-//Edit own post
-const editPost = document.getElementsByClassName("editPost");
-const postUpdate = document.getElementById("postUpdate")
-const updateCancel =  document.getElementById("updateCancel");
-
-// editPost.addEventListener("click",function(){
-//     postUpdate.style.display = "block";
-//     body.style.backgroundColor = "rgba(0, 0, 0,0.5)";
-//     post.classList.add("blur");
-//     searchBar.classList.add("blur");
-// });
-
-updateCancel.addEventListener("click",function(){
-    postUpdate.style.display = "none";
-    body.style.backgroundColor = "rgba(0, 0, 0,0)";
-    post.classList.remove("blur");
-    searchBar.classList.remove("blur");
-});
 
 //Display all post
 async function fetchPosts() {
@@ -182,6 +164,7 @@ searchForm.addEventListener("submit", function(event){
 });
 
 
+//Show selected post for user to update
 async function fetchIdPost(searchTerm) {
     try{
         const response = await fetch(`/post/id/${searchTerm}`); // Replace with your API endpoint
@@ -204,20 +187,20 @@ async function fetchIdPost(searchTerm) {
         <br>
         <form>
             <div class="form-group">
-              <input class="form-control" value="${data.header}">
+              <input id="headerInput" class="form-control" name="header" value="${data.header}">
             </div>
             <div class="form-group">
-                <textarea class="form-control">${data.message}</textarea>
+                <textarea id="messageTextarea" class="form-control" name="message">${data.message}</textarea>
             </div>
             <div class="row">
                 <div class="col-sm-4 text-center">
                     <button type="button" id="updateCancel" class="btn btn-primary">Cancel</button>
                 </div>
                 <div class="col-sm-4 text-center">
-                    <button type="button" class="btn btn-danger">DELETE</button>
+                    <button type="button" id="updateDelete" class="btn btn-danger">DELETE</button>
                 </div>
                 <div class="col-sm-4 text-center">
-                    <button type="button" class="btn btn-success">Update</button>
+                    <button type="button" id="updatePost" class="btn btn-success">Update</button>
                 </div>
             </div>
         </form>
@@ -236,9 +219,72 @@ async function fetchIdPost(searchTerm) {
             post.classList.remove("blur");
             searchBar.classList.remove("blur");
         });
+
+        const update = document.getElementById("updatePost");
+        // update.addEventListener("click",function(){
+        //     //Add function to update text and sql database
+        //     const header = document.getElementById("headerInput").value;
+        //     const message = document.getElementById("messageTextarea").value;
+        //     console.log(data.post_id + "," + header + "," + message);
+        //     updatePost(data.post_id, header, message);
+        //     postUpdate.style.display = "none";
+        //     body.style.backgroundColor = "rgba(0, 0, 0,0)";
+        //     post.classList.remove("blur");
+        //     searchBar.classList.remove("blur");
+        // });
+        update.addEventListener("click",async()=>{
+            //Add function to update text and sql database
+            const header = document.getElementById("headerInput").value;
+            const message = document.getElementById("messageTextarea").value;
+            console.log(data.post_id + "," + header + "," + message);
+            try {
+                const response = await fetch(`/forum/update/${data.post_id}`, {
+                    method: 'PUT',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                      header: header,
+                      message: message
+                    })
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+        
+                console.log('Post updated successfully!');
+                location.reload();
+            }catch (error) {
+                console.error('Error fetching posts:', error);
+            }
+
+            postUpdate.style.display = "none";
+            body.style.backgroundColor = "rgba(0, 0, 0,0)";
+            post.classList.remove("blur");
+            searchBar.classList.remove("blur");
+        });
+
+        const deletePost = document.getElementById("updateDelete");
+        deletePost.addEventListener("click",function(){
+            //Add function to delete post and sql database
+            console.log(data.post_id);
+            postDelete(data.post_id)
+            postUpdate.style.display = "none";
+            body.style.backgroundColor = "rgba(0, 0, 0,0)";
+            post.classList.remove("blur");
+            searchBar.classList.remove("blur");
+        });
     }catch (error) {
         console.error('Error fetching posts:', error);
     }
 }
 
+async function postDelete(post_id){
+    try {
+        await fetch(`/forum/delete/${post_id}`,{method: `DELETE`})
+        location.reload();
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+    }
+}
 

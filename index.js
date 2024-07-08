@@ -216,8 +216,10 @@ app.get("/forum", async (req,res) => {
     res.sendFile(filePath);
 });
 app.get('/posts/:header',forumController.getPostbyHeader); //Getting post by searching the header
-app.get('/post/id/:post_id', forumController.getPostById);
+app.get('/post/id/:post_id', forumController.getPostById); //Route to display a post
 app.post('/forum/post', forumController.createPost); // Route to handle creating a new post
+app.put('/forum/update/:post_id', forumController.updatePost); // Route to update post
+app.delete('/forum/delete/:post_id', forumController.deletePost); //Deleting the post
 
 //Comments routes
 app.get('/comments/:postId', commentsController.getCommentById); //Route to get comments
@@ -231,6 +233,7 @@ app.get("/admin/forum", async (req,res) => {
     res.sendFile(filePath);
 });
 app.get('/admin/posts/:post_id',admin_forumController.getPostById);
+app.delete('/admin/forum/delete/:post_id', admin_forumController.deletePost); //Deleting the post
 
 
 //Feedback Routes
