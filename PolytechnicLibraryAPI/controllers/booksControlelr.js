@@ -8,9 +8,13 @@ const getAllBooks = async (req, res) => {
     if (!authHeader) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
-  
+    // console.log(req.user);
     const books = await Book.getAllBooks();
-    res.json(books);
+    const result = {
+      role:req.user.role,
+      books:books
+    };
+    res.json(result);
   } catch (error) {
     console.error(error);
     res.status(500).send("Error retrieving books");
@@ -20,7 +24,7 @@ const getAllBooks = async (req, res) => {
 const updateBookAvalibility = async (req, res) => {
     const bookId = parseInt(req.params.bookId);
     const newBookAvailability = req.body.newAvailability;
-    // console.log(newBookAvailability)
+    console.log(req.body)
     try {
       const updatedBook = await Book.updateBookAvailability(bookId, newBookAvailability);
       if (!updatedBook) {

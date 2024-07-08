@@ -39,10 +39,12 @@
                 }
 
                 const data = await response.json();
+                const books = data.books;
+                const role = data.role;
                 const booksContainer = document.getElementById("booksContainer");
 
-                data.forEach(book => {
-                    booksContainer.appendChild(createBooks(book, "librarian"));
+                books.forEach(book => {
+                    booksContainer.appendChild(createBooks(book, role));
                 });
 
             } catch (error) {
