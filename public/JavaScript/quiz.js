@@ -40,7 +40,7 @@ submitBtn.addEventListener("click", async () => {
         
         const responseData = await response.json();
         console.log(responseData);
-        updateChart(responseData);
+        updateChart(responseData, questions.length);
     } catch (err) {
         console.log("Error checking answers", err);
         throw err;
@@ -49,21 +49,28 @@ submitBtn.addEventListener("click", async () => {
 
 
 
-function updateChart(fractionInput) {
-
+function updateChart(fractionInput, noOfQuestions) {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
     const container = document.getElementById("resultsContainer");
     const circle = document.getElementById("circle");
     const percentage = document.getElementById("percentage");
-    
-    let fraction = parseFloat(fractionInput/15);
+    const overlay = document.getElementById("overlay");
+
+    let fraction = parseFloat(fractionInput/noOfQuestions);
     
     
     const percentageValue = (fraction * 100).toFixed(2) + '%';
-    percentage.textContent = percentageValue;
+    percentage.textContent = `${fractionInput} / ${noOfQuestions}`;
     const degree = fraction * 360;
     
     circle.style.background = `conic-gradient(#88C431 ${degree}deg, #F7FFEC ${degree}deg)`;
     container.style.display = "flex";
+    overlay.style.display = "block";
+    
+    document.body.classList.add('no-scroll');
 }
 
 redoBtn.addEventListener("click", () => {

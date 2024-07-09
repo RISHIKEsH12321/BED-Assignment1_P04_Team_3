@@ -99,8 +99,14 @@ const getIndustryInfo = async (req, res) => {
 
         // Access the document object
         const document = dom.window.document;
+        
+        // Get the main_intro container and set its bg image
+        const mainIntro = document.getElementById("main_intro");
+        mainIntro.style.backgroundImage = `url(../../images/industry${industry_id}.jpg)`;
 
-
+        //Get the quiz btn and sets it redirect link
+        const quizBtn = document.getElementById("QuizButtonA");
+        quizBtn.href = `/users/quiz/${industry_id}`;
 
         // Populate Industry Name
         const industryName = document.getElementById("IndustryName");
@@ -135,7 +141,8 @@ const getIndustryInfo = async (req, res) => {
 
             var ChallengeIntroContainer = document.createElement("div");
             ChallengeIntroContainer.id = "ChallengeIntroContainer";
-
+            ChallengeIntroContainer.classList.add("hidden");
+    
             var ChallengeNameDesContainer = document.createElement("div");
             ChallengeNameDesContainer.id = "ChallengeNameDesContainer";
             ChallengeNameDesContainer.appendChild(ChallengeIntroTitle);
@@ -151,15 +158,17 @@ const getIndustryInfo = async (req, res) => {
             //Challenge Content
             
             var ChallengeContainerTitle  = document.createElement("h1");
-            ChallengeContainerTitle.textContent= challengesArray[i].challenge_name;
+            ChallengeContainerTitle.textContent= challengesArray[i].challenge_name;            
 
             var ChallengeContainerHeader = document.createElement("h2");
             ChallengeContainerHeader.textContent= "Overcoming " + challengesArray[i].challenge_name;
 
-            var ChallengeContainerContent  = document.createElement("div");
+            var ChallengeContainerContent  = document.createElement("p");
             ChallengeContainerContent.textContent= challengesArray[i].challenge_content;
             
             var ChallengeContentContainer = document.createElement("div");
+            ChallengeContentContainer.id = "ChallengeContentContainer";
+            ChallengeContentContainer.classList.add("hidden");
             ChallengeContentContainer.appendChild(ChallengeContainerTitle);
             ChallengeContentContainer.appendChild(ChallengeContainerHeader);
             ChallengeContentContainer.appendChild(ChallengeContainerContent);
