@@ -5,6 +5,13 @@ const jwt = require("jsonwebtoken");
 async function registerUser(req, res) {
   const { username, passwordHash, role } = req.body;
 
+  //Sample req Body
+  // {
+  //   "username": "john_doe",
+  //   "passwordHash": "examplePassword123",
+  //   "role": "member"
+  // }
+
   try {
     // Validate user data
     // ... your validation logic here ...
@@ -21,6 +28,7 @@ async function registerUser(req, res) {
 
     // Hash password
     const salt = await bcryptjs.genSalt(10);
+    console.log(username);
     const hashedPassword = await bcryptjs.hash(passwordHash, salt);
 
     data = {
@@ -49,7 +57,6 @@ async function registerUser(req, res) {
 
 async function login(req, res) {
   const { username, password } = req.body;
-
   try {
     // Validate user credentials
     const user = await User.getUserByUsername(username);
@@ -58,7 +65,7 @@ async function login(req, res) {
     }
 
     // Compare password with hash
-    console.log(user.passwordHash)
+    // console.log(user.passwordHash)
     const isMatch = await bcryptjs.compare(password, user.passwordHash);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
