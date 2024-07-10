@@ -31,6 +31,11 @@ const add_button = document.getElementById("button_add_question");
 const delete_button = document.getElementById("button_delete_question");
 const save_question_button = document.getElementById("button_save_question");
 
+//Current User
+const user_id = localStorage.getItem("user_id");
+const admin_id = localStorage.getItem("admin_id");
+const username = localStorage.getItem("username");
+
 // Load data when page is loaded
 document.addEventListener("DOMContentLoaded", async function() {
   await populateSelectors(); // Initial population
@@ -39,7 +44,6 @@ document.addEventListener("DOMContentLoaded", async function() {
 // Event listener to fetch data and populate selectors
 const populateSelectors = async () => {
   const result = await getData(); // Use getData function
-  console.log(result);
   if (result) {
     // Store currently selected values
     const selectedIndustryId = industry_selector.value;
@@ -243,7 +247,9 @@ save_question_button.addEventListener("click", async () => {
           { option_id: option_3_btn.value, option_text: newOption3 },
           { option_id: option_4_btn.value, option_text: newOption4 }
         ],
-        correct_option_id: correctOptionId
+        correct_option_id: correctOptionId,
+        user_id:user_id,
+        admin_id:admin_id
       })
     });
 
@@ -313,7 +319,9 @@ add_button.addEventListener("click", async () => {
           { option_text: newOption3 },
           { option_text: newOption4 }
         ],
-        correct_option_id: correctOptionId
+        correct_option_id: correctOptionId,
+        user_id:user_id,
+        admin_id:admin_id
       })
     });
 
@@ -347,7 +355,9 @@ delete_button.addEventListener("click", async () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        question_id: selectedQuestionId
+        question_id: selectedQuestionId,
+        user_id:user_id,
+        admin_id:admin_id
       })
     });
 
@@ -368,12 +378,23 @@ async function handleResponse(response, successfulMsg) {
     if (successfulMsg){
       showToast(successfulMsg);
     }
+    
     return await response.json();
   } else if (response.status === 400) {
     const errorData = await response.json();
     console.error("Validation error:", errorData.errors);
     showToast("Validation error: " + errorData.errors.join(", "));
     throw new Error("Validation error");
+  } else if (response.status === 401) {
+    const errorData = await response.json();
+    console.error("Access error:", errorData.details);
+    showToast("Access error: " + errorData.details);
+    throw new Error("Access error");
+  }else if (response.status === 402) {
+    const errorData = await response.json();    
+    console.error("Access error:", errorData.details);
+    showToast("Access error: " + errorData.details);
+    throw new Error("Access error");
   } else {
     console.error("Unexpected response status:", response.status);
     showToast("Unexpected error occurred. Please try again.");

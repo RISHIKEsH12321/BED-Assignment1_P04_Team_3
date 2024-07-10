@@ -1,5 +1,6 @@
 const Industry_Info = require("../models/industry_info");
 const Industry_Challenges = require("../models/industry_challenges");
+const validateRole = require("../middleware/validateRole");
 
 const fs = require("fs");
 const path = require("path");
@@ -192,32 +193,38 @@ const getIndustryInfo = async (req, res) => {
 };
 
 const createNewChallenge = async (req, res) => {
-    const newChallenge = req.body;
-    console.log(newChallenge);
-    try {
-      const data = await Industry_Challenges.createNewChallenge(newChallenge);
-      if (!data) {
-        return res.status(404).send("Challenge not found");
+  const newChallenge = req.body;
+  try {
+      const role = await validateRole.validateUserRole(req);
+      if (role === "admin") {
+          const data = await Industry_Challenges.createNewChallenge(newChallenge);
+          if (!data) {
+              return res.status(404).send("Challenge not found");
+          }
+          res.status(200).json(data);
+      } else {
+          return res.status(401).json({ message: "Access error", details: "You are not an Admin. Lack of access." });
       }
-    res.status(200).json(data);
-
-    } catch (error) {
+  } catch (error) {
       console.error(error);
-      res.status(500).send("Error creating Challenge");
-    }
+      res.status(500).json({ message: "Error creating Challenge", error: error.message });
+  }
 };
-
 
 const updateChallenge = async (req, res) => {
     const newChallenge = req.body;
     console.log(newChallenge);
     try {
-      const data = await Industry_Challenges.updateChallenge(newChallenge);
-      if (!data) {
-        return res.status(404).send("Challenge not found");
+      const role = await validateRole.validateUserRole(req);
+      if (role === "admin") {
+        const data = await Industry_Challenges.updateChallenge(newChallenge);
+        if (!data) {
+          return res.status(404).send("Challenge not found");
+        }
+        res.status(200).json(data);
+      } else {
+        return res.status(401).json({ message: "Access error", details: "You are not an Admin. Lack of access." });
       }
-    res.status(200).json(data);
-
     } catch (error) {
       console.error(error);
       res.status(500).send("Error creating Challenge");
@@ -228,27 +235,37 @@ const updateIndustryInfo = async (req, res) => {
     const industry_id = req.body.id;
     const newIndustryIntro = req.body.introduction;
     try {
-      const data = await Industry_Info.updateIndustryInfo(industry_id, newIndustryIntro);
-      if (!data) {
-        return res.status(404).send("Industry not found");
+      const role = await validateRole.validateUserRole(req);
+      if (role === "admin") {
+        const data = await Industry_Info.updateIndustryInfo(industry_id, newIndustryIntro);
+        if (!data) {
+          return res.status(404).send("Industry not found");
+        }
+        res.status(200).json(data);
+      } else {
+        return res.status(401).json({ message: "Access error", details: "You are not an Admin. Lack of access." });
       }
-    res.status(200).json(data);
-
     } catch (error) {
       console.error(error);
       res.status(500).send("Error Updating Industry");
     }
 };
 
+
+
 const deleteIndustryChallenge = async (req, res) => {
     const industry_id = parseInt(req.params.id);
     try {
-      const data = await Industry_Challenges.deleteIndustryChallenge(industry_id);
-      if (!data) {
-        return res.status(404).send("Challenge not found");
+      const role = await validateRole.validateUserRole(req);
+      if (role === "admin") {
+        const data = await Industry_Challenges.deleteIndustryChallenge(industry_id);
+        if (!data) {
+          return res.status(404).send("Challenge not found");
+        }
+      res.status(200).json(data);
+      } else {
+        return res.status(401).json({ message: "Access error", details: "You are not an Admin. Lack of access." });
       }
-    res.status(200).json(data);
-
     } catch (error) {
       console.error(error);
       res.status(500).send("Error deleting Challenge");

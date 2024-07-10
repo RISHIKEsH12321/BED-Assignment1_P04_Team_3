@@ -22,6 +22,7 @@ const feedbackController = require("./controller/feedbackController");
 
 //MiddleWare for each person
 const validateIndustryAndQuiz = require("./middleware/industryAndQuizValidation");
+const validateRole = require("./middleware/validateRole");
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
@@ -166,7 +167,7 @@ app.put("/admin/industry/challenge", validateIndustryAndQuiz.validateSaveChallen
 
 app.put("/admin/industry/intro", validateIndustryAndQuiz.validateSaveIntro, industry_info_controller.updateIndustryInfo); // Update Industry Introduction
 
-app.delete("/admin/industry/:id",industry_info_controller.deleteIndustryChallenge); // Delete Challenge
+app.delete("/admin/industry/:id", validateIndustryAndQuiz.validateDeleteChallenge,industry_info_controller.deleteIndustryChallenge); // Delete Challenge
 
 //Quiz Routes
 app.get("/users/quiz/checkAnswers", quiz_controller.checkAnswers); //Check Answers and return result

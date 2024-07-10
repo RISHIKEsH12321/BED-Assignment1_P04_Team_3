@@ -1,4 +1,5 @@
 const Quiz_Question = require("../models/quiz_question");
+const validateRole = require("../middleware/validateRole");
 
 const fs = require("fs");
 const path = require("path");
@@ -103,8 +104,6 @@ const displayAdminPage = async (req,res) =>{
 }
 
 const checkAnswers = async (req,res) =>{
-
-
   try{
     const questionData = req.query;
     const formattedData = questionData.question_id.map((question_id, index) => ({
@@ -129,50 +128,61 @@ const checkAnswers = async (req,res) =>{
 }
 
 const updateQuestion = async (req,res) =>{
-    const newQuesion = req.body;
-    
-    try {
+  const newQuesion = req.body;
+  
+  try {
+    const role = await validateRole.validateUserRole(req);
+    if (role === "admin") {
       const data = await Quiz_Question.updateQuestion(newQuesion);
       if (!data) {
         return res.status(404).send("Question not found");
       }
-    res.status(200).json(data);
-
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Error Updating Question");
+      res.status(200).json(data);
+    } else {
+      return res.status(401).json({ message: "Access error", details: "You are not an Admin. Lack of access." });
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error Updating Question");
+  }
 }
 
 const createNewQuestion = async (req,res) =>{
-    const newQuesion = req.body;
-    try {
+  const newQuesion = req.body;
+  try {
+    const role = await validateRole.validateUserRole(req);
+    if (role === "admin") {
       const data = await Quiz_Question.createNewQuestion(newQuesion);
       if (!data) {
         return res.status(404).send("Question not found");
       }
-    res.status(200).json(data);
-
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Error Creating Question");
+      res.status(200).json(data);
+    } else {
+      return res.status(401).json({ message: "Access error", details: "You are not an Admin. Lack of access." });
     }
-
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error Creating Question");
+  }
 }
 
 const deleteQuestion = async (req,res) =>{
-    const question_id = req.body.question_id;
-    try {
-        const data = await Quiz_Question.deleteQuestion(question_id);
-        if (!data) {
-          return res.status(404).send("Question not found");
-        }
-      res.status(200).json(data);
-  
-      } catch (error) {
-        console.error(error);
-        res.status(500).send("Error Deleting Question");
+  const question_id = req.body.question_id;
+  try {
+    const role = await validateRole.validateUserRole(req);
+    if (role === "admin") {
+      const data = await Quiz_Question.deleteQuestion(question_id);
+      if (!data) {
+        return res.status(404).send("Question not found");
       }
+    res.status(200).json(data);
+    } else {
+      return res.status(401).json({ message: "Access error", details: "You are not an Admin. Lack of access." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error Deleting Question");
+  }
   
 }
 

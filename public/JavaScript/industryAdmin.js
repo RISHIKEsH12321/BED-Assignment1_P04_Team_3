@@ -28,6 +28,11 @@ const add_button = document.getElementById("button_add_challenge");
 const delete_button = document.getElementById("button_delete_challenge");
 const save_challenge_button = document.getElementById("button_save_challenge");
 
+//Current User
+const user_id = localStorage.getItem("user_id");
+const admin_id = localStorage.getItem("admin_id");
+const username = localStorage.getItem("username");
+
 document.addEventListener("DOMContentLoaded", async function() {
 
   await populateSelectors(); // Initial population
@@ -76,7 +81,7 @@ const populateSelectors = async () => {
 
       // Populate Challenge Selector
       const challenge_option = document.createElement("option");
-      challenge_option.textContent = "Select Challenge";
+      challenge_option.textContent = "Select Challange";
       challenge_option.value = "";
 
       const challenge_option_add = document.createElement("option");
@@ -197,7 +202,9 @@ save_button.addEventListener("click", async () => {
       },
       body: JSON.stringify({
         id: selectedIndustryId,
-        introduction: newIntroduction
+        introduction: newIntroduction,
+        user_id:user_id,
+        admin_id:admin_id
       })
     });
 
@@ -208,7 +215,7 @@ save_button.addEventListener("click", async () => {
     await populateSelectors();
   } catch (error) {
     console.error('Error updating industry introduction:', error);
-    showToast("Error updating industry introduction");
+    // showToast("  Error updating industry introduction");
   }
 });
 
@@ -242,7 +249,9 @@ save_challenge_button.addEventListener("click", async () => {
         challenge_id: selectedChallengeId,
         challenge_name: newName,
         challenge_description: newDes,
-        challenge_content: newContent
+        challenge_content: newContent,
+        user_id:user_id,
+        admin_id:admin_id
       })
     });
 
@@ -253,7 +262,7 @@ save_challenge_button.addEventListener("click", async () => {
     await populateSelectors();
   } catch (error) {
     console.error('Error updating industry introduction:', error);
-    showToast('Error updating industry introduction:');
+    // showToast('Error updating industry introduction:');
   }
 });
 
@@ -271,13 +280,15 @@ add_button.addEventListener("click", async () => {
     const newDes = challenge_des.value;
     const newContent = challenge_content.value;
 
+    console.log(`userid: ${user_id}\nadmin_id: ${admin_id}\nusername:  ${username}`);
+
     if (newName === "" || newDes === "" || newContent === "" || !newName || !newDes || !newContent) {
       console.log("Enter values for all fields");
       showToast("Enter values for all fields");
       return;
     }
 
-    console.log(newName + "\n" + newDes + "\n" + newContent);
+    // console.log(newName + "\n" + newDes + "\n" + newContent);
     try {
       // Send PUT request to update industry introduction
       const response = await fetch('/admin/industry', {
@@ -289,7 +300,9 @@ add_button.addEventListener("click", async () => {
           id: selectedIndustryId,
           name: newName,
           description: newDes,
-          content: newContent
+          content: newContent,
+          user_id:user_id,
+          admin_id:admin_id
         })
       });
 
@@ -300,10 +313,11 @@ add_button.addEventListener("click", async () => {
       await populateSelectors();
     } catch (error) {
       console.error('Error adding industry challenge:', error);
+      showToast('Error adding industry challenge:');
     }
   } else {
     console.log("Invalid selector option");
-    showToast("Invalid selector option");
+    // showToast("Invalid selector option");
   }
 });
 
@@ -323,16 +337,21 @@ delete_button.addEventListener("click", async()=>{
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify({
+          user_id:user_id,
+          admin_id:admin_id
+      })
     });
 
     const data = await handleResponse(response,"Sucessfully Deleted Challenge");
-    console.log(data);
+    console.log(response.status);
 
     // Update result variable request
     await populateSelectors();
   } catch (error) {
-    console.error('Error updating industry introduction:', error);
+    console.error('Error deleting industry introduction:', error);
+    // showToast('Error deleting industry challenge:');
   }
 });
 
@@ -350,12 +369,23 @@ async function handleResponse(response, successfulMsg) {
     console.error("Validation error:", errorData.errors);
     showToast("Validation error: " + errorData.errors.join(", "));
     throw new Error("Validation error");
+  } else if (response.status === 401) {
+    const errorData = await response.json();
+    console.error("Access error:", errorData.details);
+    showToast("Access error: " + errorData.details);
+    throw new Error("Access error");
+  }else if (response.status === 402) {
+    const errorData = await response.json();
+    console.error("Access error:", errorData.details);
+    showToast("Access error: " + errorData.details);
+    throw new Error("Access error");
   } else {
     console.error("Unexpected response status:", response.status);
     showToast("Unexpected error occurred. Please try again.");
     throw new Error("Unexpected error");
   }
 }
+
 // Remove all child elements
 function removeAllChildren(element) {
   while (element.firstChild) {
