@@ -28,41 +28,29 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-auto">
-                <button type="button" class="btn btn-primary">Posts</button>
+                <button type="button" class="btn btn-primary" onclick="fetchPosts()">Posts</button>
             </div>
             <div class="col-md-auto">
-                <button type="button" class="btn btn-primary">Comments</button>
+                <button type="button" class="btn btn-primary" onclick="fetchComments()">Comments</button>
             </div>
-            <div class="col-md-auto"> 
+            <!-- <div class="col-md-auto"> 
                 <button type="button" class="btn btn-primary">Deleted</button>
-            </div>
+            </div> -->
         </div>
     </div>
     <br>
-    <!-- Post list -->
+    <!-- Post/Comment list -->
     <div class="container mt-3">
         <table class="table">
           <thead class="thead-light">
             <tr>
-              <th scope="col">POST ID</th>
+              <th scope="col" id="tableID">POST ID</th>
               <th scope="col">Date Created</th>
-              <th scope="col">Type</th>
+              <th scope="col" id="type">Type</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody id="tableBody" style="background-color: white;">
-            <tr>
-              <td>P3</td>
-              <td>3/3/3</td>
-              <td>Agriculture</td>
-              <td><button type="button" class="btn btn-primary">Read</button></td>
-            </tr>
-            <tr>
-                <td>P1</td>
-                <td>1/1/1</td>
-                <td>Agriculture</td>
-                <td><button type="button" class="btn btn-primary">Read</button></td>
-              </tr>
           </tbody>
         </table>
     </div>
@@ -88,7 +76,13 @@
                 </div>
             </div>
         </div>
-       
+    </div>
+
+    <!-- reading comment -->
+    <div id="comment">
+        <b>Jonas</b>
+        <p>Commented on: 2010-05-18</p>
+        <p>nice idea man.</p>
     </div>
     <script src="../JavaScript/forumScripts_admin.js"></script>
 </body>
