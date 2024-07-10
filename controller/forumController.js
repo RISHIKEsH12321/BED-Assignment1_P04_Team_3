@@ -69,7 +69,7 @@ const updatePost = async (req, res) => {
       console.error(error);
       res.status(500).send("Error updating post");
     }
-  };
+};
 
 const deletePost = async (req, res) => {
     const postId = parseInt(req.params.post_id);
@@ -84,7 +84,7 @@ const deletePost = async (req, res) => {
       console.error(error);
       res.status(500).send("Error deleting post");
     }
-  };
+};
   
 
 module.exports = {

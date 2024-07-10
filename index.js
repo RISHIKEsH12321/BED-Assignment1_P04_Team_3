@@ -22,6 +22,7 @@ const feedbackController = require("./controller/feedbackController");
 
 //MiddleWare for each person
 const validateIndustryAndQuiz = require("./middleware/industryAndQuizValidation");
+const validateForum = require("./middleware/forumValidation");
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
@@ -208,7 +209,7 @@ app.get("/", async  (req,res) =>{
 });
 
 
-//Forum routes
+//User forum routes
 app.get('/posts', forumController.getAllPosts); //Getting all post
 app.get("/forum", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "forum.html");
@@ -217,24 +218,26 @@ app.get("/forum", async (req,res) => {
 });
 app.get('/posts/:header',forumController.getPostbyHeader); //Getting post by searching the header
 app.get('/post/id/:post_id', forumController.getPostById); //Route to display a post
-app.post('/forum/post', forumController.createPost); // Route to handle creating a new post
-app.put('/forum/update/:post_id', forumController.updatePost); // Route to update post
+app.post('/forum/post', validateForum.validatePost, forumController.createPost); // Route to handle creating a new post
+app.put('/forum/update/:post_id', validateForum.validatePost, forumController.updatePost); // Route to update post
 app.delete('/forum/delete/:post_id', forumController.deletePost); //Deleting the post
 
 //Comments routes
 app.get('/comments/:postId', commentsController.getCommentById); //Route to get comments
-app.post('/comments', commentsController.createComment);// Post comments
+app.post('/comments', validateForum.validateComments, commentsController.createComment);// Post comments
 
 //Admin forum routes
-app.get('/admin/posts', admin_forumController.getAllPosts); //Getting all post
+app.get('/admin/posts', admin_forumController.getAllPosts); //Getting all post for admin
 app.get("/admin/forum", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "adminForum.html");
     console.log("File path is", filePath);
     res.sendFile(filePath);
 });
-app.get('/admin/posts/:post_id',admin_forumController.getPostById);
+app.get('/admin/posts/:post_id',admin_forumController.getPostById); //Getting specific post
 app.delete('/admin/forum/delete/:post_id', admin_forumController.deletePost); //Deleting the post
-
+app.get('/admin/forum/comments', commentsController.getAllComments); //Getting all comments
+app.get('/admin/forum/comments/:comment_id', commentsController.getCommentByCommentId); //Getting specific comment
+app.delete('/admin/forum/comment/delete/:comment_id', commentsController.deleteComment); //Deleting the comment
 
 //Feedback Routes
 app.get("/admin/allfeedback", feedbackController.getAllFeedback); // admin getting every feedback
