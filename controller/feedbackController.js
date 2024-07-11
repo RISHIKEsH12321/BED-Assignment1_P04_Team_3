@@ -1,8 +1,8 @@
 const Feedback = require("../models/feedback");
 
-const getAllFeedback = async (req, res) => {
+const getOngoingFeedback = async (req, res) => {
     try{
-        const feedbacks = await Feedback.getAllFeedback();
+        const feedbacks = await Feedback.getOngoingFeedback();
         res.json(feedbacks);
     }
     catch(error){
@@ -10,6 +10,16 @@ const getAllFeedback = async (req, res) => {
         res.status(500).send("Error retrieving feedbacks");
     }
 };
+
+const getResolvedFeedback = async (req, res) => {
+    try{
+        const feedbacks = await Feedback.getResolvedFeedback();
+        res.json(feedbacks);
+    }catch(error){
+        console.error(error);
+        res.status(500).send("Error retrieving feedbacks");
+    }
+}
 
 const createFeedback = async (req, res) => {
     const newFeedback = req.body;
@@ -24,6 +34,7 @@ const createFeedback = async (req, res) => {
 };
 
 module.exports = {
-    getAllFeedback,
+    getOngoingFeedback,
+    getResolvedFeedback,
     createFeedback
 }

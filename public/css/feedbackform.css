@@ -58,3 +58,67 @@ h2 {
 #feedback-form button:hover {
     background-color: #3baf8d;
 }
+
+
+/* original codes */
+/* body {
+    font-family: Arial, sans-serif;
+    background-color: #f5fbe9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#feedback-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#feedback-form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#feedback-form select,
+#feedback-form input,
+#feedback-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#feedback-form button {
+    background-color: #4ae3b5;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1em;
+    align-self: center;
+}
+
+#feedback-form button:hover {
+    background-color: #3baf8d;
+} */
+
+

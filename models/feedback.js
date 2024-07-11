@@ -14,12 +14,38 @@ class Feedback {
         this.date_created = date_created;
     }
 
-    static async getAllFeedback() {
+    static async getOngoingFeedback() {
         const connection = await sql.connect(dbConfig);
 
-        const sqlQuery = `SELECT * FROM Feedback`;
+        const sqlQuery = `SELECT * FROM Feedback WHERE resolve = "N"`;
 
         const request = connection.request();
+        
+        const result = await request.query(sqlQuery);
+
+        connection.close();
+
+        return result.recordset.map(
+            (row) => new Feedback(row.id,
+                row.type,
+                row.name,
+                row.emai,
+                row.number,
+                row.comment,
+                row.resolve,
+                row.favourite,
+                row.date_created
+            )
+        );
+    }
+
+    static async getResolvedFeedback() {
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `SELECT * FROM Feedback WHERE resolve = "Y"`;
+
+        const request = connection.request();
+        
         const result = await request.query(sqlQuery);
 
         connection.close();
