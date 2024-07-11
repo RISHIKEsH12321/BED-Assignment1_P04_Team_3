@@ -3,16 +3,15 @@ const Joi = require("joi");
 
 // Middleware for Adding a Industry Introductions
 const validateSaveIntro = (req, res, next) => {
-  if (checkForIds(req)){
-    res.status(402).json({ message: "Access Error", details: ["You must login to change data."] });
-    return;
-  }
+  if (checkForIds(req, res)){ return; }
+  
   
   const schema = Joi.object({
     id: Joi.string().required(),
     introduction: Joi.string().min(3).required(),
     user_id: Joi.required(),
-    admin_id: Joi.required()
+    admin_id: Joi.required(),
+    token: Joi.required()
   });
 
   const validation = schema.validate(req.body, { abortEarly: false }); // Validate request body
@@ -28,10 +27,8 @@ const validateSaveIntro = (req, res, next) => {
 
 // Middleware for Updating a challenge
 const validateSaveChallenge = (req, res, next) => {
-  if (checkForIds(req)){
-    res.status(402).json({ message: "Access Error", details: ["You must login to change data."] });
-    return;
-  }
+  if (checkForIds(req, res)){ return; }
+  
   console.log("validateSaveChallenge IS RUN ")
   const schema = Joi.object({
     challenge_id: Joi.string().required(),
@@ -39,7 +36,8 @@ const validateSaveChallenge = (req, res, next) => {
     challenge_description: Joi.string().min(3).required(),
     challenge_content: Joi.string().min(3).required(),
     user_id: Joi.required(),
-    admin_id: Joi.required()
+    admin_id: Joi.required(),
+    token: Joi.required()
   });
 
   const validation = schema.validate(req.body, { abortEarly: false }); // Validate request body
@@ -55,17 +53,16 @@ const validateSaveChallenge = (req, res, next) => {
 
 // Middleware for Adding a challenge
 const validateAddChallenge = (req, res, next) => {
-  if (checkForIds(req)){
-    res.status(402).json({ message: "Access Error", details: ["You must login to change data."] });
-    return;
-  }
+  if (checkForIds(req, res)){ return; }
+  
   const schema = Joi.object({
       id: Joi.string().required(),
       name: Joi.string().min(3).required(),
       description: Joi.string().min(3).required(),
       content: Joi.string().min(3).required(),
       user_id: Joi.required(),
-      admin_id: Joi.required()
+      admin_id: Joi.required(),
+      token: Joi.required()
   });
 
   const validation = schema.validate(req.body, { abortEarly: false }); // Validate request body
@@ -81,13 +78,12 @@ const validateAddChallenge = (req, res, next) => {
 
 // Middleware for Deleting a challenge
 const validateDeleteChallenge = (req, res, next) => {
-  if (checkForIds(req)){
-    res.status(402).json({ message: "Access Error", details: ["You must login to change data."] });
-    return;
-  }
+  if (checkForIds(req, res)){ return; }
+
   const schema = Joi.object({
       user_id: Joi.required(),
-      admin_id: Joi.required()
+      admin_id: Joi.required(),
+      token: Joi.required()
   });
 
   const validation = schema.validate(req.body, { abortEarly: false }); // Validate request body
@@ -103,10 +99,8 @@ const validateDeleteChallenge = (req, res, next) => {
 
 // Middleware for updating a question
 const validateUpdateQuestion = (req, res, next) => {
-  if (checkForIds(req)){
-    res.status(402).json({ message: "Access Error", details: ["You must login to change data."] });
-    return;
-  }
+  if (checkForIds(req, res)){ return; }
+  
 
   const schema = Joi.object({
       question_id: Joi.number().integer().required(),
@@ -119,7 +113,9 @@ const validateUpdateQuestion = (req, res, next) => {
       ).length(4).required(),
       correct_option_id: Joi.string().required(),
       user_id: Joi.required(),
-      admin_id: Joi.required()
+      admin_id: Joi.required(),
+      token: Joi.required(),
+      token: Joi.required()
   });
 
   const { error } = schema.validate(req.body, { abortEarly: false });
@@ -134,10 +130,8 @@ const validateUpdateQuestion = (req, res, next) => {
 
 // Middleware for creating a new question
 const validateCreateQuestion = (req, res, next) => {
-  if (checkForIds(req)){
-    res.status(402).json({ message: "Access Error", details: ["You must login to change data."] });
-    return;
-  }
+  if (checkForIds(req, res)){ return; }
+  
   const schema = Joi.object({
       industry_id: Joi.string().required(),
       question_text: Joi.string().min(3).required(),
@@ -148,7 +142,8 @@ const validateCreateQuestion = (req, res, next) => {
       ).length(4).required(),
       correct_option_id: Joi.number().integer().valid(1, 2, 3, 4).required(),
       user_id: Joi.required(),
-      admin_id: Joi.required()
+      admin_id: Joi.required(),
+      token: Joi.required()
     });
 
   const { error } = schema.validate(req.body, { abortEarly: false });
@@ -163,15 +158,14 @@ const validateCreateQuestion = (req, res, next) => {
 
 // Middleware for deleting a question
 const validateDeleteQuestion = (req, res, next) => {
-  if (checkForIds(req)){
-    res.status(402).json({ message: "Access Error", details: ["You must login to change data."] });
-    return;
-  }
+  if (checkForIds(req, res)){ return; }
+  
 
   const schema = Joi.object({
       question_id: Joi.number().integer().required(),
       user_id: Joi.required(),
-      admin_id: Joi.required()
+      admin_id: Joi.required(),
+      token: Joi.required()
   });
 
   const { error } = schema.validate(req.body, { abortEarly: false });
@@ -186,9 +180,10 @@ const validateDeleteQuestion = (req, res, next) => {
 
 
 // Check if user_id or admin_id is null
-const checkForIds = (req)=>{
-  if (!req.body.user_id && !req.body.admin_id) {
-    console.log("Goes through if")
+const checkForIds = (req, res)=>{
+  if (!req.body.user_id && !req.body.admin_id && !req.body.token) {
+    console.log("Goes through if");
+    res.status(402).json({ message: "Access Error", details: ["You must login to change data."] });
     return true; 
   }
 }

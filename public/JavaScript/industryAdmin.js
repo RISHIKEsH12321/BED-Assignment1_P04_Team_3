@@ -32,9 +32,9 @@ const save_challenge_button = document.getElementById("button_save_challenge");
 const user_id = localStorage.getItem("user_id");
 const admin_id = localStorage.getItem("admin_id");
 const username = localStorage.getItem("username");
+const token = localStorage.getItem("token");
 
 document.addEventListener("DOMContentLoaded", async function() {
-
   await populateSelectors(); // Initial population
 });
 
@@ -204,7 +204,8 @@ save_button.addEventListener("click", async () => {
         id: selectedIndustryId,
         introduction: newIntroduction,
         user_id:user_id,
-        admin_id:admin_id
+        admin_id:admin_id,
+        token:token
       })
     });
 
@@ -251,7 +252,8 @@ save_challenge_button.addEventListener("click", async () => {
         challenge_description: newDes,
         challenge_content: newContent,
         user_id:user_id,
-        admin_id:admin_id
+        admin_id:admin_id,
+        token:token
       })
     });
 
@@ -302,7 +304,8 @@ add_button.addEventListener("click", async () => {
           description: newDes,
           content: newContent,
           user_id:user_id,
-          admin_id:admin_id
+          admin_id:admin_id,
+          token:token
         })
       });
 
@@ -340,7 +343,8 @@ delete_button.addEventListener("click", async()=>{
       },
       body: JSON.stringify({
           user_id:user_id,
-          admin_id:admin_id
+          admin_id:admin_id,
+          token:token
       })
     });
 

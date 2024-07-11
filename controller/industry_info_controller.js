@@ -202,8 +202,10 @@ const createNewChallenge = async (req, res) => {
               return res.status(404).send("Challenge not found");
           }
           res.status(200).json(data);
-      } else {
+      } else if (role === "user") {
           return res.status(401).json({ message: "Access error", details: "You are not an Admin. Lack of access." });
+      } else {
+        return res.status(401).json({ message: "Access error", details: role });
       }
   } catch (error) {
       console.error(error);
@@ -222,8 +224,10 @@ const updateChallenge = async (req, res) => {
           return res.status(404).send("Challenge not found");
         }
         res.status(200).json(data);
-      } else {
+      } else if (role === "user") {
         return res.status(401).json({ message: "Access error", details: "You are not an Admin. Lack of access." });
+      } else {
+        return res.status(401).json({ message: "Access error", details: role });
       }
     } catch (error) {
       console.error(error);
@@ -242,8 +246,10 @@ const updateIndustryInfo = async (req, res) => {
           return res.status(404).send("Industry not found");
         }
         res.status(200).json(data);
-      } else {
+      } else if (role === "user") {
         return res.status(401).json({ message: "Access error", details: "You are not an Admin. Lack of access." });
+      } else {
+        return res.status(401).json({ message: "Access error", details: role });
       }
     } catch (error) {
       console.error(error);
@@ -263,8 +269,10 @@ const deleteIndustryChallenge = async (req, res) => {
           return res.status(404).send("Challenge not found");
         }
       res.status(200).json(data);
-      } else {
+      } else if (role === "user") {
         return res.status(401).json({ message: "Access error", details: "You are not an Admin. Lack of access." });
+      } else {
+        return res.status(401).json({ message: "Access error", details: role });
       }
     } catch (error) {
       console.error(error);

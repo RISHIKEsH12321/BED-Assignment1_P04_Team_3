@@ -249,7 +249,8 @@ save_question_button.addEventListener("click", async () => {
         ],
         correct_option_id: correctOptionId,
         user_id:user_id,
-        admin_id:admin_id
+        admin_id:admin_id,
+        token:token
       })
     });
 
@@ -321,7 +322,8 @@ add_button.addEventListener("click", async () => {
         ],
         correct_option_id: correctOptionId,
         user_id:user_id,
-        admin_id:admin_id
+        admin_id:admin_id,
+        token:token
       })
     });
 
@@ -357,7 +359,8 @@ delete_button.addEventListener("click", async () => {
       body: JSON.stringify({
         question_id: selectedQuestionId,
         user_id:user_id,
-        admin_id:admin_id
+        admin_id:admin_id,
+        token:token
       })
     });
 
