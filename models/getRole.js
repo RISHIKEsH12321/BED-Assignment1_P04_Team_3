@@ -13,7 +13,7 @@ class Role{
     static async getUserRole(userId, adminId, token){
         try{
 
-            const decoded = jwt.decode(token);
+            const decoded = jwt.verify(token, process.env.JWT_SECERT);
             console.log(decoded); // Access the user role
             console.log(`UserID: ${userId}`);
             console.log(`AdminId: ${adminId}`);

@@ -6,7 +6,11 @@ const dbConfig = require("./dbConfig");
 const bodyparser=require("body-parser")
 const path = require('path');
 const fs = require("fs");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json"); // Import generated spec
 
+
+//Controllers
 const usercontroller = require("./controllers/usercontroller")
 const booksController = require("./controllers/booksControlelr")
 const verifyJWT = require("./middlewares/authmiddleware");
@@ -17,6 +21,10 @@ const port = process.env.PORT || 3000; // Use environment variable or default po
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 app.get("/loginPage", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html","login.html"));
