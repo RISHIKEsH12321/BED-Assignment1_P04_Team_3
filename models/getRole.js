@@ -44,6 +44,7 @@ class Role{
                 const result = await request.query(sqlQuery);
                 console.log("Secont Check: "+ result.recordset[0].user_role);
                 const adminTableRole = result.recordset[0].user_role;
+                return adminTableRole;
             }
 
             connection.close();
