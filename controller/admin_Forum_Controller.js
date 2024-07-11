@@ -1,11 +1,16 @@
 //Done by Joseph
 const Admin_Forum = require("../models/admin_Forum");
-
+const validateRole = require("../middleware/validateRole");
 
 const getAllPosts = async (req, res) => {
     try {
+      const role = await validateRole.validateUserRole(req);
+      if (role === "admin") {
       const posts = await Admin_Forum.getAllPosts();
       res.json(posts);
+    } else {
+      return res.status(401).json({ message: "Access error", details: role });
+    }
     } catch (error) {
       console.error(error);
       res.status(500).send("Error retrieving posts");

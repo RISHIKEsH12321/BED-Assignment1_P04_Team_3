@@ -95,6 +95,7 @@ button:hover {
     border: none; /* Remove default border */
     border-radius: 5px; /* Round the corners */
     cursor: pointer; /* Change cursor to pointer */
+    margin-bottom:5%;
     transition: background-color 0.3s ease; /* Smooth transition for hover effect */
   }
   

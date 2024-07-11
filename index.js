@@ -24,6 +24,7 @@ const feedbackController = require("./controller/feedbackController");
 const validateIndustryAndQuiz = require("./middleware/industryAndQuizValidation");
 const validateForum = require("./middleware/forumValidation");
 const validateRole = require("./middleware/validateRole");
+const verifyuser = require("./middleware/restrictionvalidation");
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
@@ -155,7 +156,7 @@ app.get("/loginadmin", (req,res) => {
 })
 
 
-app.get("/admin/viewUser", (req,res) => {
+app.get("/admin/viewUser", verifyuser.verifyJWTuser, (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "allUsers.html");
     console.log("File path is", filePath);
     res.sendFile(filePath);

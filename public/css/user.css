@@ -53,6 +53,7 @@ body {
     text-align: center;
     font-size: 2em;
     font-weight: bold;
+    max-width: 100%;
 }
 
 .right-column {
