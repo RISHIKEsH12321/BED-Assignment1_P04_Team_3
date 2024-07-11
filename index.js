@@ -75,6 +75,31 @@ app.get("/home", (req, res) => {
     });
 });
 
+app.get("/adminActions", (req, res) => {
+    const filePath = path.join(__dirname, "public", "html", "adminActions.html");
+    console.log("File path is" + filePath);
+    // Read the index.html file
+    fs.readFile(filePath, "utf8", (err, data) => {
+        if (err) {
+            console.error("Error reading index.html file:", err);
+            res.status(500).send("Internal Server Error");
+            return;
+        }
+
+        // Create a new JSDOM instance
+        const dom = new JSDOM(data);
+
+        // Access the document object
+        const document = dom.window.document;
+
+        // Serialize the modified document back to a string
+        const modifiedContent = dom.serialize();
+
+        // Send the modified content as the response
+        res.send(dom.serialize());
+    });
+});
+
 // Users Route (Ye Chyang)
 app.post("/users/account/login", User_Account_Controller.userlogin);
 app.get("/users/account/:id", User_Account_Controller.getUserById); // get specific user
