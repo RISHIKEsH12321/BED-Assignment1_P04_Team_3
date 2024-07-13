@@ -17,10 +17,10 @@ class Feedback {
     static async getOngoingFeedback() {
         const connection = await sql.connect(dbConfig);
 
-        const sqlQuery = `SELECT * FROM Feedback WHERE resolve = "N"`;
+        const sqlQuery = `SELECT * FROM Feedback WHERE resolve = @resolve`;
 
         const request = connection.request();
-        
+        request.input("resolve", "N");
         const result = await request.query(sqlQuery);
 
         connection.close();
@@ -29,7 +29,7 @@ class Feedback {
             (row) => new Feedback(row.id,
                 row.type,
                 row.name,
-                row.emai,
+                row.email,
                 row.number,
                 row.comment,
                 row.resolve,
@@ -42,10 +42,10 @@ class Feedback {
     static async getResolvedFeedback() {
         const connection = await sql.connect(dbConfig);
 
-        const sqlQuery = `SELECT * FROM Feedback WHERE resolve = "Y"`;
+        const sqlQuery = `SELECT * FROM Feedback WHERE resolve = @resolve`;
 
         const request = connection.request();
-        
+        request.input("resolve", "Y");
         const result = await request.query(sqlQuery);
 
         connection.close();
@@ -54,7 +54,7 @@ class Feedback {
             (row) => new Feedback(row.id,
                 row.type,
                 row.name,
-                row.emai,
+                row.email,
                 row.number,
                 row.comment,
                 row.resolve,

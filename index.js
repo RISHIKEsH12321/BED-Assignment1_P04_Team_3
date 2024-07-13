@@ -270,8 +270,10 @@ app.get('/admin/forum/comments/:comment_id', commentsController.getCommentByComm
 app.delete('/admin/forum/comment/delete/:comment_id', commentsController.deleteComment); //Deleting the comment
 
 //Feedback Routes
-app.get("/admin/allfeedback", feedbackController.getAllFeedback); // admin getting every feedback
+app.get("/admin/ongoingfeedback", feedbackController.getOngoingFeedback); // admin getting every ongoing feedback
+app.get("/admin/resolvedfeedback", feedbackController.getResolvedFeedback); // admin getting all resolved feedback
 app.post("/users/feedback", feedbackController.createFeedback); // users post feedbacks
+app.get("/admin/feedback/:id", feedbackController.getFeedbackById); // admin getting viewing a specific feedback
 
 
 app.get("/contactus", async (req,res) => {
@@ -282,6 +284,18 @@ app.get("/contactus", async (req,res) => {
 
 app.get("/feedbackform", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "feedbackform.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+app.get("/ongoingfeedback", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "ongoingfeedback.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+app.get("/viewfeedback", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "viewfeedback.html");
     console.log("File path is", filePath);
     res.sendFile(filePath);
 });
