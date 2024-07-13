@@ -271,7 +271,8 @@ app.get('/admin/forum/comments/:comment_id', commentsController.getCommentByComm
 app.delete('/admin/forum/comment/delete/:comment_id', commentsController.deleteComment); //Deleting the comment
 
 //Feedback Routes
-
+app.get("/admin/ongoingfeedback", feedbackController.getOngoingFeedback); // admin getting every ongoing feedback
+app.get("/admin/resolvedfeedback", feedbackController.getResolvedFeedback); // admin getting all resolved feedback
 app.post("/users/feedback", feedbackController.createFeedback); // users post feedbacks
 app.get("/admin/feedback/:id", feedbackController.getFeedbackById); // admin getting viewing a specific feedback
 
