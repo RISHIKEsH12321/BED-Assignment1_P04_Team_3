@@ -17,6 +17,21 @@ const validateUserRole = async (req, res) =>{
 }
 
 
+const validateRoleUsingToken = async (req,res) => {
+    const {token} = req.body;
+
+    try{
+        const role = await getRole.getRoleByToken(token);
+
+        return role;
+    } catch (error){
+        console.error("Login Error: ", error);
+        res.json({message: "Internal server error"})
+    }
+}
+
+
 module.exports = {
-    validateUserRole
+    validateUserRole,
+    validateRoleUsingToken
 }

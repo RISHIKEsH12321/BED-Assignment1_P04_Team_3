@@ -83,13 +83,48 @@ document.addEventListener("DOMContentLoaded", function() {
             });
     
             if (response.ok) {
+                // User account created successfully
+                showToast("Account created successfully");
                 window.location.href = '/loginuser';
             } else {
-                alert('Unable to create account');
+                // Display error message
+                const result = await response.json();
+                if (result.errors && result.errors.length > 0) {
+                    result.errors.forEach(error => {
+                        showToast(error);
+                    });
+                } else {
+                    showToast("Unknown error occurred");
+                }
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Unable to create account');
+            showToast("Unable to create account");
         }
     });
 });
+
+
+function showToast(message) {
+    // Create a new toast element
+    const toast = document.createElement('div');
+    toast.classList.add('toast');
+    toast.textContent = message;
+
+    // Add the toast to the container
+    const toastContainer = document.getElementById('toast-container');
+    toastContainer.appendChild(toast);
+
+    // Fade in the toast
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+
+    // Remove the toast after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            toast.remove();
+        }, 500); // Remove toast after transition ends
+    }, 3000);
+}

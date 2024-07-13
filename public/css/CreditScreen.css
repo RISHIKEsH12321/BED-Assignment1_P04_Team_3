@@ -1,0 +1,141 @@
+/* General Styles */
+body {
+    background-color: #f9f9f9;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;  
+}
+.content-section {
+    display: none;
+}
+  
+.content-section.active {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+/* Header Styles */
+header {
+    background-color: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+}
+
+header .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+header h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+  
+/* Main Styles */
+main {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 32px 16px;
+}
+  
+/* Button Styles */
+.button-container {
+    margin-bottom: 32px;
+}
+
+button {
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: medium;
+    background-color: #f0f4f8;
+    color: #1a202c;
+    margin-right: 8px;
+}
+
+.toggle-button {
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: medium;
+    background-color: #f0f4f8;
+    color: #1a202c;
+    margin-right: 8px;
+    cursor: pointer;
+}
+  
+.toggle-button.active {
+    background-color: #1a202c;
+    color: #f0f4f8;
+}
+/* Section Styles */
+section {
+    margin-top: 32px;
+}
+
+section h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: #333;
+}
+
+/* Card Styles */
+.card-container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 16px;
+}
+
+.card .title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.card .description {
+    font-size: 14px;
+    color: #4a5568;
+    margin-top: 8px;
+}
+
+.card img {
+    width: 200px;
+    height: 200px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 16px auto 0;
+}
+
+.card .link-container {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.card .link-container a svg {
+    height: 24px;
+    width: 24px;
+}
+  
