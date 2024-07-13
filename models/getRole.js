@@ -13,7 +13,7 @@ class Role{
     static async getUserRole(userId, adminId, token){
         try{
 
-            const decoded = jwt.verify(token, process.env.JWT_SECERT);
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
             console.log(decoded); // Access the user role
             console.log(`UserID: ${userId}`);
             console.log(`AdminId: ${adminId}`);
@@ -52,6 +52,33 @@ class Role{
             return result.recordset[0].user_role;
         }catch (err){
             console.log(err);
+            throw err;
+        }
+    }
+
+
+    static async getRoleByToken(token) {
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            if (!decoded) {
+                return "Invalid Token";
+            }
+
+            const userId = decoded.user_id;
+
+            const connection = await sql.connect(dbConfig);
+            const sqlQuery = `SELECT user_role FROM User_Account WHERE user_id = @user_id;`;
+        
+            const request = connection.request();
+            request.input("user_id", userId);
+            const result = await request.query(sqlQuery);
+            const userTableRole = result.recordset[0].user_role;
+
+            connection.close();
+
+            return userTableRole;
+        } catch (err) {
+            console.error("Error getting user role by token:", err);
             throw err;
         }
     }

@@ -1,11 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function() {
-
-    // const adminId = localStorage.getItem('admin_id');
-    // if (!adminId) {
-    //     alert('Access denied. Only admins can view this page.');
-    //     window.location.href = '/home';
-    //     return;
-    // }
+    
+    const token = localStorage.getItem('token');
 
     let users = [];
 

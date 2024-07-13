@@ -44,7 +44,7 @@ const userlogin = async (req, res) => {
               };
 
               // Generate JWT token
-              const token = jwt.sign(payload, "your_secret_key", { expiresIn: "3600s" });
+              const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3600s" });
               res.status(200).json({
                   message: "Login successful",
                   token: token,

@@ -84,17 +84,46 @@ document.addEventListener("DOMContentLoaded", function() {
             });
 
             if (response.ok) {
-                // If account creation is successful, redirect to /loginadmin
+                showToast("Account created successfully");
                 window.location.href = '/loginadmin';
             } else {
-                // If account creation fails, alert the user and redirect to /registeruser
-                alert('Unable to create admin account');
-                window.location.href = '/registeruser';
+                const result = await response.json();
+                if (result.errors && result.errors.length > 0) {
+                    result.errors.forEach(error => {
+                        showToast(error);
+                    });
+                } else {
+                    showToast("Unknown error occurred");
+                }
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Unable to create admin account');
-            window.location.href = '/registeruser';
+            showToast("Unable to create account");
         }
     });
 });
+
+
+function showToast(message) {
+    // Create a new toast element
+    const toast = document.createElement('div');
+    toast.classList.add('toast');
+    toast.textContent = message;
+
+    // Add the toast to the container
+    const toastContainer = document.getElementById('toast-container');
+    toastContainer.appendChild(toast);
+
+    // Fade in the toast
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+
+    // Remove the toast after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            toast.remove();
+        }, 500); // Remove toast after transition ends
+    }, 3000);
+}

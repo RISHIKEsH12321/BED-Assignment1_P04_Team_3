@@ -1,33 +1,12 @@
 // Admin Controller (Ye Chyang)
 const Admin_Account = require("../models/Admin_Account");
 const path = require("path");
-
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
-// const adminlogin = async (req,res) => {
-//     const { username, user_password } = req.body;
-
-//     try {
-//         // Call the userlogin method from the model
-//         const isLoggedIn = await Admin_Account.adminlogin(username, user_password);
-
-//         if (isLoggedIn) {
-//             res.status(200).json({
-//               message: "Login successful",
-//               admin_id: isLoggedIn.admin_id,
-//               user_id: isLoggedIn.user_id
-//             });
-//         } else {
-//             res.status(401).json({ message: "Invalid username or password" });
-//         }
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: "Internal server error" });
-//     }
-// };
+const validateRole = require("../middleware/validateRole");
+const { user } = require("../dbConfig");
 
 const adminlogin = async (req, res) => {
     const { username, user_password } = req.body;
@@ -48,7 +27,7 @@ const adminlogin = async (req, res) => {
                     admin_id: admin.admin_id,
                 };
 
-                const token = jwt.sign(payload, process.env.JWT_SECERT, { expiresIn: "3600s" });
+                const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3600s" });
                 res.status(200).json({
                     message: "Login successful",
                     token: token,
@@ -95,21 +74,7 @@ const getAllUsers = async (req,res) => {
 }
 
 
-// const AdmincreateAccount = async (req, res) => {
-//     const { username, user_email, user_phonenumber, user_password, user_role, security_code } = req.body;
-//     const newUserData = { username, user_email, user_phonenumber, user_password, user_role };
-
-//     try {
-//         const createdAccount = await Admin_Account.AdmincreateAccount(newUserData, security_code);
-//         res.status(201).json(createdAccount);
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).send("Error creating user");
-//     }
-// };
-
-
-const AdmincreateAccount = async (req, res) => {
+const AdmincreateAccount = async (req, res) => { 
     const { username, user_email, user_phonenumber, user_password, user_role, security_code } = req.body;
 
     try {
@@ -135,14 +100,24 @@ const AdmincreateAccount = async (req, res) => {
 };
 
 
-// const AdminupdateUser = async (req,res) => {
+
+// const AdminupdateUser = async (req, res) => {
 //     const userId = parseInt(req.params.id);
 //     const newUserData = req.body;
 
 //     try {
+//         if (newUserData.user_password) {
+//             // Hash the new password
+//             const salt = await bcryptjs.genSalt(10);
+//             newUserData.user_password = await bcryptjs.hash(newUserData.user_password, salt);
+//         } else {
+//             // Remove user_password from newUserData if it's not provided
+//             delete newUserData.user_password;
+//         }
+
 //         const updatedUser = await Admin_Account.AdminupdateUser(userId, newUserData);
 //         if (!updatedUser) {
-//           return res.status(404).send("User not found");
+//             return res.status(404).send("User not found");
 //         }
 //         res.json(updatedUser);
 //     } catch (error) {
@@ -151,30 +126,71 @@ const AdmincreateAccount = async (req, res) => {
 //     }
 // }
 
+
 const AdminupdateUser = async (req, res) => {
     const userId = parseInt(req.params.id);
     const newUserData = req.body;
 
     try {
-        if (newUserData.user_password) {
-            // Hash the new password
-            const salt = await bcryptjs.genSalt(10);
-            newUserData.user_password = await bcryptjs.hash(newUserData.user_password, salt);
-        } else {
-            // Remove user_password from newUserData if it's not provided
-            delete newUserData.user_password;
-        }
+        const role = await validateRole.validateRoleUsingToken(req);
+        
+        if (role === 'admin') {
 
-        const updatedUser = await Admin_Account.AdminupdateUser(userId, newUserData);
-        if (!updatedUser) {
-            return res.status(404).send("User not found");
+            const userToUpdate = await Admin_Account.getUserById(userId);
+
+            if (!userToUpdate) {
+                return res.status(404).send("User not found");
+            }
+
+            if (userToUpdate.user_role === 'admin' && parseInt(req.body.user_id) !== userId) {
+                return res.status(403).send('Access denied. Admins cannot update other admin accounts.');
+            }
+
+            // Admin can update any user's profile
+            if (newUserData.user_password) {
+                // Hash the new password
+                const salt = await bcryptjs.genSalt(10);
+                newUserData.user_password = await bcryptjs.hash(newUserData.user_password, salt);
+            } else {
+                // Remove user_password from newUserData if it's not provided
+                delete newUserData.user_password;
+            }
+
+            const updatedUser = await Admin_Account.AdminupdateUser(userId, newUserData);
+            if (!updatedUser) {
+                return res.status(404).send("User not found");
+            }
+            return res.json(updatedUser);
+        } else if (role === 'user') {
+            // User can only update their own profile
+            if (parseInt(req.body.user_id) !== userId) {
+                return res.status(403).send('Access denied. You can only update your own profile.');
+            }
+
+            if (newUserData.user_password) {
+                // Hash the new password
+                const salt = await bcryptjs.genSalt(10);
+                newUserData.user_password = await bcryptjs.hash(newUserData.user_password, salt);
+            } else {
+                // Remove user_password from newUserData if it's not provided
+                delete newUserData.user_password;
+            }
+
+            const updatedUser = await Admin_Account.AdminupdateUser(userId, newUserData);
+            if (!updatedUser) {
+                return res.status(404).send("User not found");
+            }
+            return res.json(updatedUser);
+        } else {
+            return res.status(403).send('Access denied. Admins only.');
         }
-        res.json(updatedUser);
     } catch (error) {
         console.error(error);
         res.status(500).send("Error updating User");
     }
 }
+
+
 
 
 const AdmindeleteUser = async (req,res) => {

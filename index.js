@@ -22,12 +22,13 @@ const forumController = require("./controller/forumController");
 const admin_forumController = require("./controller/admin_Forum_Controller");
 const commentsController = require("./controller/commentsController");
 const feedbackController = require("./controller/feedbackController");
+const rolecontroller = require("./controller/getRoleController");
 
 //MiddleWare for each person
 const validateIndustryAndQuiz = require("./middleware/industryAndQuizValidation");
 const validateForum = require("./middleware/forumValidation");
 const validateRole = require("./middleware/validateRole");
-const verifyuser = require("./middleware/restrictionvalidation");
+const validateCreateAccount = require('./middleware/AccountValidation');
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
@@ -107,7 +108,7 @@ app.get("/adminActions", (req, res) => {
 // Users Route (Ye Chyang)
 app.post("/users/account/login", User_Account_Controller.userlogin);
 app.get("/users/account/:id", User_Account_Controller.getUserById); // get specific user
-app.post("/users/account", User_Account_Controller.createAccount); // Create user account
+app.post("/users/account",validateCreateAccount.validateAccountUser,User_Account_Controller.createAccount); // Create user account
 app.put("/users/account/:id", User_Account_Controller.updateUser); // Update user
 app.delete("/users/account/:id", User_Account_Controller.deleteUser); // Delete user
 app.get("/users/forgotpassword/:user_email", User_Account_Controller.userforgotpassword); // Forgot password
@@ -117,7 +118,7 @@ app.post("/users/check-password",User_Account_Controller.checkPassword)
 app.post("/admin/account/login", Admin_Account_Controller.adminlogin);
 app.get("/admin/account", Admin_Account_Controller.getAllUsers); // Get all user
 app.get("/admin/account/:id", Admin_Account_Controller.getUserById); // Get specific user
-app.post("/admin/account/create", Admin_Account_Controller.AdmincreateAccount); // Create Admin Account
+app.post("/admin/account/create",validateCreateAccount.validateAccountAdmin, Admin_Account_Controller.AdmincreateAccount); // Create Admin Account
 app.put("/admin/account/:id", Admin_Account_Controller.AdminupdateUser); // Update Account
 app.delete("/admin/account/:id", Admin_Account_Controller.AdmindeleteUser); // Delete Account 
 app.get("/admin/forgotpassword/:user_email", Admin_Account_Controller.adminforgotpassword);
@@ -159,11 +160,11 @@ app.get("/loginadmin", (req,res) => {
 })
 
 
-app.get("/admin/viewUser", verifyuser.verifyJWTuser, (req,res) => {
+app.get("/admin/viewUser", (req, res) => {
     const filePath = path.join(__dirname, "public", "html", "allUsers.html");
     console.log("File path is", filePath);
     res.sendFile(filePath);
-})
+});
 
 app.get("/account-profile/:id", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "editprofile.html");
