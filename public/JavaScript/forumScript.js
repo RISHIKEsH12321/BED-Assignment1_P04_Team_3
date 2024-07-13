@@ -221,17 +221,6 @@ async function fetchIdPost(searchTerm) {
         });
 
         const update = document.getElementById("updatePost");
-        // update.addEventListener("click",function(){
-        //     //Add function to update text and sql database
-        //     const header = document.getElementById("headerInput").value;
-        //     const message = document.getElementById("messageTextarea").value;
-        //     console.log(data.post_id + "," + header + "," + message);
-        //     updatePost(data.post_id, header, message);
-        //     postUpdate.style.display = "none";
-        //     body.style.backgroundColor = "rgba(0, 0, 0,0)";
-        //     post.classList.remove("blur");
-        //     searchBar.classList.remove("blur");
-        // });
         update.addEventListener("click",async()=>{
             //Add function to update text and sql database
             const header = document.getElementById("headerInput").value;
@@ -249,13 +238,15 @@ async function fetchIdPost(searchTerm) {
                     })
                 });
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    const errorMessage = await response.json()
+                    throw new Error(`${errorMessage.errors}`);
                 }
         
                 console.log('Post updated successfully!');
                 location.reload();
             }catch (error) {
                 console.error('Error fetching posts:', error);
+                showToast(error);
             }
 
             postUpdate.style.display = "none";
@@ -288,3 +279,60 @@ async function postDelete(post_id){
     }
 }
 
+function showToast(message) {
+    const toastContainer = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.classList.add('toast');
+    toast.textContent = message;
+    toastContainer.appendChild(toast);
+    
+    // Show the toast
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+  
+    // Hide the toast after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        // Remove the toast from the DOM after it fades out
+        setTimeout(() => {
+            toastContainer.removeChild(toast);
+        }, 500);
+    }, 3000);
+}
+
+const postForm = document.getElementById("postCreationSubmit");
+postForm.addEventListener("click",async()=>{
+    //Add function to update text and sql database
+    const header = document.getElementById("headerInput").value;
+    const message = document.getElementById("messageTextarea").value;
+    console.log(header + "," + message);
+    try {
+        const response = await fetch(`/forum/post`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              header: header,
+              message: message
+            })
+        });
+        if (!response.ok) {
+            const errorMessage = await response.json()
+            throw new Error(`${errorMessage.errors}`);
+        }
+
+        console.log('Post updated successfully!');
+        postCreation.style.display = "none";
+        body.style.backgroundColor = "rgba(0, 0, 0,0)";
+        post.classList.remove("blur");
+        searchBar.classList.remove("blur");
+        navbar.classList.remove("blur");
+        location.reload();
+    }catch (error) {
+        console.error('Error fetching posts:', error);
+        showToast(error);
+    }
+
+});
