@@ -80,6 +80,27 @@ app.get("/home", (req, res) => {
     });
 });
 
+app.get("/credits", (req,res) =>{
+    const filePath = path.join(__dirname, "public", "html", "CreditScreen.html");
+    console.log("File path is" + filePath);
+    // Read the index.html file
+    fs.readFile(filePath, "utf8", (err, data) => {
+        if (err) {
+            console.error("Error reading index.html file:", err);
+            res.status(500).send("Internal Server Error");
+            return;
+        }
+
+        // Create a new JSDOM instance
+        const dom = new JSDOM(data);
+
+        // Access the document object
+        const document = dom.serialize();
+
+        res.send(document);
+    });
+})
+
 app.get("/adminActions", (req, res) => {
     const filePath = path.join(__dirname, "public", "html", "adminActions.html");
     console.log("File path is" + filePath);

@@ -127,7 +127,7 @@ body{
     background-color: #F7FFEC;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 5;
     border-radius: 3%;
     border: 3px solid #D49A42; /* Add this line to include a border */
     padding-top: 5px;

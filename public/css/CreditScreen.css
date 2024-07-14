@@ -1,3 +1,10 @@
+:root{
+    --logoFirstColor:#88C431;
+    --logoSecondColor: #D49A42;
+    --backgroundGreen: #F7FFEC;
+    --backgroundGreenDarker: #4dffa6;
+}
+
 /* General Styles */
 body {
     background-color: #f9f9f9;
@@ -6,6 +13,7 @@ body {
     margin: 0;
     padding: 0;  
 }
+
 .content-section {
     display: none;
 }
@@ -55,26 +63,37 @@ button {
     padding: 8px 16px;
     font-size: 14px;
     font-weight: medium;
-    background-color: #f0f4f8;
+    /* background-color: #f0f4f8; */
     color: #1a202c;
     margin-right: 8px;
 }
 
 .toggle-button {
-    border: none;
+    border: 3px solid transparent; /* Add transparent border */
     border-radius: 4px;
     padding: 8px 16px;
-    font-size: 14px;
-    font-weight: medium;
-    background-color: #f0f4f8;
-    color: #1a202c;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: var(--backgroundGreen);
+    color: var(--logoSecondColor);
     margin-right: 8px;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
-  
+
+.toggle-button:hover{
+    border: 3px solid var(--logoSecondColor);
+}
+
 .toggle-button.active {
-    background-color: #1a202c;
+    background-color: var(--logoFirstColor);
     color: #f0f4f8;
+}
+
+.toggle-button.active:hover {
+    background-color: var(--logoFirstColor);
+    color: #f0f4f8;
+    border: 3px solid transparent;
 }
 /* Section Styles */
 section {

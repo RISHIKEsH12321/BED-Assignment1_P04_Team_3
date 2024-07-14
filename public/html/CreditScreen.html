@@ -5,14 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Credits Page</title>
   <link rel="stylesheet" href="../css/CreditScreen.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+
+  <link rel="icon" type="image/x-icon" href="../../images/Icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton+SC&display=swap" rel="stylesheet">
+
   <script src="../JavaScript/CreditScreen.js" defer></script>
 </head>
 <body>
-  <header>
-    <div>
-      <h1>Credits Page</h1>
-    </div>
-  </header>
+  <div class="navbar">
+    <a id = "HomeLogo" href = "/home">
+      <div id = "logo">
+        <img id="navbar_logo" src="../../images/image_transparent_removed_white.png" alt="Logo">
+        <span class="LogoHeader first">Agri</span><span class="LogoHeader second">Dynamic</span>
+      </div>
+    </a>
+
+    <div class="dropdown">
+      <button class="dropbtn">Agriculture Industries 
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <h1>INDUSTRIES</h1>
+        <a href="/users/industry/1">Agriculture</a>
+        <h1>SUB-INDUSTRIES</h1>
+        <a href="/users/industry/2">Crop Production</a>
+        <a href="/users/industry/3">Livestock Farming</a>
+        <a href="/users/industry/4">Horticulture</a>
+        <a href="/users/industry/5">Agrotechnology</a>
+      </div>
+    </div> 
+
+    <a href="#" class="navbarItem">Forum</a>
+    <a href="#" class="navbarItem">About Us</a>
+    <a href="#" class="navbarItem">Contact us</a>
+    <a href="./credits" class="navbarItem">Credits</a>
+    <img id="profile_pic_navbar" src="../../images/profile-user.png" alt="Logo">
+    <!-- <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a> -->
+  </div>
+
   <main>
     <div class="button-container">
       <button class="toggle-button" data-target="acknowledgments">Acknowledgments</button>
