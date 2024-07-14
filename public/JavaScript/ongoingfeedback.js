@@ -32,7 +32,7 @@ async function fetchOngoingFeedbacks() {
 
         const actionCell = document.createElement('td');
         const actionLink = document.createElement('a');
-        actionLink.href = '#';
+        actionLink.href = `/viewfeedback/${feedback.id}`;
         actionLink.textContent = 'Read';
         actionCell.appendChild(actionLink);
 
