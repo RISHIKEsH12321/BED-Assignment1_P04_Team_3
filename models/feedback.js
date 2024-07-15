@@ -145,6 +145,32 @@ class Feedback {
 
         return this.getFeedbackById(id); // return the updated feedback
     }
+
+    // getting all favourited feedback
+    static async getFavourite() {
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `SELECT * FROM Feedback WHERE favourite = @favourite`;
+
+        const request = connection.request();
+        request.input("favourite", "Y");
+        const result = await request.query(sqlQuery);
+
+        connection.close();
+
+        return result.recordset.map(
+            (row) => new Feedback(row.id,
+                row.type,
+                row.name,
+                row.email,
+                row.number,
+                row.comment,
+                row.resolve,
+                row.favourite,
+                row.date_created
+            )
+        );
+    }
 }
 
 module.exports = Feedback;
