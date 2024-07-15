@@ -56,6 +56,11 @@ body, html {
   font-size: 1.5rem;
   max-width: 768px;
   margin-bottom: 48px;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  padding: 16px;
+  border-radius: 8px;
+
 }
 
 .header-content button {
@@ -65,6 +70,7 @@ body, html {
   border: none;
   color: white;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .container {
