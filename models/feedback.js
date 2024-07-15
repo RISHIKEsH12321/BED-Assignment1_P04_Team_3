@@ -14,6 +14,7 @@ class Feedback {
         this.date_created = date_created;
     }
 
+    //getting all ongoing feedback
     static async getOngoingFeedback() {
         const connection = await sql.connect(dbConfig);
 
@@ -39,6 +40,7 @@ class Feedback {
         );
     }
 
+    // getting all the resolved feedback
     static async getResolvedFeedback() {
         const connection = await sql.connect(dbConfig);
 
@@ -64,6 +66,7 @@ class Feedback {
         );
     }
 
+    //getting a specific feedback using id
     static async getFeedbackById(id) {
         const connection = await sql.connect(dbConfig);
 
@@ -90,6 +93,7 @@ class Feedback {
             : null;
     }
 
+    // for creating a new feedback
     static async createFeedback(newFeedbackData) {
         const connection = await sql.connect(dbConfig);
 
@@ -108,6 +112,22 @@ class Feedback {
         connection.close();
 
         return this.getFeedbackById(result.recordset[0].id);
+    }
+
+    // updating the resolve of a specific feedback 
+    static async updateResolve(id, newResolve){
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `UPDATE Feedback SET resolve = @resolve WHERE id = @id`;
+
+        const request = connection.request();
+        request.input("id", id);
+        request.input("resolve", newResolve.resolve);
+
+        await request.query(sqlQuery);
+        connection.close();
+
+        return this.getFeedbackById(id); // return the updated feedback
     }
 }
 

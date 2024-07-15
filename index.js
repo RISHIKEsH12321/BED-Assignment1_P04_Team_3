@@ -296,7 +296,7 @@ app.get("/admin/ongoingfeedback", feedbackController.getOngoingFeedback); // adm
 app.get("/admin/resolvedfeedback", feedbackController.getResolvedFeedback); // admin getting all resolved feedback
 app.post("/users/feedback", feedbackController.createFeedback); // users post feedbacks
 app.get("/admin/feedback/:id", feedbackController.getFeedbackById); // admin getting viewing a specific feedback
-
+app.put("/admin/resolve/:id", feedbackController.updateResolve); // admin changing the status of resolve on a feedback
 
 app.get("/contactus", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "contactus.html");
