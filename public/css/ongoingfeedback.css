@@ -80,15 +80,25 @@ td a:hover {
     text-decoration: underline;
 }
 
+
+
 .star {
     font-size: 2em;
     cursor: pointer;
 }
 
-.star.gray {
+.gray {
+    color: #ccc;
+}
+
+.gold {
+    color: #ffd700;
+}
+
+/* .star.gray {
     color: #ccc;
 }
 
 .star.gold {
     color: #ffd700;
-}
+} */

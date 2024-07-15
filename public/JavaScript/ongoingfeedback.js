@@ -25,7 +25,9 @@ async function fetchOngoingFeedbacks() {
         id.textContent = feedback.id;
         
         const date = document.createElement("td");
-        date.textContent = feedback.date_created;
+        const dateData = new Date(feedback.date_created);
+        const formattedDate = dateData.toLocaleDateString();
+        date.textContent = formattedDate;
 
         const type = document.createElement("td");
         type.textContent = feedback.type;
@@ -50,7 +52,7 @@ async function fetchOngoingFeedbacks() {
 fetchOngoingFeedbacks(); // calling function
 
 
-// changing the star between gray and gold when clicked
+/* // changing the star between gray and gold when clicked
 document.addEventListener('DOMContentLoaded', (event) => {
     const stars = document.querySelectorAll('.star');
     
@@ -65,4 +67,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
     });
-});
+}); */

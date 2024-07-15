@@ -35,7 +35,7 @@ if (feedbackId) {
 //updating resolve of feedback to Y
 document.getElementById('resolve-button').addEventListener('click', async function() {
     try {
-        const response = await fetch(`/users/feedback/${feedbackId}`, {
+        const response = await fetch(`/admin/resolve/${feedbackId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
