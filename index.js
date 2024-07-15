@@ -55,28 +55,11 @@ app.get("/home", (req, res) => {
         // Create a new JSDOM instance
         const dom = new JSDOM(data);
 
-        // Access the document object
-        const document = dom.window.document;
-
-        // Locate the div with id "modifyTest" and insert new content
-        const divToModify = document.getElementById("modifyTest");
-        if (divToModify) {
-            const divToInsert = document.createElement("div");
-            divToInsert.textContent = "Asdasd";
-
-            const newElement = document.createElement("h1");
-            newElement.id = "TestSubject1";
-            newElement.textContent = "New Element";
-
-            divToModify.appendChild(divToInsert);
-            divToModify.appendChild(newElement);
-        }
-
         // Serialize the modified document back to a string
-        const modifiedContent = dom.serialize();
+        const document = dom.serialize();
 
         // Send the modified content as the response
-        res.send(modifiedContent);
+        res.send(document);
     });
 });
 
@@ -179,7 +162,6 @@ app.get("/loginadmin", (req,res) => {
     console.log("File path is", filePath);
     res.sendFile(filePath);
 })
-
 
 app.get("/admin/viewUser", (req, res) => {
     const filePath = path.join(__dirname, "public", "html", "allUsers.html");
