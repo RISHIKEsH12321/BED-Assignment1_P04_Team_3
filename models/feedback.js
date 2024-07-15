@@ -129,6 +129,22 @@ class Feedback {
 
         return this.getFeedbackById(id); // return the updated feedback
     }
+
+    //updating the favourite of a feedback
+    static async updateFavourite(id, newFav){
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `UPDATE Feedback SET favourite = @favourite WHERE id = @id`;
+
+        const request = connection.request();
+        request.input("id", id);
+        request.input("favourite", newFav.favourite);
+
+        await request.query(sqlQuery);
+        connection.close();
+
+        return this.getFeedbackById(id); // return the updated feedback
+    }
 }
 
 module.exports = Feedback;
