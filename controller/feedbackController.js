@@ -47,9 +47,26 @@ const createFeedback = async (req, res) => {
     }
 };
 
+const updateResolve = async (req, res) => {
+    const feedbackId = parseInt(req.params.id);
+    const newResolve = req.body;
+
+    try{
+        const updatedfeedback = await Feedback.updateResolve(feedbackId, newResolve);
+        if(!updatedfeedback){
+            return res.status(404).send("Feedback not found");
+        }
+        res.json(updatedfeedback);
+    } catch(error){
+        console.error(error);
+        res.status(500).send("Error updating feedback");
+    }
+};
+
 module.exports = {
     getOngoingFeedback,
     getResolvedFeedback,
     getFeedbackById,
-    createFeedback
+    createFeedback,
+    updateResolve
 }

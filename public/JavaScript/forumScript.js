@@ -55,9 +55,9 @@ async function fetchPosts() {
                       <div>
                           <h5>comments</h5>
                           <form class="form-inline" action="/comments" method="POST">
-                              <input class="form-control mr-sm-2" name="comment" placeholder="Comment">
-                              <input type="hidden" name="post_id" value="${post.post_id}">
-                              <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Send</button>
+                              <input id="commentMessage" class="form-control mr-sm-2" name="comment" placeholder="Comment">
+                              <input id="comment_post_id" type="hidden" name="post_id" value="${post.post_id}">
+                              <button id="commentForm_${post.post_id}" class="btn btn-outline-primary my-2 my-sm-0" type="button">Send</button>
                           </form>
                           <br>
                           <div id="comment${post.post_id}" style="border: 1;"></div>
@@ -65,12 +65,41 @@ async function fetchPosts() {
                   </div>
             `;
 
-            
-          
             forum.appendChild(container);
 
             //console.log(post.post_id);
             fetchComments(post.post_id);
+
+            const form = document.getElementById(`commentForm_${post.post_id}`)
+            form.addEventListener("click",async()=>{
+                //Add function to update text and sql database
+                const comment = document.getElementById("commentMessage").value;
+                const id = document.getElementById("comment_post_id").value;
+                console.log(id + "," + comment);
+                try {
+                    const response = await fetch(`/comments`, {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          post_id: id,
+                          comment: comment
+                        })
+                    });
+                    if (!response.ok) {
+                        const errorMessage = await response.json()
+                        throw new Error(`${errorMessage.errors}`);
+                    }
+            
+                    location.reload();
+                }catch (error) {
+                    console.error('Error fetching posts:', error);
+                    showToast(error);
+                }
+                
+            });
+            
         });
     }catch (error) {
         console.error('Error fetching posts:', error);
@@ -132,9 +161,9 @@ async function fetchSearchedPosts(searchTerm) {
                       <div>
                           <h5>comments</h5>
                           <form class="form-inline" action="/comments" method="POST">
-                              <input class="form-control mr-sm-2" name="comment" placeholder="Comment">
-                              <input type="hidden" name="post_id" value="${post.post_id}">
-                              <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Send</button>
+                              <input id="commentMessage" class="form-control mr-sm-2" name="comment" placeholder="Comment">
+                              <input id="comment_post_id" type="hidden" name="post_id" value="${post.post_id}">
+                              <button id="commentForm_${post.post_id}" class="btn btn-outline-primary my-2 my-sm-0" type="button">Send</button>
                           </form>
                           <br>
                           <div id="comment${post.post_id}" style="border: 1;"></div>
@@ -149,6 +178,37 @@ async function fetchSearchedPosts(searchTerm) {
             // Fetch comments for each post
             //console.log(post.post_id);
             fetchComments(post.post_id);
+
+            
+            const form = document.getElementById(`commentForm_${post.post_id}`)
+            form.addEventListener("click",async()=>{
+                //Add function to update text and sql database
+                const comment = document.getElementById("commentMessage").value;
+                const id = document.getElementById("comment_post_id").value;
+                console.log(id + "," + comment);
+                try {
+                    const response = await fetch(`/comments`, {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          post_id: id,
+                          comment: comment
+                        })
+                    });
+                    if (!response.ok) {
+                        const errorMessage = await response.json()
+                        throw new Error(`${errorMessage.errors}`);
+                    }
+            
+                    location.reload();
+                }catch (error) {
+                    console.error('Error fetching posts:', error);
+                    showToast(error);
+                }
+                
+            });
         });
     }catch (error) {
         console.error('Error fetching posts:', error);

@@ -1,23 +1,41 @@
-// Mock data for viewing a completed form
-const feedbackData = {
-    id: 1, // Example feedback ID
-    type: 'Bugs',
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    number: '1234567890',
-    comments: 'There is a bug in the application.'
-};
+// Function to get the feedback ID from the URL path
+function getFeedbackIdFromUrl() {
+    const path = window.location.pathname;
+    const segments = path.split('/');
+    return segments[segments.length - 1]; // Return the last segment, which should be the feedback ID
+}
 
-// Populate the form with feedback data
-document.getElementById('type').value = feedbackData.type;
-document.getElementById('name').value = feedbackData.name;
-document.getElementById('email').value = feedbackData.email;
-document.getElementById('number').value = feedbackData.number;
-document.getElementById('comments').value = feedbackData.comments;
+// Get feedback ID from URL path
+const feedbackId = getFeedbackIdFromUrl();
 
+// Fetch feedback details using the feedback ID
+async function fetchFeedbackDetails(id) {
+    try {
+        const response = await fetch(`/admin/feedback/${id}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const feedback = await response.json();
+        document.getElementById('type').value = feedback.type;
+        document.getElementById('name').value = feedback.name;
+        document.getElementById('email').value = feedback.email;
+        document.getElementById('number').value = feedback.number;
+        document.getElementById('comments').value = feedback.comment;
+    } catch (error) {
+        console.error('Error fetching feedback details:', error);
+    }
+}
+
+// Fetch feedback details on page load
+if (feedbackId) {
+    fetchFeedbackDetails(feedbackId);
+}
+
+
+//updating resolve of feedback to Y
 document.getElementById('resolve-button').addEventListener('click', async function() {
     try {
-        const response = await fetch(`/users/feedback/${feedbackData.id}`, {
+        const response = await fetch(`/admin/resolve/${feedbackId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -37,3 +55,5 @@ document.getElementById('resolve-button').addEventListener('click', async functi
         alert('There was an error resolving the feedback.');
     }
 });
+
+

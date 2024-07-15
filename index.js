@@ -55,28 +55,11 @@ app.get("/home", (req, res) => {
         // Create a new JSDOM instance
         const dom = new JSDOM(data);
 
-        // Access the document object
-        const document = dom.window.document;
-
-        // Locate the div with id "modifyTest" and insert new content
-        const divToModify = document.getElementById("modifyTest");
-        if (divToModify) {
-            const divToInsert = document.createElement("div");
-            divToInsert.textContent = "Asdasd";
-
-            const newElement = document.createElement("h1");
-            newElement.id = "TestSubject1";
-            newElement.textContent = "New Element";
-
-            divToModify.appendChild(divToInsert);
-            divToModify.appendChild(newElement);
-        }
-
         // Serialize the modified document back to a string
-        const modifiedContent = dom.serialize();
+        const document = dom.serialize();
 
         // Send the modified content as the response
-        res.send(modifiedContent);
+        res.send(document);
     });
 });
 
@@ -179,7 +162,6 @@ app.get("/loginadmin", (req,res) => {
     console.log("File path is", filePath);
     res.sendFile(filePath);
 })
-
 
 app.get("/admin/viewUser", (req, res) => {
     const filePath = path.join(__dirname, "public", "html", "allUsers.html");
@@ -296,7 +278,7 @@ app.get("/admin/ongoingfeedback", feedbackController.getOngoingFeedback); // adm
 app.get("/admin/resolvedfeedback", feedbackController.getResolvedFeedback); // admin getting all resolved feedback
 app.post("/users/feedback", feedbackController.createFeedback); // users post feedbacks
 app.get("/admin/feedback/:id", feedbackController.getFeedbackById); // admin getting viewing a specific feedback
-
+app.put("/admin/resolve/:id", feedbackController.updateResolve); // admin changing the status of resolve on a feedback
 
 app.get("/contactus", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "contactus.html");
@@ -316,7 +298,7 @@ app.get("/ongoingfeedback", async (req,res) => {
     res.sendFile(filePath);
 });
 
-app.get("/viewfeedback", async (req,res) => {
+app.get("/viewfeedback/:id", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "viewfeedback.html");
     console.log("File path is", filePath);
     res.sendFile(filePath);
