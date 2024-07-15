@@ -1,7 +1,7 @@
 
 
-async function fetchOngoingFeedbacks() {
-    const response = await fetch("/admin/ongoingfeedback");
+async function fetchResolvedFeedbacks() {
+    const response = await fetch("/admin/resolvedfeedback");
     const data = await response.json();
 
     const feedbacktable = document.getElementById("feedbacktable");
@@ -40,18 +40,26 @@ async function fetchOngoingFeedbacks() {
         actionLink.textContent = 'Read';
         actionCell.appendChild(actionLink);
 
+        const deleteCell = document.createElement('td');
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.classList.add('delete-btn');
+        deleteButton.dataset.id = feedback.id;  // Store feedback id
+        deleteCell.appendChild(deleteButton);
+
         row.appendChild(star);
         row.appendChild(id);
         row.appendChild(date);
         row.appendChild(type);
         row.appendChild(actionCell);
+        row.appendChild(deleteCell);
 
         feedbacktable.appendChild(row);
 
     });
 }
 
-fetchOngoingFeedbacks(); // calling function
+fetchResolvedFeedbacks(); // calling function
 
 // Add event listener for star toggling and updating
 feedbacktable.addEventListener('click', async function(event) {

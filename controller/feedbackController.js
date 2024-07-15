@@ -63,10 +63,38 @@ const updateResolve = async (req, res) => {
     }
 };
 
+const updateFavourite = async (req, res) => {
+    const feedbackId = parseInt(req.params.id);
+    const newFav = req.body;
+
+    try{
+        const updatedfeedback = await Feedback.updateFavourite(feedbackId, newFav);
+        if(!updatedfeedback){
+            return res.status(404).send("Feedback not found");
+        }
+        res.json(updatedfeedback);
+    } catch(error){
+        console.error(error);
+        res.status(500).send("Error updating feedback");
+    }
+};
+
+const getFavourite = async (req, res) => {
+    try{
+        const feedbacks = await Feedback.getFavourite();
+        res.json(feedbacks);
+    }catch(error){
+        console.error(error);
+        res.status(500).send("Error retrieving feedbacks");
+    }
+}
+
 module.exports = {
     getOngoingFeedback,
     getResolvedFeedback,
     getFeedbackById,
     createFeedback,
-    updateResolve
+    updateResolve,
+    updateFavourite,
+    getFavourite
 }
