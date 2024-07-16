@@ -306,6 +306,12 @@ app.get("/resolvedfeedback", async (req,res) => {
     res.sendFile(filePath);
 });
 
+app.get("/favfeedback", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "favfeedback.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
 app.get("/viewfeedback/:id", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "viewfeedback.html");
     console.log("File path is", filePath);
