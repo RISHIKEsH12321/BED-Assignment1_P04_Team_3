@@ -279,6 +279,8 @@ app.get("/admin/resolvedfeedback", feedbackController.getResolvedFeedback); // a
 app.post("/users/feedback", feedbackController.createFeedback); // users post feedbacks
 app.get("/admin/feedback/:id", feedbackController.getFeedbackById); // admin getting viewing a specific feedback
 app.put("/admin/resolve/:id", feedbackController.updateResolve); // admin changing the status of resolve on a feedback
+app.put("/admin/fav/:id", feedbackController.updateFavourite); // admin can favourite/unfavourite a feedback
+app.get("/admin/fav", feedbackController.getFavourite); // getting every favourited feedback
 
 app.get("/contactus", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "contactus.html");
@@ -294,6 +296,18 @@ app.get("/feedbackform", async (req,res) => {
 
 app.get("/ongoingfeedback", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "ongoingfeedback.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+app.get("/resolvedfeedback", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "resolvedfeedback.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+app.get("/favfeedback", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "favfeedback.html");
     console.log("File path is", filePath);
     res.sendFile(filePath);
 });

@@ -1,7 +1,7 @@
 
 
-async function fetchOngoingFeedbacks() {
-    const response = await fetch("/admin/ongoingfeedback");
+async function fetchFavFeedbacks() {
+    const response = await fetch("/admin/fav");
     const data = await response.json();
 
     const feedbacktable = document.getElementById("feedbacktable");
@@ -51,7 +51,7 @@ async function fetchOngoingFeedbacks() {
     });
 }
 
-fetchOngoingFeedbacks(); // calling function
+fetchFavFeedbacks(); // calling function
 
 // Add event listener for star toggling and updating
 feedbacktable.addEventListener('click', async function(event) {
