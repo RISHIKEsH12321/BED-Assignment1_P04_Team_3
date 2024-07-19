@@ -104,7 +104,7 @@ feedbacktable.addEventListener('click', async function(event) {
         if (confirmed) {
             // Send DELETE request to delete the feedback
             try {
-                const response = await fetch(`/users/feedback/${feedbackId}`, {
+                const response = await fetch(`/admin/feedback/${feedbackId}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -115,8 +115,8 @@ feedbacktable.addEventListener('click', async function(event) {
                     throw new Error('Network response was not ok');
                 }
 
-                const data = await response.json();
-                console.log('Delete Success:', data);
+                //const data = await response.json();
+                console.log('Delete Success');
 
                 // Remove row from UI
                 const row = deleteButton.closest('tr');
