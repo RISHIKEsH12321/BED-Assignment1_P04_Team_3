@@ -2,6 +2,9 @@
 const Admin_Forum = require("../models/admin_Forum");
 const validateRole = require("../middleware/validateRole");
 
+
+
+
 const getAllPosts = async (req, res) => {
     try {
       const role = await validateRole.validateUserRole(req);

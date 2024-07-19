@@ -1,8 +1,25 @@
 // Done by Joseph
+
+//Current User
+const user_id = localStorage.getItem("user_id");
+const admin_id = localStorage.getItem("admin_id");
+const username = localStorage.getItem("username");
+
 window.onload = fetchPosts();
 async function fetchPosts() {
     try{
-        const response = await fetch("/admin/posts"); // Replace with your API endpoint
+        const response = await fetch("/admin/posts",{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+            user_id:user_id,
+            admin_id:admin_id,
+            token:token
+            })
+        }
+        ); // Replace with your API endpoint
         const data = await response.json();
       
         const id = document.getElementById("tableID");
