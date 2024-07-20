@@ -3,11 +3,12 @@ const sql = require("mssql");
 const dbConfig = require("../dbConfig");
 
 class Post{
-    constructor(post_id, date_column, header, message ){
+    constructor(post_id, date_column, header, message, author ){
         this.post_id = post_id;
         this.date_column = date_column;
         this.header = header;
         this.message = message;
+        this.author = author;
     }
 
     static async getPostbyHeader(postHeader) {
@@ -22,7 +23,7 @@ class Post{
       connection.close();
   
       return result.recordset.map(
-        (row) => new Post(row.post_id, row.date_column, row.header, row.message)
+        (row) => new Post(row.post_id, row.date_column, row.header, row.message, row.author)
       ); // Convert rows to post objects
   }
 
@@ -42,7 +43,8 @@ class Post{
           result.recordset[0].post_id,
           result.recordset[0].date_column,
           result.recordset[0].header,
-          result.recordset[0].message
+          result.recordset[0].message,
+          result.recordset[0].author
         )
       : null;
   }
@@ -58,17 +60,18 @@ class Post{
     connection.close();
 
     return result.recordset.map(
-      (row) => new Post(row.post_id, row.date_column, row.header, row.message)
+      (row) => new Post(row.post_id, row.date_column, row.header, row.message, row.author)
     ); // Convert rows to post objects
   } 
 
-  static async createPost(header, message) {
+  static async createPost(header, message, author) {
     try {
       await sql.connect(dbConfig);
       const request = new sql.Request();
-      const query = `INSERT INTO Posts (date_column, Header, Message) VALUES (CONVERT(DATE, GETDATE()),@header, @message)`;
+      const query = `INSERT INTO Posts (date_column, Header, Message, Author) VALUES (CONVERT(DATE, GETDATE()),@header, @message, @author)`;
       request.input('header', sql.NVarChar, header);
       request.input('message', sql.NVarChar, message);
+      request.input('author', author);
       const result = await request.query(query);
       return result;
     } catch (err) {
