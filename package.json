@@ -6,6 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:industryCtl": "jest ./tests/industryController.test.js",
+    "test:userAccountCtl": "jest ./tests/User_Account_Controller.test.js",
+    "test:userAccountModel": "jest ./tests/User_Account.test.js",
     "start": "nodemon index.js"
   },
   "author": "",
