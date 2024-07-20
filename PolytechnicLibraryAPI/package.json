@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:booksController": "jest ./tests/booksController.test.js",
+    "test:books": "jest ./tests/book.test.js",
     "start": "nodemon index.js"
   },
   "author": "",
@@ -19,5 +21,8 @@
     "nodemon": "^3.1.4",
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

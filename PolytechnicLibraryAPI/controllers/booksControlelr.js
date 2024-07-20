@@ -10,14 +10,13 @@ const getAllBooks = async (req, res) => {
     }
     // console.log(req.user);
     const books = await Book.getAllBooks();
-    const result = {
-      role:req.user.role,
-      books:books
-    };
-    res.json(result);
+    // const result = {
+    //   role:req.user.role,
+    //   books:books
+    // };
+    res.json(books);
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Error retrieving books");
+    return res.status(500).send("Error retrieving books");
   }
 };
 
