@@ -30,6 +30,10 @@ const validateForum = require("./middleware/forumValidation");
 const validateRole = require("./middleware/validateRole");
 const validateCreateAccount = require('./middleware/AccountValidation');
 
+//Swagger 
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json"); // Import generated spec
+
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
 
@@ -40,6 +44,9 @@ app.use(fileUpload());
 app.use(express.json()); 
 
 const staticMiddleware = express.static("public");
+
+// Serveing Swagger UI
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/home", (req, res) => {
     const filePath = path.join(__dirname, "public", "html", "index.html");
