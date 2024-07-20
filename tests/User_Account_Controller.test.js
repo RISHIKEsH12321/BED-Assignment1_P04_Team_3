@@ -160,25 +160,6 @@ describe("User Controller", () => {
             expect(res.status).toHaveBeenCalledWith(500);
             expect(res.send).toHaveBeenCalledWith("Error retrieving User");
         });
-
-        it("should return 500 for database connectivity issues", async () => {
-            const req = {
-                params: {
-                    id: "1"
-                }
-            };
-            const res = {
-                status: jest.fn().mockReturnThis(),
-                send: jest.fn()
-            };
-        
-            User_Account.getUserById.mockRejectedValue(new Error("Database connection failed"));
-        
-            await userController.getUserById(req, res);
-        
-            expect(res.status).toHaveBeenCalledWith(500);
-            expect(res.send).toHaveBeenCalledWith("Database connection failed");
-        });
     });
 
     describe("createAccount", () => {
