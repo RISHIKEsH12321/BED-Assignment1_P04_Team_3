@@ -93,4 +93,37 @@ feedbacktable.addEventListener('click', async function(event) {
             console.error('Error:', error);
         }
     }
+    // delete button
+    else if (event.target.classList.contains('delete-btn')) {
+        const deleteButton = event.target;
+        const feedbackId = deleteButton.dataset.id;
+
+        // Show confirmation dialog
+        const confirmed = confirm("Are you sure you want to delete this feedback?");
+
+        if (confirmed) {
+            // Send DELETE request to delete the feedback
+            try {
+                const response = await fetch(`/admin/feedback/${feedbackId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                //const data = await response.json();
+                console.log('Delete Success');
+
+                // Remove row from UI
+                const row = deleteButton.closest('tr');
+                row.remove();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    }
 });

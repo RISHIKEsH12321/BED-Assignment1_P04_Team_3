@@ -171,6 +171,22 @@ class Feedback {
             )
         );
     }
+
+    // deleting feedback 
+    static async deleteFeedback(id) {
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `DELETE FROM Feedback WHERE id = @id`;
+
+        const request = connection.request();
+        request.input("id", id);
+        const result = await request.query(sqlQuery);
+
+        connection.close();
+
+        return result.rowsAffected > 0;
+    }
+
 }
 
 module.exports = Feedback;
