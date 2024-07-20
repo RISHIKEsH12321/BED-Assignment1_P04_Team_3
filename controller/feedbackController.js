@@ -89,6 +89,22 @@ const getFavourite = async (req, res) => {
     }
 }
 
+const deleteFeedback = async (req, res) => {
+    const feedbackId = parseInt(req.params.id);
+
+    try{
+        const success = await Feedback.deleteFeedback(feedbackId);
+        if (!success){
+            return res.status(404).send("Feedback not found");
+        }
+        res.status(204).send();
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).send("Error deleting feedback");
+    }
+}
+
 module.exports = {
     getOngoingFeedback,
     getResolvedFeedback,
@@ -96,5 +112,6 @@ module.exports = {
     createFeedback,
     updateResolve,
     updateFavourite,
-    getFavourite
+    getFavourite,
+    deleteFeedback
 }

@@ -10,13 +10,11 @@ const searchBar = document.getElementById("searchbar");
 const post = document.getElementById("post");
 const body = document.getElementById("wholePage");
 const cancel = document.getElementById("cancel");
-const navbar = document.getElementById("parentNav");
 newPost.addEventListener("click",function(){
     postCreation.style.display = "block";
     body.style.backgroundColor = "rgba(0, 0, 0,0.5)";
     post.classList.add("blur");
     searchBar.classList.add("blur");
-    navbar.classList.add("blur");
 });
 
 cancel.addEventListener("click",function(){
@@ -24,7 +22,6 @@ cancel.addEventListener("click",function(){
     body.style.backgroundColor = "rgba(0, 0, 0,0)";
     post.classList.remove("blur");
     searchBar.classList.remove("blur");
-    navbar.classList.remove("blur");
 });
 
 
@@ -388,7 +385,6 @@ postForm.addEventListener("click",async()=>{
         body.style.backgroundColor = "rgba(0, 0, 0,0)";
         post.classList.remove("blur");
         searchBar.classList.remove("blur");
-        navbar.classList.remove("blur");
         location.reload();
     }catch (error) {
         console.error('Error fetching posts:', error);

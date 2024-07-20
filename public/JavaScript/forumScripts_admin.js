@@ -1,5 +1,12 @@
 // Done by Joseph
+
+//Current User
+const user_id = localStorage.getItem("user_id");
+const admin_id = localStorage.getItem("admin_id");
+const username = localStorage.getItem("username");
+const token = localStorage.getItem("token");
 window.onload = fetchPosts();
+
 async function fetchPosts() {
     try{
         const response = await fetch("/admin/posts"); // Replace with your API endpoint

@@ -273,6 +273,7 @@ app.get('/admin/forum/comments', commentsController.getAllComments); //Getting a
 app.get('/admin/forum/comments/:comment_id', commentsController.getCommentByCommentId); //Getting specific comment
 app.delete('/admin/forum/comment/delete/:comment_id', commentsController.deleteComment); //Deleting the comment
 
+
 //Feedback Routes
 app.get("/admin/ongoingfeedback", feedbackController.getOngoingFeedback); // admin getting every ongoing feedback
 app.get("/admin/resolvedfeedback", feedbackController.getResolvedFeedback); // admin getting all resolved feedback
@@ -281,6 +282,7 @@ app.get("/admin/feedback/:id", feedbackController.getFeedbackById); // admin get
 app.put("/admin/resolve/:id", feedbackController.updateResolve); // admin changing the status of resolve on a feedback
 app.put("/admin/fav/:id", feedbackController.updateFavourite); // admin can favourite/unfavourite a feedback
 app.get("/admin/fav", feedbackController.getFavourite); // getting every favourited feedback
+app.delete("/admin/feedback/:id", feedbackController.deleteFeedback); // admin delete feedback from the database
 
 app.get("/contactus", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "contactus.html");
