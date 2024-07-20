@@ -41,13 +41,14 @@ class Comment{
         ); // Convert rows to comment objects
   }
 
-  static async createComment(comment, post_id) {
+  static async createComment(comment, post_id, author) {
       try {
         await sql.connect(dbConfig);
         const request = new sql.Request();
-        const query = `INSERT INTO Comments (date_column, message, post_id) VALUES (CONVERT(DATE, GETDATE()), @message, @post_id)`;
+        const query = `INSERT INTO Comments (author, date_column, message, post_id) VALUES (@author, CONVERT(DATE, GETDATE()), @message, @post_id)`;
         request.input('message', sql.NVarChar, comment);
         request.input('post_id', post_id);
+        request.input(`author`, author)
         const result = await request.query(query);
         return result;
       } catch (err) {

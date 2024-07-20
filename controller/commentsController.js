@@ -25,10 +25,10 @@ const getCommentById = async (req, res) => {
 };
 
 const createComment = async (req, res) => {
-    const {comment, post_id} = req.body;
+    const {comment, post_id, author} = req.body;
     
     try {
-      const result = await Comment.createComment(comment, post_id);
+      const result = await Comment.createComment(comment, post_id, author);
       console.log('New comment inserted successfully:', result);
       res.redirect('/forum');
       //res.status(200).send('Comment submitted successfully'); 
