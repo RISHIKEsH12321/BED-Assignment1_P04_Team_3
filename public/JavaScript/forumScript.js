@@ -1,7 +1,8 @@
 // Done by Joseph
 //Getting id and username of user that logged in
-const user_id = sessionStorage.getItem("user_id");
-const username = sessionStorage.getItem("username");
+const user_id = localStorage.getItem("user_id");
+const username = localStorage.getItem("username");
+console.log("userid: " + user_id + "name: " + username);
 
 //Creating a new post
 const newPost = document.getElementById("newPost");
@@ -11,10 +12,15 @@ const post = document.getElementById("post");
 const body = document.getElementById("wholePage");
 const cancel = document.getElementById("cancel");
 newPost.addEventListener("click",function(){
-    postCreation.style.display = "block";
-    body.style.backgroundColor = "rgba(0, 0, 0,0.5)";
-    post.classList.add("blur");
-    searchBar.classList.add("blur");
+    if (user_id === null & username === null){
+        showToast("Create an account first")
+    }else{
+        document.getElementById("postCreationName").textContent = username;
+        postCreation.style.display = "block";
+        body.style.backgroundColor = "rgba(0, 0, 0,0.5)";
+        post.classList.add("blur");
+        searchBar.classList.add("blur");
+    }
 });
 
 cancel.addEventListener("click",function(){
@@ -42,7 +48,7 @@ async function fetchPosts() {
             <div class="card-body d-flex flex-column align-items-start">
                       <div style="display: flex;">
                           <div>
-                              <b>Name of user that posted</b>
+                              <b>${post.author}</b>
                               <p>Posted on: ${formattedDate}</p>
                           </div>
                           <img src="../images/EditBtn.png" alt="edit post" id="editPost${post.post_id}" style="height: fit-content;" type="button" onclick="fetchIdPost(${post.post_id})">
@@ -51,7 +57,7 @@ async function fetchPosts() {
                       <p>${post.message}</p>
                       <div>
                           <h5>comments</h5>
-                          <form class="form-inline" action="/comments" method="POST">
+                          <form class="form-inline">
                               <input id="commentMessage" class="form-control mr-sm-2" name="comment" placeholder="Comment">
                               <input id="comment_post_id" type="hidden" name="post_id" value="${post.post_id}">
                               <button id="commentForm_${post.post_id}" class="btn btn-outline-primary my-2 my-sm-0" type="button">Send</button>
@@ -63,38 +69,48 @@ async function fetchPosts() {
             `;
 
             forum.appendChild(container);
+            const editBtn = document.getElementById(`editPost${post.post_id}`);
+            if(username != post.author){
+                editBtn.style.display = "none";
+            }else{
+                editBtn.style.display = "block";
+            }
 
             //console.log(post.post_id);
             fetchComments(post.post_id);
 
             const form = document.getElementById(`commentForm_${post.post_id}`)
             form.addEventListener("click",async()=>{
-                //Add function to update text and sql database
-                const comment = document.getElementById("commentMessage").value;
-                const id = document.getElementById("comment_post_id").value;
-                console.log(id + "," + comment);
-                try {
-                    const response = await fetch(`/comments`, {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                          post_id: id,
-                          comment: comment
-                        })
-                    });
-                    if (!response.ok) {
-                        const errorMessage = await response.json()
-                        throw new Error(`${errorMessage.errors}`);
-                    }
-            
-                    location.reload();
-                }catch (error) {
-                    console.error('Error fetching posts:', error);
-                    showToast(error);
-                }
+                if (user_id === null & username === null){
+                    showToast("Create an account first")
+                }else{
+                    //Add function to update text and sql database
+                    const comment = document.getElementById("commentMessage").value;
+                    const id = document.getElementById("comment_post_id").value;
+                    console.log(id + "," + comment);
+                    try {
+                        const response = await fetch(`/comments`, {
+                            method: 'POST',
+                            headers: {
+                            'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                            post_id: id,
+                            comment: comment,
+                            author: username
+                            })
+                        });
+                        if (!response.ok) {
+                            const errorMessage = await response.json()
+                            throw new Error(`${errorMessage.errors}`);
+                        }
                 
+                        location.reload();
+                    }catch (error) {
+                        console.error('Error fetching posts:', error);
+                        showToast(error);
+                    }
+                }
             });
             
         });
@@ -148,7 +164,7 @@ async function fetchSearchedPosts(searchTerm) {
             <div class="card-body d-flex flex-column align-items-start">
                       <div style="display: flex;">
                           <div>
-                              <b>Name of user that posted</b>
+                              <b>${post.author}</b>
                               <p>Posted on: ${formattedDate}</p>
                           </div>
                           <img src="../images/EditBtn.png" alt="edit post" id="editPost${post.post_id}" style="height: fit-content;" type="button" onclick="fetchIdPost(${post.post_id})">
@@ -157,7 +173,7 @@ async function fetchSearchedPosts(searchTerm) {
                       <p>${post.message}</p>
                       <div>
                           <h5>comments</h5>
-                          <form class="form-inline" action="/comments" method="POST">
+                          <form class="form-inline">
                               <input id="commentMessage" class="form-control mr-sm-2" name="comment" placeholder="Comment">
                               <input id="comment_post_id" type="hidden" name="post_id" value="${post.post_id}">
                               <button id="commentForm_${post.post_id}" class="btn btn-outline-primary my-2 my-sm-0" type="button">Send</button>
@@ -170,8 +186,12 @@ async function fetchSearchedPosts(searchTerm) {
           
           
             forum.appendChild(container);
-
-          
+            const editBtn = document.getElementById(`editPost${post.post_id}`);
+            if(username != post.author){
+                editBtn.style.display = "none";
+            }else{
+                editBtn.style.display = "block";
+            }
             // Fetch comments for each post
             //console.log(post.post_id);
             fetchComments(post.post_id);
@@ -179,32 +199,36 @@ async function fetchSearchedPosts(searchTerm) {
             
             const form = document.getElementById(`commentForm_${post.post_id}`)
             form.addEventListener("click",async()=>{
-                //Add function to update text and sql database
-                const comment = document.getElementById("commentMessage").value;
-                const id = document.getElementById("comment_post_id").value;
-                console.log(id + "," + comment);
-                try {
-                    const response = await fetch(`/comments`, {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                          post_id: id,
-                          comment: comment
-                        })
-                    });
-                    if (!response.ok) {
-                        const errorMessage = await response.json()
-                        throw new Error(`${errorMessage.errors}`);
-                    }
-            
-                    location.reload();
-                }catch (error) {
-                    console.error('Error fetching posts:', error);
-                    showToast(error);
-                }
+                if (user_id === null & username === null){
+                    showToast("Create an account first")
+                }else{
+                    //Add function to update text and sql database
+                    const comment = document.getElementById("commentMessage").value;
+                    const id = document.getElementById("comment_post_id").value;
+                    console.log(id + "," + comment);
+                    try {
+                        const response = await fetch(`/comments`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                post_id: id,
+                                comment: comment,
+                                author: username
+                            })
+                        });
+                        if (!response.ok) {
+                            const errorMessage = await response.json()
+                            throw new Error(`${errorMessage.errors}`);
+                        }
                 
+                        location.reload();
+                    }catch (error) {
+                        console.error('Error fetching posts:', error);
+                        showToast(error);
+                    }
+                }
             });
         });
     }catch (error) {
@@ -235,7 +259,7 @@ async function fetchIdPost(searchTerm) {
         <br>
         <div class="row">
             <div class="col">
-                <b>Jonas</b>
+                <b>${username}</b>
             </div>
             <div class="col text-right" >
                 <img src="../images/addMedia.png" alt="add media">
@@ -372,7 +396,8 @@ postForm.addEventListener("click",async()=>{
             },
             body: JSON.stringify({
               header: header,
-              message: message
+              message: message,
+              author: username
             })
         });
         if (!response.ok) {

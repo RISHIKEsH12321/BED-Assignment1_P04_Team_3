@@ -4,6 +4,7 @@ const validatePost = (req, res, next) => {
   const schema = Joi.object({
     header: Joi.string().max(50).required(),
     message: Joi.string().max(300).required(),
+    author: Joi.string().max(50).required(),
   });
 
   const validation = schema.validate(req.body, { abortEarly: false }); // Validate request body
@@ -21,6 +22,7 @@ const validateComments = (req, res, next) => {
   const schema = Joi.object({
     comment: Joi.string().max(100).required(),
     post_id: Joi.any().strip(),
+    author: Joi.string().max(50).required(),
   });
 
   const validation = schema.validate(req.body, { abortEarly: false }); // Validate request body

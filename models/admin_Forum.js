@@ -3,11 +3,12 @@ const sql = require("mssql");
 const dbConfig = require("../dbConfig");
 
 class Admin_Forum{
-  constructor(post_id, date_column, header, message ){
+  constructor(post_id, date_column, header, message, author){
       this.post_id = post_id;
       this.date_column = date_column;
       this.header = header;
       this.message = message;
+      this.author = author;
   }
 
   static async getAllPosts() {
@@ -21,7 +22,7 @@ class Admin_Forum{
       connection.close();
   
       return result.recordset.map(
-        (row) => new Admin_Forum(row.post_id, row.date_column, row.header, row.message)
+        (row) => new Admin_Forum(row.post_id, row.date_column, row.header, row.message, row.author)
       ); // Convert rows to post objects
   } 
 
@@ -41,7 +42,8 @@ class Admin_Forum{
             result.recordset[0].post_id,
             result.recordset[0].date_column,
             result.recordset[0].header,
-            result.recordset[0].message
+            result.recordset[0].message,
+            result.recordset[0].author
           )
         : null;
   }

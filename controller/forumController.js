@@ -28,9 +28,9 @@ const getAllPosts = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-  const { header, message } = req.body;
+  const { header, message, author } = req.body;
   try {
-    const result = await Post.createPost(header, message);
+    const result = await Post.createPost(header, message, author);
     console.log('New post inserted successfully:', result);
     res.redirect('/forum');
     //res.status(200).send('Post submitted successfully'); 

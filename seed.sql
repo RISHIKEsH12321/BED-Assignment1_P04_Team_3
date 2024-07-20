@@ -183,8 +183,7 @@ CREATE TABLE Posts(
 	date_column DATE DEFAULT CONVERT(DATE, GETDATE()), 
 	header VARCHAR(50), 
 	message VARCHAR(300),
-user_id INT,
-FOREIGN KEY (user_id) REFERENCES User_Account(user_id)
+	author VARCHAR(50)
 );
 
 
@@ -194,12 +193,8 @@ CREATE TABLE Comments(
 	date_column DATE DEFAULT CONVERT(DATE, GETDATE()),  
 	message VARCHAR(300),
 	post_id INT, 
-	FOREIGN KEY (post_id) REFERENCES Posts(post_id),
-	user_id INT,
-FOREIGN KEY (user_id) REFERENCES User_Account(user_id)
+	FOREIGN KEY (post_id) REFERENCES Posts(post_id)
 );
-
-
 
 -- Louis table
 CREATE TABLE Feedback (
