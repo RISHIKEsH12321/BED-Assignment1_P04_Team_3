@@ -197,7 +197,9 @@ app.get("/profile/:id", async (req,res) => {
 
 //Industry Routes
 app.get("/users/industry/:id", industry_info_controller.getIndustryInfo);//Get Industry data
-
+app.get("/users/industry/", (req, res) => {
+    res.status(400).send("Industry ID is required");
+});
 app.get("/admin/industry", industry_info_controller.displayAdminPage); // Dispaly Admin Page
 
 app.get("/admin/api/industry", industry_info_controller.getAllIndustryInfo); // Get All challenges

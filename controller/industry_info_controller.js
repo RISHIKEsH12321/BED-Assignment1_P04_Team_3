@@ -7,77 +7,32 @@ const path = require("path");
 const { JSDOM } = require("jsdom"); 
 
 const getAllIndustryInfo = async (req, res) => {
-  const industry_id = parseInt(req.params.id);
-  try {
-    const data = await Industry_Info.getAllIndustryInfo(industry_id);
+    try {
+    const data = await Industry_Info.getAllIndustryInfo();
     const challenge_data = await Industry_Challenges.getAllIndustryChallenges();
     const result = {
       industry:data,
       challanges:challenge_data
     }
-
-    // const filePath = path.join(__dirname, "../public", "html", "industryAdmin.html");
-    // console.log("File path is " + filePath);
-    // // Read the index.html file
-    // fs.readFile(filePath, "utf8", (err, data) => {
-    //     if (err) {
-    //         console.error("Error reading industryAdmin.html file:", err);
-    //         res.status(500).send("Internal Server Error");
-    //         return;
-    //     }
-
-    //     // Create a new JSDOM instance
-    //     const dom = new JSDOM(data);
-
-    //     // Access the document object
-    //     const document = dom.window.document;
-
-    //     // Populate Industry Selector
-    //     const industry_selector = document.getElementById("IndustrySelection");
-    //     for (var i=0; i < result.industry.length ;i++){
-    //       var industry_option = document.createElement("option");
-    //       industry_option.textContent = result.industry[i].industry_name;
-    //       industry_option.value = result.industry[i].industry_id;
-    //       industry_selector.appendChild(industry_option);
-    //     }
-    //     const intro_edit = document.getElementById("IndustryIntro");
-
-    //     industry_selector.addEventListener("change", () => {
-    //       const id = parseInt(industry_selector.value, 10); // Get the selected industry_id
-    //       const selectedIndustry = result.industry.find(industry => industry.industry_id === id); // Find the industry by id
-    //       if (selectedIndustry) {
-    //         intro_edit.textContent = selectedIndustry.introduction; // Set the introduction text
-    //       }
-    //     });
-
-    //     // const PageTitle = document.getElementById("Industry Edit");
-    //     // PageTitle.textContent = result.industry.industry_name;
-    //     // Serialize the modified document back to a string
-    //     const modifiedContent = dom.serialize();
-
-    //     // Send the modified content as the response
-    //     res.send(modifiedContent);
-    // });
-    if (!result) {
+    console.log(result)
+    // Check if data or challenge_data is null or undefined
+    if (!data || !challenge_data || !data.length || !challenge_data.length) {
       return res.status(404).send("Industries not found");
     }
     res.status(200).send(result);
-
-    
-
   } catch (error) {
-    console.error(error);
+    // console.log(error);
     res.status(500).send("Error retrieving Industries");
   }
 }
 
 const getIndustryInfo = async (req, res) => {
     const industry_id = parseInt(req.params.id);
-    console.log(industry_id)
     try {
       const data = await Industry_Info.getIndustryInfo(industry_id);
       const challenge_data = await Industry_Challenges.getIndustryChallenges(industry_id);
       if (!data || !challenge_data) {
+        console.log(data)
         return res.status(404).send("Industry not found");
       }
       const result = {
@@ -256,8 +211,6 @@ const updateIndustryInfo = async (req, res) => {
       res.status(500).send("Error Updating Industry");
     }
 };
-
-
 
 const deleteIndustryChallenge = async (req, res) => {
     const industry_id = parseInt(req.params.id);
