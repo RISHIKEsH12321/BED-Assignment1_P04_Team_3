@@ -35,6 +35,7 @@ const save_question_button = document.getElementById("button_save_question");
 const user_id = localStorage.getItem("user_id");
 const admin_id = localStorage.getItem("admin_id");
 const username = localStorage.getItem("username");
+const token = localStorage.getItem("token");
 
 // Load data when page is loaded
 document.addEventListener("DOMContentLoaded", async function() {

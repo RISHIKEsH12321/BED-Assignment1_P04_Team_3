@@ -9,12 +9,14 @@ const get15Questions = async (req,res) =>{
     const industry_id = parseInt(req.params.id);
     try {
         let result = await Quiz_Question.get15Questions(industry_id);
-        console.log(result.industryName)
-        if (!result) {
+        // console.log(result)
+        // console.log(Array.isArray(result.questions))
+        // console.log(result.questions.length === 0)
+        // console.log(result.industryName)      
+        if (!Array.isArray(result.questions) || result.questions.length === 0 || !result.industryName) {
           return res.status(404).send("Questions for industry not found");
         }
-        
-
+      
         const name = result.industryName;
         //Get 15 random quesion
         if (result.questions.length > 15) {
@@ -58,7 +60,7 @@ const get15Questions = async (req,res) =>{
             const modifiedContent = dom.serialize();
 
             // Send the modified content as the response
-            res.status(200).send(modifiedContent);
+            return res.status(200).send(modifiedContent);
         })
 
     }catch (error) {
@@ -70,12 +72,15 @@ const get15Questions = async (req,res) =>{
 const getAllQuestions = async (req,res) =>{
   try{
     const data =  await Quiz_Question.getAllQuestions();
+    if (!data) {
+      return res.status(404).send("Questions for industry not found");
+    }
     res.status(200).send(data);
   }catch (err){
     res.status(500).send("Error Getting questions");
   }
-
 }
+
 const displayAdminPage = async (req,res) =>{
   const filePath = path.join(__dirname, "../public", "html", "quizAdmin.html");
   console.log("File path is" + filePath);
@@ -129,7 +134,7 @@ const checkAnswers = async (req,res) =>{
 
 const updateQuestion = async (req,res) =>{
   const newQuesion = req.body;
-  
+  console.log(newQuesion)
   try {
     const role = await validateRole.validateUserRole(req);
     if (role === "admin") {
