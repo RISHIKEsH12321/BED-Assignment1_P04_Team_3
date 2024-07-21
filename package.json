@@ -13,6 +13,9 @@
     "test:userAccountCtl": "jest ./tests/User_Account_Controller.test.js",
     "test:userAccountModel": "jest ./tests/User_Account.test.js",
     "test:adminAccountCtl":  "jest ./tests/Admin_Account_Controller.test.js",
+    "test:adminAccountModel": "jest ./tests/Admin_Account.test.js",
+    "test:profileCtl": "jest ./tests/Profile_Controller.test.js",
+    "test:profileModel": "jest ./tests/Profile_model.test.js",
     "start": "nodemon index.js"
   },
   "author": "",

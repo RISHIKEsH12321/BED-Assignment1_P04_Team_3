@@ -37,6 +37,10 @@ class Profile {
         const currentprofile = await this.getUserProfile(user_id);
         const connection = await sql.connect(dbConfig);
 
+        if (!currentprofile) {
+            throw new Error("Profile not found");
+        }
+
         const sqlQuery = `UPDATE Profile SET about_me = @about_me, country = @country, position = @position,
                             security_code = @security_code, profile_picture_url = @profile_picture_url WHERE user_id = @user_id`;
 
