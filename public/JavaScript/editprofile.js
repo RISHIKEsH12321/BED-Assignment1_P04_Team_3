@@ -711,12 +711,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (profileResponse.ok) {
                         showToast('Account details updated successfully');
                     } else {
-                        console.error('Profile update error:', await profileResponse.text());
-                        alert('Error updating profile');
+                        const errorText = await profileResponse.text();
+                        console.error('Profile update error:', errorText);
+                        showToast(`Error updating profile: ${errorText}`);
                     }
                 } catch (error) {
                     console.error('Error updating account:', error);
-                    alert(error.message || 'Error updating account');
+                    showToast(error.message || 'Error updating account');
                 }
             }
 

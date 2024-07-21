@@ -29,6 +29,7 @@ const validateIndustryAndQuiz = require("./middleware/industryAndQuizValidation"
 const validateForum = require("./middleware/forumValidation");
 const validateRole = require("./middleware/validateRole");
 const validateCreateAccount = require('./middleware/AccountValidation');
+const validateUpdateProfile = require('./middleware/ProfileChecker');
 
 //Swagger 
 const swaggerUi = require("swagger-ui-express");
@@ -137,7 +138,7 @@ app.put("/admin/account/email/:id", Admin_Account_Controller.AdminupdateUserwith
 
 // Profile Routes
 app.get("/account/profile/:id", Profile_Controller.getUserProfile);
-app.put("/account/profile/:id", Profile_Controller.updateUserProfile);
+app.put("/account/profile/:id",validateUpdateProfile, Profile_Controller.updateUserProfile);
 
 
 // Route for Users and Admin account (Ye Chyang)

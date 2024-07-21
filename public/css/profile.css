@@ -90,6 +90,13 @@ body {
     margin-left:5px;
 }
 
+#about_me {
+    word-wrap: break-word; 
+    overflow-wrap: break-word;
+    max-width: 100%;
+    margin:10px; 
+}
+
 #logoutbtn{
     margin-top:20px;
     padding:8px;
