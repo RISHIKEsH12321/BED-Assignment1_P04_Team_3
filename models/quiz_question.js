@@ -1,97 +1,92 @@
 const sql = require("mssql");
 const dbConfig = require("../dbConfig");
 
-class Quiz_Question{
+class Quiz_Question {
     constructor(industry_id, question_id, question_text, options, correct_option) {
         this.industry_id = industry_id;
         this.question_id = question_id;
         this.question_text = question_text;
         this.options = options;
         this.correct_option = correct_option;
-
     }
 
-        
     static async get15Questions(id) {
-        try{
-        const connection = await sql.connect(dbConfig);
-    
-        const sqlQuery = `
-        SELECT 
-            q.question_id, 
-            q.question_text, 
-            o.option_id, 
-            o.option_text
-            
-        FROM 
-            Questions q
-        LEFT JOIN 
-            Options o ON q.question_id = o.question_id
-        WHERE 
-            q.industry_id = @id
-        ORDER BY 
-            q.question_id
-        `;
+        let connection;
+        try {
+            connection = await sql.connect(dbConfig);
 
-    
-        const request = connection.request();
-        request.input("id", id);
-        const result = await request.query(sqlQuery);
+            const sqlQuery = `
+                SELECT 
+                    q.question_id, 
+                    q.question_text, 
+                    o.option_id, 
+                    o.option_text
+                FROM 
+                    Questions q
+                LEFT JOIN 
+                    Options o ON q.question_id = o.question_id
+                WHERE 
+                    q.industry_id = @id
+                ORDER BY 
+                    q.question_id
+            `;
 
-        const nameQuery = `
-        SELECT industry_name
-        FROM Industry_Info
-        WHERE industry_id = @id_industry;
-        `;
+            const request = connection.request();
+            request.input("id", id);
+            const result = await request.query(sqlQuery);
 
-        const request2 = connection.request();
-        request2.input("id_industry", id);
-        const result2 = await request2.query(nameQuery);
-        const industryName = result2.recordset[0].industry_name;
+            const nameQuery = `
+                SELECT industry_name
+                FROM Industry_Info
+                WHERE industry_id = @id_industry;
+            `;
 
-    
-        connection.close();
-
-        const questionsMap = new Map();
-        
-        result.recordset.forEach(row => {
-            if (!questionsMap.has(row.question_id)) {
-                questionsMap.set(row.question_id, {
-                    question_id: row.question_id,
-                    question_text: row.question_text,
-                    options: []
-                    // correct_option_id: row.correct_option_id ? row.correct_option_id : null
-                });
+            const request2 = connection.request();
+            request2.input("id_industry", id);
+            const result2 = await request2.query(nameQuery);
+            let industryName = null;
+            if (result2.recordset[0] != null) {
+                industryName = result2.recordset[0].industry_name;
             }
 
-            const question = questionsMap.get(row.question_id);
-            question.options.push({
-                option_id: row.option_id,
-                option_text: row.option_text
+            const questionsMap = new Map();
+            result.recordset.forEach(row => {
+                if (!questionsMap.has(row.question_id)) {
+                    questionsMap.set(row.question_id, {
+                        question_id: row.question_id,
+                        question_text: row.question_text,
+                        options: []
+                    });
+                }
+
+                const question = questionsMap.get(row.question_id);
+                question.options.push({
+                    option_id: row.option_id,
+                    option_text: row.option_text
+                });
             });
 
-            // Update correct_option_id if it is null and current row has correct_option_id
-            // if (question.correct_option_id === null && row.correct_option_id !== null) {
-            //     question.correct_option_id = row.correct_option_id;
-            // }
-        });
+            const returnData = {
+                questions: Array.from(questionsMap.values()),
+                industryName: industryName
+            }
+            return returnData;
 
-        const returnData = {
-            questions: Array.from(questionsMap.values()),
-            industryName:industryName
-        }
-        return returnData;
-
-        }catch (err){
+        } catch (err) {
             console.log(err);
             throw err;
+        } finally {
+            if (connection) {
+                connection.close();
+            }
         }
     }
 
     static async getAllQuestions() {
+        let connection;
         try {
-            const connection = await sql.connect(dbConfig);
-    
+            connection = await sql.connect(dbConfig);
+
             const sqlQuery = `
                 SELECT 
                     i.industry_id,
@@ -112,12 +107,10 @@ class Quiz_Question{
                 ORDER BY 
                     i.industry_id, q.question_id
             `;
-    
+
             const result = await connection.request().query(sqlQuery);
-            connection.close();
-    
             const industriesMap = new Map();
-    
+
             result.recordset.forEach(row => {
                 if (!industriesMap.has(row.industry_id)) {
                     industriesMap.set(row.industry_id, {
@@ -126,10 +119,9 @@ class Quiz_Question{
                         questions: []
                     });
                 }
-    
+
                 const industry = industriesMap.get(row.industry_id);
-    
-                // Check if question already exists in industry
+
                 let question = industry.questions.find(q => q.question_id === row.question_id);
                 if (!question) {
                     question = {
@@ -140,32 +132,34 @@ class Quiz_Question{
                     };
                     industry.questions.push(question);
                 }
-    
-                // Add the option to the question's options array
+
                 question.options.push({
                     option_id: row.option_id,
                     option_text: row.option_text
                 });
-    
-                // Assign correct_option_id if it's not already set
+
                 if (!question.correct_option_id && row.correct_option_id === row.option_id) {
                     question.correct_option_id = row.correct_option_id;
                 }
             });
-    
+
             return Array.from(industriesMap.values());
-    
+
         } catch (err) {
             console.log(err);
             throw err;
+        } finally {
+            if (connection) {
+                connection.close();
+            }
         }
     }
-    
 
     static async updateQuestion(data) {
+        let connection;
         try {
-            const connection = await sql.connect(dbConfig);
-    
+            connection = await sql.connect(dbConfig);
+
             // Update question text
             const updateQuestionQuery = `
                 UPDATE Questions
@@ -175,9 +169,8 @@ class Quiz_Question{
             const request = connection.request();
             request.input("question_text", data.question_text);
             request.input("question_id", data.question_id);
-            var x = await request.query(updateQuestionQuery);
-            console.log(x)
-    
+            await request.query(updateQuestionQuery);
+
             // Update options
             for (const option of data.options) {
                 const updateOptionQuery = `
@@ -186,11 +179,11 @@ class Quiz_Question{
                     WHERE option_id = @option_id;
                 `;
                 const optionRequest = connection.request();
-                optionRequest.input("option_text", option.option_text); // Use option.option_text
-                optionRequest.input("option_id", option.option_id); // Use option.option_id
+                optionRequest.input("option_text", option.option_text);
+                optionRequest.input("option_id", option.option_id);
                 await optionRequest.query(updateOptionQuery);
             }
-    
+
             // Update correct answer
             const updateCorrectAnswerQuery = `
                 UPDATE Correct_Answers
@@ -198,32 +191,31 @@ class Quiz_Question{
                 WHERE question_id = @question_id;
             `;
 
-            console.log("data.correct_option_id"+ data.correct_option_id)
-            console.log("data.question_id" + data.question_id)
             const correctAnswerRequest = connection.request();
             correctAnswerRequest.input("correct_option_id", data.correct_option_id);
             correctAnswerRequest.input("question_id", data.question_id);
-            var x= await correctAnswerRequest.query(updateCorrectAnswerQuery);
-            
-            connection.close();
-    
+            await correctAnswerRequest.query(updateCorrectAnswerQuery);
+
             return true;
         } catch (error) {
             console.error("Error updating question:", error);
             throw error;
+        } finally {
+            if (connection) {
+                connection.close();
+            }
         }
     }
-    
 
     static async createNewQuestion(data) {
+        let connection;
         try {
-            const connection = await sql.connect(dbConfig);
-    
+            connection = await sql.connect(dbConfig);
+
             // Insert question and get the question_id
             const insertQuestionQuery = `
                 INSERT INTO Questions (industry_id, question_text)
                 VALUES (@industry_id, @question_text);
-    
                 SELECT SCOPE_IDENTITY() AS question_id;
             `;
             const request = connection.request();
@@ -231,19 +223,16 @@ class Quiz_Question{
                 .input("industry_id", data.industry_id)
                 .input("question_text", data.question_text)
                 .query(insertQuestionQuery);
-            
 
             const question_id = result.recordset[0].question_id;
-            console.log("question_id: " + question_id);
-    
+
             // Insert options
             const insertOptionQuery = `
                 INSERT INTO Options (question_id, option_text)
                 VALUES (@question_id, @option_text);
                 SELECT SCOPE_IDENTITY() AS option_id;
-
             `;
-            const optionIDs = []; // Array to store inserted option IDs
+            const optionIDs = [];
             for (const [index, option] of data.options.entries()) {
                 const optionRequest = connection.request();
                 const optionResult = await optionRequest
@@ -252,69 +241,37 @@ class Quiz_Question{
                     .query(insertOptionQuery);
                 const insertedOptionID = optionResult.recordset[0].option_id;
                 optionIDs.push(insertedOptionID);
-                // If this is the correct option, store its ID                
                 if (index === data.correct_option_id - 1) {
                     data.correct_option_id = insertedOptionID;
-                    console.log("insertedOptionID", insertedOptionID);
-                    console.log("data.correct_option_id", data.correct_option_id);
-
                 }
             }
-    
+
             // Insert the correct answer
             const insertCorrectAnswerQuery = `
                 INSERT INTO Correct_Answers (question_id, correct_option_id)
                 VALUES (@question_id, @correct_option_id);
             `;
             const correctAnswerRequest = connection.request();
-
-            console.log("Inserting Correct Answer:", {
-                question_id: question_id,
-                correct_option_id: data.correct_option_id
-            });
-            
             await correctAnswerRequest
                 .input("question_id", question_id)
                 .input("correct_option_id", data.correct_option_id)
                 .query(insertCorrectAnswerQuery);
-    
-            connection.close();
-    
+
             return question_id;
         } catch (error) {
             console.error("Error creating question:", error);
             throw error;
+        } finally {
+            if (connection) {
+                connection.close();
+            }
         }
-        /*
-        Sample Data
-        {
-            "industry_id": 1,
-            "question_text": "POST Question (CREATE)",
-            "options":[
-                {
-                    "option_id": 1,
-                    "option_text":"Option 1"
-                },        {
-                    "option_id": 2,
-                    "option_text":"Option 2"
-                },        {
-                    "option_id": 3,
-                    "option_text":"Option 3"
-                },        {
-                    "option_id": 4,
-                    "option_text":"Option 4"
-                }
-            ],
-            "correct_option_id": 1
-        }   
-        */
-
     }
-    
 
     static async deleteQuestion(question_id) {
+        let connection;
         try {
-            const connection = await sql.connect(dbConfig);
+            connection = await sql.connect(dbConfig);
 
             // Delete correct answer
             const deleteCorrectAnswerQuery = `
@@ -340,25 +297,25 @@ class Quiz_Question{
             const questionRequest = connection.request();
             await questionRequest.input("question_id", sql.Int, question_id).query(deleteQuestionQuery);
 
-            connection.close();
-
             return true;
         } catch (error) {
             console.error("Error deleting question:", error);
             throw error;
+        } finally {
+            if (connection) {
+                connection.close();
+            }
         }
     }
 
     static async checkAnswer(data) {
+        let connection;
         try {
-            const connection = await sql.connect(dbConfig);
-    
-            // Prepare question parameters
+            connection = await sql.connect(dbConfig);
+
             const questionParams = data.map((_, index) => `(@questionId${index})`).join(',');
-            // Prepare option parameters
             const optionParams = data.map((_, index) => `(@optionId${index})`).join(',');
-    
-            // Construct the query
+
             const query = `
                 SELECT COUNT(*) AS correct_count
                 FROM Correct_Answers ca
@@ -372,30 +329,25 @@ class Quiz_Question{
                     WHERE o.option_id = ca.correct_option_id
                 );
             `;
-    
-            // Prepare the request
+
             const request = connection.request();
             data.forEach((q, index) => {
                 request.input(`questionId${index}`, q.question_id);
                 request.input(`optionId${index}`, q.option_id);
             });
-    
-            // Execute the query
+
             const result = await request.query(query);
-            connection.close();
-    
-            // Return the count of correct answers
+
             return result.recordset[0].correct_count;
         } catch (error) {
             console.error("Error checking answers", error);
             throw error;
+        } finally {
+            if (connection) {
+                connection.close();
+            }
         }
     }
-
-    
-    
-
 }
-
 
 module.exports = Quiz_Question;
