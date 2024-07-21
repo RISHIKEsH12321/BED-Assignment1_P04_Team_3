@@ -93,6 +93,10 @@ const getUserById = async (req,res) => {
 const createAccount = async (req, res) => {
   const { username, user_email, user_phonenumber, user_password, user_role } = req.body;
 
+  if (!username || !user_email || !user_phonenumber || !user_password) {
+    return res.status(400).json({ message: "Missing required fields" });
+  }
+
   try {
       // Hash the password
       const salt = await bcryptjs.genSalt(10);
@@ -140,13 +144,16 @@ const updateUser = async (req, res) => {
           // Hash the new password
           const salt = await bcryptjs.genSalt(10);
           newUserData.user_password = await bcryptjs.hash(newUserData.user_password, salt);
+      } else {
+        // Remove user_password from newUserData if it's not provided
+        delete newUserData.user_password;
       }
 
       const updatedUser = await User_Account.updateUser(userId, newUserData);
       if (!updatedUser) {
           return res.status(404).send("User not found");
       }
-      res.json(updatedUser);
+      return res.status(200).json(updatedUser);
   } catch (error) {
       console.error("Update User Error: ", error);
       res.status(500).send("Error updating User");
@@ -178,7 +185,7 @@ const userforgotpassword = async (req,res) => {
       if (!user) {
         return res.status(404).send("User not found");
       }
-      res.json(user);
+      res.status(200).json(user);
     } catch (error) {
       console.error(error);
       res.status(500).send("Error retrieving User");

@@ -8,6 +8,8 @@
     "test:industryCtl": "jest ./tests/industryController.test.js",
     "test:industryInfoMdl": "jest ./tests/industry_info.test.js",
     "test:industryChallengeMdl": "jest ./tests/industry_challenges.test.js",
+    "test:userAccountCtl": "jest ./tests/User_Account_Controller.test.js",
+    "test:userAccountModel": "jest ./tests/User_Account.test.js",
     "start": "nodemon index.js"
   },
   "author": "",
