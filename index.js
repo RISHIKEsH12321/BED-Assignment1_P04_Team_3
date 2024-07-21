@@ -295,6 +295,12 @@ app.put("/admin/fav/:id", feedbackController.updateFavourite); // admin can favo
 app.get("/admin/fav", feedbackController.getFavourite); // getting every favourited feedback
 app.delete("/admin/feedback/:id", feedbackController.deleteFeedback); // admin delete feedback from the database
 
+app.get("/aboutus", async (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "aboutus.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
 app.get("/contactus", async (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "contactus.html");
     console.log("File path is", filePath);

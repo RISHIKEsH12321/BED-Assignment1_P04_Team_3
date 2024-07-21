@@ -1,0 +1,62 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+}
+
+.selection-container {
+    font-family: Arial, sans-serif;
+    background-color: #f2f9e9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.accountOptions{
+    display: flex;
+    gap: 50px;
+}
+.accountOption{
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+    width: 250px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.accountOption p{
+    color: #4A4A4A;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#userBtn{
+    background-color: #1c64f2;
+    color: white;
+    padding:.5rem 1rem;
+    border:none;
+    border-radius:.25rem;
+    cursor:pointer;
+
+}
+#adminBtn{
+    background-color: #ff9800;
+    color: white;
+    padding:.5rem 1rem;
+    border:none;
+    border-radius:.25rem;
+    cursor:pointer;
+}

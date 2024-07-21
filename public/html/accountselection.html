@@ -3,18 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/account.css">
-    <link rel="stylesheet" href="../css/index.css">
+    <title>Account Selection</title>
+    <link rel="icon" type="image/x-icon" href="../images/Icon.png">
+    <link rel="stylesheet" href="../css/accountSelection.css">
 </head>
 <body>
     <div class="selection-container">
         <div class="card">
             <h2>Select Account Type</h2>
             <p>Choose from the options below and get started</p>
-            <div class="selection-buttons">
-                <button class="account-selection-button user" onclick="location.href='/loginuser'">User</button>
-                <button class="account-selection-button admin" onclick="location.href='/loginadmin'">Admin</button>
+            <div class="accountOptions">
+                <div class="accountOption card">
+                    <img src="../images/profile-user.png" style="width: 40px;" alt="user image">
+                    <h3>User Account</h3>
+                    <p>Choose this account type if you want to access your personal user account. You'll be able to manage your profile and account settings.</p>
+                    <button id="userBtn" onclick="location.href='/loginuser'">Choose</button>
+                </div>
+                <div class="accountOption card">
+                    <img src="../images/profile-user-brown.png" style="width: 40px;" alt="admin image">
+                    <h3>Admin Account</h3>
+                    <p>Opt for an admin account to manage user accounts, configure system settings, and access advanced features.</p>
+                    <button id="adminBtn" onclick="location.href='/loginadmin'">Choose</button>
+                </div>
             </div>
         </div>
     </div>
