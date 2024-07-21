@@ -8,6 +8,7 @@
     "test:industryCtl": "jest ./tests/industryController.test.js",
     "test:userAccountCtl": "jest ./tests/User_Account_Controller.test.js",
     "test:userAccountModel": "jest ./tests/User_Account.test.js",
+    "test:adminAccountCtl":  "jest ./tests/Admin_Account_Controller.test.js",
     "start": "nodemon index.js"
   },
   "author": "",

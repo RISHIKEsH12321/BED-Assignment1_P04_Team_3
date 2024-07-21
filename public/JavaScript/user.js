@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (newPasswordValue === reconfirmPasswordValue) {
                             try {
                                 // Make a PUT request to update the password
-                                const updateResponse = await fetch(`/admin/account/${data.user_id}`, {
+                                const updateResponse = await fetch(`/admin/account/email/${data.user_id}`, {
                                     method: 'PUT',
                                     headers: {
                                         'Content-Type': 'application/json'

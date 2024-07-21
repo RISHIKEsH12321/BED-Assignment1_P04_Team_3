@@ -95,36 +95,40 @@ const AdmincreateAccount = async (req, res) => {
         res.status(201).json(createdAccount);
     } catch (error) {
         console.error(error);
-        res.status(500).send("Error creating user");
+        if (error.message.includes("Validation")) {
+            res.status(400).send("Validation error");
+        } else {
+            res.status(500).send("Error creating user");
+        }
     }
 };
 
 
 
-// const AdminupdateUser = async (req, res) => {
-//     const userId = parseInt(req.params.id);
-//     const newUserData = req.body;
+const AdminupdateUserwithemail = async (req, res) => {
+    const userId = parseInt(req.params.id);
+    const newUserData = req.body;
 
-//     try {
-//         if (newUserData.user_password) {
-//             // Hash the new password
-//             const salt = await bcryptjs.genSalt(10);
-//             newUserData.user_password = await bcryptjs.hash(newUserData.user_password, salt);
-//         } else {
-//             // Remove user_password from newUserData if it's not provided
-//             delete newUserData.user_password;
-//         }
+    try {
+        if (newUserData.user_password) {
+            // Hash the new password
+            const salt = await bcryptjs.genSalt(10);
+            newUserData.user_password = await bcryptjs.hash(newUserData.user_password, salt);
+        } else {
+            // Remove user_password from newUserData if it's not provided
+            delete newUserData.user_password;
+        }
 
-//         const updatedUser = await Admin_Account.AdminupdateUser(userId, newUserData);
-//         if (!updatedUser) {
-//             return res.status(404).send("User not found");
-//         }
-//         res.json(updatedUser);
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).send("Error updating User");
-//     }
-// }
+        const updatedUser = await Admin_Account.AdminupdateUser(userId, newUserData);
+        if (!updatedUser) {
+            return res.status(404).send("User not found");
+        }
+        res.json(updatedUser);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error updating User");
+    }
+}
 
 
 const AdminupdateUser = async (req, res) => {
@@ -231,4 +235,5 @@ module.exports = {
     AdminupdateUser,
     AdmindeleteUser,
     adminforgotpassword,
+    AdminupdateUserwithemail
 };

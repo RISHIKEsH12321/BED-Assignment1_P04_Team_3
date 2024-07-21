@@ -59,7 +59,7 @@ class Role{
 
     static async getRoleByToken(token) {
         try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const decoded = jwt.verify(token, process.env.JWT_SECERT);
             if (!decoded) {
                 return "Invalid Token";
             }

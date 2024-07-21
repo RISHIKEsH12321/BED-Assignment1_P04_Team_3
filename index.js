@@ -133,6 +133,7 @@ app.post("/admin/account/create",validateCreateAccount.validateAccountAdmin, Adm
 app.put("/admin/account/:id", Admin_Account_Controller.AdminupdateUser); // Update Account
 app.delete("/admin/account/:id", Admin_Account_Controller.AdmindeleteUser); // Delete Account 
 app.get("/admin/forgotpassword/:user_email", Admin_Account_Controller.adminforgotpassword);
+app.put("/admin/account/email/:id", Admin_Account_Controller.AdminupdateUserwithemail);
 
 // Profile Routes
 app.get("/account/profile/:id", Profile_Controller.getUserProfile);
