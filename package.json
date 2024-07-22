@@ -16,6 +16,12 @@
     "test:adminAccountModel": "jest ./tests/Admin_Account.test.js",
     "test:profileCtl": "jest ./tests/Profile_Controller.test.js",
     "test:profileModel": "jest ./tests/Profile_model.test.js",
+    "test:forumController": "jest ./tests/forumController.test.js",
+    "test:forum": "jest ./tests/forum.test.js",
+    "test:adminForumController": "jest ./tests/admin_Forum_Controller.test.js",
+    "test:adminForum": "jest ./tests/admin_Forum.test.js",
+    "test:comments": "jest ./tests/comments.test.js",
+    "test:commentsController": "jest ./tests/commentsController.test.js",
     "start": "nodemon index.js"
   },
   "author": "",
