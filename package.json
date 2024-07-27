@@ -25,6 +25,7 @@
     "test:adminForum": "jest ./tests/admin_Forum.test.js",
     "test:comments": "jest ./tests/comments.test.js",
     "test:commentsController": "jest ./tests/commentsController.test.js",
+    "test:feedbackController": "jest ./tests/feedbackController.test.js",
     "start": "nodemon index.js"
   },
   "author": "",
