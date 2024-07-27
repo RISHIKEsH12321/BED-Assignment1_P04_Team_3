@@ -40,9 +40,26 @@ CREATE TABLE Correct_Answers (
     FOREIGN KEY (correct_option_id) REFERENCES Options(option_id)
 );
 
+-- Create the Chat table
+CREATE TABLE Chat (
+    conversationId INT PRIMARY KEY IDENTITY(1,1), 
+    conversationTitle NVARCHAR(255) NOT NULL,    
+    timeStamp DATETIME NOT NULL,                 
+    userId INT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES User_Account(user_id)
+);
 
-
-
+-- Create the ChatHistory table
+CREATE TABLE ChatHistory (
+    chatHistoryId INT PRIMARY KEY IDENTITY(1,1),  
+    conversationId INT NOT NULL,                  
+    role NVARCHAR(50) NOT NULL,                   
+    text NVARCHAR(MAX) NOT NULL,                  
+    timeStamp DATETIME DEFAULT GETDATE(),         
+    CONSTRAINT FK_ChatHistory_Chat FOREIGN KEY (conversationId)
+        REFERENCES Chat(conversationId)
+        ON DELETE CASCADE
+);
 -- Rishikesh Insert
 INSERT INTO Industry_Info (industry_name, introduction)
 VALUES 

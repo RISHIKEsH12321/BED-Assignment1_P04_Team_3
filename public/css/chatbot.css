@@ -1,0 +1,144 @@
+:root{
+    --containerHeight: 100px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    height: 100vh;
+    width: 100vw;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: var(--containerHeight);
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
+    margin: 0;
+}
+
+.sidebar h2:hover {
+    margin: 0;
+    cursor: default;
+}
+
+.sidebar h1 {
+    margin: 0;
+}
+
+#craeteChatContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#addNewChat{
+    font-size: 2.5rem;
+    transition: all 0.2s ease;
+}
+#addNewChat:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-window {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #fff;
+    border-left: 1px solid #ddd;
+}
+
+.messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 70%;
+}
+
+.message.user {
+    background-color: #e1ffc7;
+    align-self: flex-end;
+}
+
+.message.model {
+    background-color: #f1f0f0;
+    align-self: flex-start;
+}
+
+.input-area {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background: #f9f9f9;
+}
+
+.input-area input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.input-area button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.input-area button:hover {
+    background-color: #0056b3;
+}
+
+
+
+.sidebar-chat-option {
+    margin: 10px 0;
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    padding: 10px;
+    border-radius: 4px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.sidebar-chat-option {
+    background-color: #575757;
+    cursor: pointer;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/chatbot.css">
+
+    <link rel="icon" type="image/x-icon" href="../../images/Icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton+SC&display=swap" rel="stylesheet">
+</head>
+<body>  
+    <div class="navbar">
+        <a id = "HomeLogo" href = "/home">
+          <div id = "logo">
+            <img id="navbar_logo" src="../../images/image_transparent_removed_white.png" alt="Logo">
+            <span class="LogoHeader first">Agri</span><span class="LogoHeader second">Dynamic</span>
+          </div>
+        </a>
+    
+        <div class="dropdown">
+          <button class="dropbtn">Agriculture Industries 
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <h1>INDUSTRIES</h1>
+            <a href="/users/industry/1">Agriculture</a>
+            <h1>SUB-INDUSTRIES</h1>
+            <a href="/users/industry/2">Crop Production</a>
+            <a href="/users/industry/3">Livestock Farming</a>
+            <a href="/users/industry/4">Horticulture</a>
+            <a href="/users/industry/5">Agrotechnology</a>
+          </div>
+        </div> 
+    
+        <a href="/forum" class="navbarItem">Forum</a>
+        <a href="/aboutus" class="navbarItem">About Us</a>
+        <a href="/contactus" class="navbarItem">Contact us</a>
+        <a href="/credits" class="navbarItem">Credits</a>
+        <img id="profile_pic_navbar" src="../../images/profile-user.png" alt="Logo">
+    </div>
+
+    <div class="container">
+        <nav class="sidebar" id="sidebar">
+            <div id = "craeteChatContainer">
+                <h2 id = "chat">Chats</h2>
+                <h1 id = "addNewChat">+</h1>
+            </div> 
+            <ul>
+            </ul>
+        </nav>
+        <main class="main-content">
+            <div class="chat-window" id = "chat-window">
+                <div class="messages" id = "messages">
+                    <div class="message user">
+                        <p>Hello, how are you?</p>
+                    </div>
+                    <div class="message bot">
+                        <p>I'm good, thank you!</p>
+                    </div>
+                </div>
+                <div class="input-area">
+                    <input type="text" id = "inputBox" placeholder="Type a message..." />
+                    <button type="button" id="sendBtn">Send</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+    <script src="../../JavaScript/account.js"></script>
+    <script src="../../JavaScript/chatbot.js"></script>
+</body>
+</html>
