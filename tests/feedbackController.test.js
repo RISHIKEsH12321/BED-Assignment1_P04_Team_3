@@ -256,7 +256,7 @@ describe("feedbackController.createFeedback", () => {
             email: "jason@1.com",
             number: 3322,
             comment: "nothing",
-            resolved: "N",
+            resolve: "N",
             favourite: "N",
             date_created: "12/12/12"
         };
@@ -287,7 +287,7 @@ describe("feedbackController.createFeedback", () => {
             email: "jason@1.com",
             number: 3322,
             comment: "nothing",
-            resolved: "N",
+            resolve: "N",
             favourite: "N",
             date_created: "12/12/12"
         };
