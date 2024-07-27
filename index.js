@@ -272,7 +272,7 @@ app.put("/chatbot/conversation/:conversationId", geminiChatController.editChatTi
 
 app.delete("/chatbot/conversation/:conversationId", geminiChatController.deleteChat);
 
-app.get("/chatbot", geminiChatController.displatChatbotPage);
+app.get("/chatbot", geminiChatController.displatChatbotPage); // Displays the chatbot page
 
 //User forum routes
 app.get('/posts', forumController.getAllPosts); //Getting all post

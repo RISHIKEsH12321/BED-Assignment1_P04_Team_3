@@ -27,7 +27,7 @@ function parseJwt(token) {
     }
 }
 
-const setContainerHeight = async () => {
+const setContainerAndNavbarHeight = async () => {
     try {
         // Get the navbar element
         const navbar = document.querySelector(".navbar");
@@ -36,7 +36,7 @@ const setContainerHeight = async () => {
         if (navbar) {
             // Get the height of the navbar
             const navbarHeight = navbar.offsetHeight;
-
+            
             // Calculate the remaining height
             const remainingHeight = `calc(100vh - ${navbarHeight}px)`;
 
@@ -191,7 +191,7 @@ const dispalyChats = (chatData) => {
 
 // Call the functions when the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", async () => {
-    setContainerHeight();
+    setContainerAndNavbarHeight();
     chatData = await fetchChatConversations(); // Await the result of fetchChatConversations
     if (chatData.length > 0){
         dispalyChats(chatData); // Pass the resolved chatData to dispalyChats
@@ -258,22 +258,31 @@ function showToast(message) {
 function createChatNavbarItem(conversation){
     let title = conversation.conversationTitle;
     let id = conversation.conversationId;
-    const li = document.createElement("li");
+    
+
     const h1delete = document.createElement("li");
-    const h1edit = document.createElement("li");
     h1delete.textContent = "X";
+    h1delete.id = "deleteBtn";
     h1delete.dataset.conversationId = id;
     addOnclickListenerToDeleteChat(h1delete);
 
-    h1edit.textContent = "🖋️";
+    const h1edit = document.createElement("img");
+    h1edit.src = "../images/edit_white.png";
+    h1edit.id = "editBtn";
     h1edit.dataset.conversationId = id;
     addOnclickListenerToEditChatTitle(h1edit);
-    
+
+    const li = document.createElement("li");
     li.dataset.conversationId = id;
     li.innerText = title;
     li.classList.add("sidebar-chat-option");
-    li.appendChild(h1edit);
-    li.appendChild(h1delete);
+
+    const btncont = document.createElement("div");
+    btncont.classList.add("btnContainer");
+    btncont.appendChild(h1edit);
+    btncont.appendChild(h1delete);
+
+    li.append(btncont);
     addOnclickListenerForChatNavigation(li);
     return li;
 }
@@ -291,7 +300,7 @@ function addOnclickListenerForChatNavigation(li) {
         
         // If the conversation exists, populate the chat window
         if (conversation) {
-            populateChatWindow(conversation)
+            populateChatWindow(conversation);
         } else {
             console.error("Conversation not found");
         }
@@ -358,7 +367,7 @@ function addOnclickListenerToEditChatTitle(h1){
             return;
         }
     
-        const userInput = window.prompt("Enter your Newcd  Chat Title:").trim();
+        const userInput = window.prompt("Enter your New Chat Title:").trim();
         if (userInput) {
             // Handle the user input
             console.log(`User entered: ${userInput}`);
@@ -414,9 +423,24 @@ function addOnclickListenerToEditChatTitle(h1){
         }
     });
 
+    h1.addEventListener('mouseover', () => {
+        h1.src = '../images/editGreen.png';
+    });
+
+    h1.addEventListener('mouseout', () => {
+        h1.src = '../images/edit_white.png';
+    });
 }
+
+
 sendBtn.addEventListener("click", async () => {
+    
     const conversationID = sendBtn.dataset.conversationId;
+    if (!conversationID){
+        showToast("Select a Chat in the navbar first.");
+        return;
+    }
+    
     let text = inputBox.value.trim();
     console.log("conversationID: ", conversationID);
     
@@ -497,7 +521,9 @@ addNewConversation.addEventListener("click", async () =>{
 function populateChatWindow(conversation){
     const chatWindow = document.getElementById("messages");
     chatWindow.innerHTML = "";
-
+    
+    const chatTitle = document.getElementById("chatTitle")
+    chatTitle.textContent = conversation.conversationTitle;
     // Populate the chat window with conversation history
     conversation.conversationHistory.chatHistory.forEach(message => {
         const messageElement = document.createElement("div");
@@ -514,4 +540,11 @@ function populateChatWindow(conversation){
 
         chatWindow.appendChild(messageElement);
     });
+    scrollToBottom();
+}
+
+// Function to scroll to the bottom of the messages
+function scrollToBottom() {
+    const messages = document.getElementById("messages");
+    messages.scrollTop = messages.scrollHeight;
 }
