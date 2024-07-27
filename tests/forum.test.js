@@ -10,8 +10,8 @@ describe("forum Model", () => {
 
     beforeEach(() => {
         mockRequest = {
-            input: jest.fn().mockReturnThis(),
-            query: jest.fn(),
+            input: jest.fn(),
+            query: jest.fn()
         };
 
         mockConnection = {
@@ -20,6 +20,7 @@ describe("forum Model", () => {
         };
 
         sql.connect.mockResolvedValue(mockConnection);
+        sql.Request.mockImplementation(() => mockRequest);
     });
 
     afterEach(() => {

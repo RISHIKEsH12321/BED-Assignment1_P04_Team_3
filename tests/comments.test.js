@@ -9,8 +9,8 @@ describe("Comment Model", () => {
 
     beforeEach(() => {
         mockRequest = {
-            input: jest.fn().mockReturnThis(),
-            query: jest.fn(),
+            input: jest.fn(),
+            query: jest.fn()
         };
 
         mockConnection = {
@@ -19,6 +19,7 @@ describe("Comment Model", () => {
         };
 
         sql.connect.mockResolvedValue(mockConnection);
+        sql.Request.mockImplementation(() => mockRequest);
     });
 
     afterEach(() => {
@@ -130,12 +131,16 @@ describe("Comment Model", () => {
             const author = "John Doe";
 
             const mockResult = {
-                rowsAffected: [1], // Simulate one row affected
+                recordsets: [],
+                recordset: undefined,
+                output: {},
+                rowsAffected: [1]
             };
 
             mockRequest.query.mockResolvedValue(mockResult);
 
             const result = await Comment.createComment(comment, postId, author);
+            console.log(result);
 
             expect(result.rowsAffected[0]).toBe(1); // Ensure comment creation is successful
             expect(mockRequest.input).toHaveBeenCalledWith("message", sql.NVarChar, comment);
