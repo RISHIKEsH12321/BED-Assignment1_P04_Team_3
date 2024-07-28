@@ -32,10 +32,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const videoElement = document.createElement('div');
                 videoElement.classList.add('video-item');
                 videoElement.innerHTML = `
-                    <h3>${video.snippet.title || 'No Title'}</h3>
+                    <div class="video-header">
+                        <h3>${video.snippet.title || 'No Title'}</h3>
+                        <button class="menu-button">⋮</button>
+                    </div>
                     <iframe width="100%" height="315" src="https://www.youtube.com/embed/${video.id}" frameborder="0" allowfullscreen></iframe>
                 `;
                 videoList.appendChild(videoElement);
+
+                const menuButton = videoElement.querySelector('.menu-button');
+                menuButton.addEventListener('click', () => {
+                    showModal(video.id);
+                });
             });
         } else {
             videoList.innerHTML = '<p>No videos found in this playlist.</p>';
@@ -70,4 +78,27 @@ function showToast(message) {
             toast.remove();
         }, 500); // Remove toast after transition ends
     }, 3000);
+}
+
+function showModal(videoId) {
+    const modal = document.getElementById('modal');
+    modal.style.display = 'block';
+
+    const cancelButton = document.getElementById('cancelButton');
+    const removeButton = document.getElementById('removeButton');
+    const closeButton = document.getElementById('closeButton');
+
+    closeButton.onclick = () => {
+        modal.style.display = 'none';
+    }
+
+    cancelButton.onclick = () => {
+        modal.style.display = 'none';
+    };
+
+    removeButton.onclick = () => {
+        // Implement remove video functionality here
+        console.log(`Removing video with ID: ${videoId}`);
+        modal.style.display = 'none';
+    };
 }
