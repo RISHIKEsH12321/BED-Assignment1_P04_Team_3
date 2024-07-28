@@ -146,7 +146,7 @@ class YouTubeModel {
         const connection = await sql.connect(dbConfig);
 
         try {
-            const sqlQuery = `DELETE * FROM playlists WHERE playlist_id = @playlist_id`;
+            const sqlQuery = `DELETE FROM playlists WHERE playlist_id = @playlist_id`;
 
             const request = connection.request();
             request.input("playlist_id", sql.Int, playlistId);
@@ -156,6 +156,31 @@ class YouTubeModel {
             return 'Playlist deleted successfully';
         } catch (error) {
             throw new Error('Error deleting playlist: ' + error.message);
+        } finally {
+            connection.close();
+        }
+    }
+
+    async updatePlaylist(playlistId, title, description) {
+        const connection = await sql.connect(dbConfig);
+    
+        try {
+            const sqlQuery = `
+                UPDATE playlists
+                SET title = @title, description = @description
+                WHERE playlist_id = @playlist_id
+            `;
+    
+            const request = connection.request();
+            request.input("playlist_id", sql.Int, playlistId);
+            request.input("title", sql.VarChar, title);
+            request.input("description", sql.VarChar, description);
+    
+            await request.query(sqlQuery);
+    
+            return 'Playlist updated successfully';
+        } catch (error) {
+            throw new Error('Error updating playlist: ' + error.message);
         } finally {
             connection.close();
         }

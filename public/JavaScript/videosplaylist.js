@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const playlistContainer = document.getElementById('playlistContainer');
     const smallModal = document.getElementById('smallModal');
     const smallModalCloseButton = document.querySelector('.small-modal-close-button');
+    const editModal = document.getElementById('editModal');
+    const editModalCloseButton = document.querySelector('.edit-modal-close-button');
     let currentPlaylistId = null;
 
     const fetchPlaylists = async () => {
@@ -90,13 +92,83 @@ document.addEventListener('DOMContentLoaded', () => {
     smallModalCloseButton.addEventListener('click', hideSmallModal);
 
     document.getElementById('editButton').addEventListener('click', () => {
-        alert('Edit playlist with ID: ' + currentPlaylistId);
+        document.getElementById('editPlaylistId').value = currentPlaylistId;
+        const titleElement = document.querySelector(`[data-playlist-id="${currentPlaylistId}"]`).closest('.playlist-box').querySelector('.playlist-title');
+        const descriptionElement = document.querySelector(`[data-playlist-id="${currentPlaylistId}"]`).closest('.playlist-box').querySelector('.playlist-description');
+        document.getElementById('editTitle').value = titleElement.innerText;
+        document.getElementById('editDescription').value = descriptionElement.innerText;
+        editModal.style.display = 'block';
         hideSmallModal();
     });
 
-    document.getElementById('deleteButton').addEventListener('click', () => {
-        alert('Delete playlist with ID: ' + currentPlaylistId);
+    document.getElementById('deleteButton').addEventListener('click', async () => {
+        const confirmDelete = confirm('Are you sure you want to delete this playlist?');
+        if (confirmDelete) {
+            try {
+                const response = await fetch('/youtube/playlist/delete', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ playlistId: currentPlaylistId })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status} ${response.statusText}`);
+                }
+
+                alert('Playlist deleted successfully!');
+                fetchPlaylists();
+            } catch (error) {
+                console.error('Failed to delete playlist:', error);
+                alert('Failed to delete playlist: ' + error.message);
+            }
+        }
         hideSmallModal();
+    });
+
+    document.getElementById('editPlaylistForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const playlistId = document.getElementById('editPlaylistId').value;
+        const title = document.getElementById('editTitle').value.trim();
+        const description = document.getElementById('editDescription').value.trim();
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            alert('No authentication token found. Please log in again.');
+            return;
+        }
+
+        try {
+            const response = await fetch('/youtube/playlist/update', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    token: token,
+                    playlistId: playlistId,
+                    title: title,
+                    description: description
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+
+            alert('Playlist updated successfully!');
+            editModal.style.display = 'none';
+            fetchPlaylists();
+        } catch (error) {
+            console.error('Failed to update playlist:', error);
+            alert('Failed to update playlist: ' + error.message);
+        }
+    });
+
+    editModalCloseButton.addEventListener('click', () => {
+        editModal.style.display = 'none';
     });
 
     // Open modal

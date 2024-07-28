@@ -106,7 +106,30 @@ const getPlaylistVideos = async (req, res) => {
     }
 };
 
+const deletePlaylist = async (req, res) => {
+    const { playlistId } = req.body;
 
+    try {
+        // Call the deletePlaylist method from the model
+        await youtubeModel.deletePlaylist(playlistId);
+        res.status(200).json({ message: 'Playlist deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting playlist:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+const updatePlaylist = async (req, res) => {
+    const { playlistId, title, description } = req.body;
+
+    try {
+        const message = await youtubeModel.updatePlaylist(playlistId, title, description);
+        res.json({ message });
+    } catch (error) {
+        console.error('Error updating playlist:', error);
+        res.status(500).json({ message: error.message });
+    }
+};
 
 // Export the functions for use in routes
 module.exports = {
@@ -116,4 +139,6 @@ module.exports = {
     getAllPlaylist,
     addVideoToPlaylist,
     getPlaylistVideos,
+    deletePlaylist,
+    updatePlaylist
 };

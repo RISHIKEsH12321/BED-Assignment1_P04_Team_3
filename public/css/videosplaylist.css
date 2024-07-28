@@ -229,3 +229,38 @@
 .small-modal-close-button{
     background-color: #0056b3;
 }
+
+
+#editPlaylistForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#editPlaylistForm label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#editPlaylistForm input[type="text"],
+#editPlaylistForm textarea {
+    max-width: 97%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#editPlaylistForm button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#editPlaylistForm button:hover {
+    background-color: #0056b3;
+}

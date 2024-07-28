@@ -72,6 +72,21 @@
       <button id="deleteButton">Delete</button>
     </div>
 
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+          <span class="close-button edit-modal-close-button">&times;</span>
+          <h2 style="text-align: center;">Edit Playlist</h2>
+          <form id="editPlaylistForm">
+              <input type="hidden" id="editPlaylistId" />
+              <label for="editTitle">Title:</label>
+              <input type="text" id="editTitle" required />
+              <label for="editDescription">Description:</label>
+              <textarea id="editDescription" required></textarea>
+              <button type="submit">Save Changes</button>
+          </form>
+      </div>
+    </div>
+
     <script src="../JavaScript/videosplaylist.js"></script>
 </body>
 </html>

@@ -179,7 +179,8 @@ app.post('/youtube/playlist', YouTubeController.createPlaylist);
 app.post('/youtube/allplaylist', YouTubeController.getAllPlaylist);
 app.post('/youtube/addvideo', YouTubeController.addVideoToPlaylist);
 app.get('/youtube/playlist/:playlist_id', YouTubeController.getPlaylistVideos);
-
+app.delete('/youtube/playlist/delete', YouTubeController.deletePlaylist);
+app.put('/youtube/playlist/update', YouTubeController.updatePlaylist);
 
 app.get("/Videos", (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "videos.html");
