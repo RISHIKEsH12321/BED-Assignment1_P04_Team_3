@@ -12,31 +12,31 @@ class YouTubeModel {
         });
     }
 
-    // async getVideoDetails(videoId) {
-    //     try {
-    //         const response = await this.youtube.videos.list({
-    //             part: 'snippet,contentDetails,statistics',
-    //             id: videoId
-    //         });
-    //         return response.data.items[0];
-    //     } catch (error) {
-    //         throw new Error('Error fetching video details: ' + error.message);
-    //     }
-    // }
+    async getVideoDetails(videoId) {
+        try {
+            const response = await this.youtube.videos.list({
+                part: 'snippet,contentDetails,statistics',
+                id: videoId
+            });
+            return response.data.items[0];
+        } catch (error) {
+            throw new Error('Error fetching video details: ' + error.message);
+        }
+    }
 
-    // async searchVideos(query) {
-    //     try {
-    //         const response = await this.youtube.search.list({
-    //             part: 'snippet',
-    //             q: query,
-    //             type: 'video',
-    //             maxResults: 2
-    //         });
-    //         return response.data.items;
-    //     } catch (error) {
-    //         throw new Error('Error searching videos: ' + error.message);
-    //     }
-    // }
+    async searchVideos(query) {
+        try {
+            const response = await this.youtube.search.list({
+                part: 'snippet',
+                q: query,
+                type: 'video',
+                maxResults: 2
+            });
+            return response.data.items;
+        } catch (error) {
+            throw new Error('Error searching videos: ' + error.message);
+        }
+    }
 
     async createPlaylist(userId, title, description) {
         const connection = await sql.connect(dbConfig);
@@ -185,6 +185,28 @@ class YouTubeModel {
             connection.close();
         }
     }
+
+    async removeVideoFromPlaylist(playlistId, videoId) {
+        const connection = await sql.connect(dbConfig);
+    
+        try {
+            const sqlQuery = `
+                DELETE FROM playlist_video 
+                WHERE playlist_id = @playlist_id AND video_id = @video_id
+            `;
+            const request = connection.request();
+            request.input('playlist_id', playlistId);
+            request.input('video_id', videoId);
+    
+            await request.query(sqlQuery);
+            return 'Video removed from playlist successfully';
+        } catch (error) {
+            throw new Error('Error removing video from playlist: ' + error.message);
+        } finally {
+            connection.close();
+        }
+    }
+    
 }
 
 module.exports = YouTubeModel;

@@ -131,6 +131,17 @@ const updatePlaylist = async (req, res) => {
     }
 };
 
+const removeVideoFromPlaylist = async (req, res) => {
+    const { playlistId, videoId } = req.body;
+
+    try {
+        const message = await youtubeModel.removeVideoFromPlaylist(playlistId, videoId);
+        res.json({ message });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Export the functions for use in routes
 module.exports = {
     getVideoDetails,
@@ -140,5 +151,6 @@ module.exports = {
     addVideoToPlaylist,
     getPlaylistVideos,
     deletePlaylist,
-    updatePlaylist
+    updatePlaylist,
+    removeVideoFromPlaylist
 };

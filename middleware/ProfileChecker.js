@@ -1,14 +1,14 @@
 const Joi = require('joi');
 
 const updateProfileSchema = Joi.object({
-    about_me: Joi.string().max(200).optional().messages({
+    about_me: Joi.string().max(200).allow('').optional().messages({
         'string.max': 'About me section must not exceed 200 characters.',
     }),
-    country: Joi.string().min(3).max(50).optional().messages({
+    country: Joi.string().min(3).max(50).allow('').optional().messages({
         'string.min': 'Country must be at least 3 characters long.',
         'string.max': 'Country need to be lesser than 50 characters long.'
     }),
-    position: Joi.string().max(50).optional().messages({
+    position: Joi.string().max(50).allow('').optional().messages({
         'string.max': 'Position must not exceed 100 characters.',
     }),
     profile_picture_base64: Joi.string().optional()

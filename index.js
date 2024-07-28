@@ -171,17 +171,17 @@ app.put("/admin/account/email/:id", Admin_Account_Controller.AdminupdateUserwith
 // Profile Routes
 app.get("/account/profile/:id", Profile_Controller.getUserProfile);
 app.put("/account/profile/:id",validateUpdateProfile, Profile_Controller.updateUserProfile);
-// app.put("/account/profile/:id", Profile_Controller.updateUserProfile);
 
 // Youtube
 app.get('/youtube/video/:videoId', YouTubeController.getVideoDetails); 
 app.get('/youtube/search', YouTubeController.searchVideos);
-app.post('/youtube/playlist', YouTubeController.createPlaylist);
-app.post('/youtube/allplaylist', YouTubeController.getAllPlaylist);
-app.post('/youtube/addvideo', YouTubeController.addVideoToPlaylist);
-app.get('/youtube/playlist/:playlist_id', YouTubeController.getPlaylistVideos);
-app.delete('/youtube/playlist/delete', YouTubeController.deletePlaylist);
-app.put('/youtube/playlist/update', YouTubeController.updatePlaylist);
+app.post('/youtube/playlist', YouTubeController.createPlaylist); // Creating playlist
+app.post('/youtube/allplaylist', YouTubeController.getAllPlaylist); // Getting all playlist
+app.post('/youtube/addvideo', YouTubeController.addVideoToPlaylist); // Adding videos to playlist
+app.get('/youtube/playlist/:playlist_id', YouTubeController.getPlaylistVideos); // Get videos in playlist
+app.delete('/youtube/playlist/delete', YouTubeController.deletePlaylist); // Delete playlist
+app.put('/youtube/playlist/update', YouTubeController.updatePlaylist); // Update playlist name and description
+app.delete('/youtube/remove-video-from-playlist', YouTubeController.removeVideoFromPlaylist) // Remove video in playlist
 
 app.get("/Videos", (req,res) => {
     const filePath = path.join(__dirname, "public", "html", "videos.html");
