@@ -73,7 +73,7 @@ INSERT INTO Codes (user_id, security_code) VALUES
 	(NULL,	'V9u0T1w2X3'),
 	(NULL,	'N6l7Q8o9I0'),
 	(NULL,	'Y3z4K5x6F7'),
-	(NULL,	'O1r2E3p4U5'),
+	(NULL,	'O1r2E3p4U5');
 
 --Joseph
 CREATE TABLE Posts(
