@@ -58,8 +58,8 @@ async function fetchPosts() {
                       <div>
                           <h5>comments</h5>
                           <form class="form-inline">
-                              <input id="commentMessage" class="form-control mr-sm-2" name="comment" placeholder="Comment">
-                              <input id="comment_post_id" type="hidden" name="post_id" value="${post.post_id}">
+                              <input id="commentMessage${post.post_id}" class="form-control mr-sm-2" name="comment" placeholder="Comment">
+                              <input id="comment_post_id${post.post_id}" type="hidden" name="post_id" value="${post.post_id}">
                               <button id="commentForm_${post.post_id}" class="btn btn-outline-primary my-2 my-sm-0" type="button">Send</button>
                           </form>
                           <br>
@@ -85,8 +85,8 @@ async function fetchPosts() {
                     showToast("Create an account first")
                 }else{
                     //Add function to update text and sql database
-                    const comment = document.getElementById("commentMessage").value;
-                    const id = document.getElementById("comment_post_id").value;
+                    const comment = document.getElementById(`commentMessage${post.post_id}`).value;
+                    const id = document.getElementById(`comment_post_id${post.post_id}`).value;
                     console.log(id + "," + comment);
                     try {
                         const response = await fetch(`/comments`, {
@@ -174,8 +174,8 @@ async function fetchSearchedPosts(searchTerm) {
                       <div>
                           <h5>comments</h5>
                           <form class="form-inline">
-                              <input id="commentMessage" class="form-control mr-sm-2" name="comment" placeholder="Comment">
-                              <input id="comment_post_id" type="hidden" name="post_id" value="${post.post_id}">
+                              <input id="commentMessage${post.post_id}" class="form-control mr-sm-2" name="comment" placeholder="Comment">
+                              <input id="comment_post_id${post.post_id}" type="hidden" name="post_id" value="${post.post_id}">
                               <button id="commentForm_${post.post_id}" class="btn btn-outline-primary my-2 my-sm-0" type="button">Send</button>
                           </form>
                           <br>
@@ -203,8 +203,8 @@ async function fetchSearchedPosts(searchTerm) {
                     showToast("Create an account first")
                 }else{
                     //Add function to update text and sql database
-                    const comment = document.getElementById("commentMessage").value;
-                    const id = document.getElementById("comment_post_id").value;
+                    const comment = document.getElementById(`commentMessage${post.post_id}`).value;
+                    const id = document.getElementById(`comment_post_id${post.post_id}`).value;
                     console.log(id + "," + comment);
                     try {
                         const response = await fetch(`/comments`, {
