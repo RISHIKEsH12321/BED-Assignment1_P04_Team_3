@@ -2,18 +2,14 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f5fbe9;
     color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .container {
     width: 80%;
-    max-width: 1200px;
     padding: 20px;
+    margin: 5% 10% 5% 10%;
     border-radius: 8px;
     background-color: #fff;
-    margin-top: 50px;
 }
 
 .header {

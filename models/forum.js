@@ -73,12 +73,12 @@ class Post{
       request.input('message', sql.NVarChar, message);
       request.input('author', author);
       const result = await request.query(query);
+      // console.log("Result from SQL query:", result);
+      await sql.close();
       return result;
     } catch (err) {
       throw new Error(`Error creating post: ${err.message}`);
-    } finally {
-      sql.close();
-    }
+    } 
   }
     
   static async updatePost(post_id, header, message) {
@@ -92,7 +92,7 @@ class Post{
       request.input("message", message || null);
   
       await request.query(sqlQuery);
-  
+
       connection.close();
   
       return this.getPostById(post_id); // returning the updated post data

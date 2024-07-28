@@ -24,6 +24,7 @@ const commentsController = require("./controller/commentsController");
 const feedbackController = require("./controller/feedbackController");
 const rolecontroller = require("./controller/getRoleController");
 const YouTubeController = require('./controller/YoutubeController');
+const geminiChatController = require("./controller/chatBotController");
 
 //MiddleWare for each person
 const validateIndustryAndQuiz = require("./middleware/industryAndQuizValidation");
@@ -50,6 +51,32 @@ const staticMiddleware = express.static("public");
 // Serveing Swagger UI
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+
+
+//Test Page (To delete)
+app.get("/", async  (req,res) =>{
+    try {
+        // Connect to the database
+        await sql.connect(dbConfig);
+        
+        // Create a new SQL request
+        const request = new sql.Request();
+        
+        // Execute the SQL query
+        const result = await request.query(`SELECT * FROM Test`);
+        
+        // Send the result as the response
+        res.send(result.recordset);
+    } catch (err) {
+        console.error("Error executing query:", err);
+        res.status(500).send("Internal Server Error");
+    } finally {
+        // Close the database connection
+        sql.close();
+    }
+});
+
+//Home Page (Static)
 app.get("/home", (req, res) => {
     const filePath = path.join(__dirname, "public", "html", "index.html");
     console.log("File path is" + filePath);
@@ -72,6 +99,7 @@ app.get("/home", (req, res) => {
     });
 });
 
+//Credits Page (Static)
 app.get("/credits", (req,res) =>{
     const filePath = path.join(__dirname, "public", "html", "CreditScreen.html");
     console.log("File path is" + filePath);
@@ -91,8 +119,9 @@ app.get("/credits", (req,res) =>{
 
         res.send(document);
     });
-})
+});
 
+//Admin Actions Page (Static)
 app.get("/adminActions", (req, res) => {
     const filePath = path.join(__dirname, "public", "html", "adminActions.html");
     console.log("File path is" + filePath);
@@ -117,6 +146,8 @@ app.get("/adminActions", (req, res) => {
         res.send(dom.serialize());
     });
 });
+
+
 
 // Users Route (Ye Chyang)
 app.post("/users/account/login", User_Account_Controller.userlogin);
@@ -256,30 +287,20 @@ app.post("/admin/quiz/create", validateIndustryAndQuiz.validateCreateQuestion,qu
 
 app.delete("/admin/quiz/delete", validateIndustryAndQuiz.validateDeleteQuestion, quiz_controller.deleteQuestion); // Delete Question
 
+//Gemini Chatbot Routes
+app.post("/chatbot/history/:userId", geminiChatController.addNewChat); //Create a new Conversation
 
+app.post("/chatbot/:conversationId", geminiChatController.postUserInput); //Post a request (promt) and get the response
 
-app.get("/", async  (req,res) =>{
-    try {
-        // Connect to the database
-        await sql.connect(dbConfig);
-        
-        // Create a new SQL request
-        const request = new sql.Request();
-        
-        // Execute the SQL query
-        const result = await request.query(`SELECT * FROM Test`);
-        
-        // Send the result as the response
-        res.send(result.recordset);
-    } catch (err) {
-        console.error("Error executing query:", err);
-        res.status(500).send("Internal Server Error");
-    } finally {
-        // Close the database connection
-        sql.close();
-    }
-});
+app.get("/chatbot/:conversationId",geminiChatController.fetchChatHistory); //Gets all previous dialogs from both user and chatbot
 
+app.post("/chatbot/conversation/:userId", geminiChatController.fetchChatByUserId); //Gets the conversations details like conversation id and title
+
+app.put("/chatbot/conversation/:conversationId", geminiChatController.editChatTitle); //Edits Conversation Title
+
+app.delete("/chatbot/conversation/:conversationId", geminiChatController.deleteChat);
+
+app.get("/chatbot", geminiChatController.displatChatbotPage); // Displays the chatbot page
 
 //User forum routes
 app.get('/posts', forumController.getAllPosts); //Getting all post
@@ -364,6 +385,9 @@ app.get("/viewfeedback/:id", async (req,res) => {
     res.sendFile(filePath);
 });
 
+app.use((req, res, next) => {
+    res.status(404).sendFile(path.join(__dirname, "public", "html", "pageNotFound.html"));
+});
 
 app.listen(port, async () => {
     try {

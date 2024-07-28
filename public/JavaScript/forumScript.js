@@ -268,10 +268,10 @@ async function fetchIdPost(searchTerm) {
         <br>
         <form>
             <div class="form-group">
-              <input id="headerInput" class="form-control" name="header" value="${data.header}">
+              <input id="headerInputUpdate" class="form-control" name="header" value="${data.header}">
             </div>
             <div class="form-group">
-                <textarea id="messageTextarea" class="form-control" name="message">${data.message}</textarea>
+                <textarea id="messageTextareaUpdate" class="form-control" name="message">${data.message}</textarea>
             </div>
             <div class="row">
                 <div class="col-sm-4 text-center">
@@ -288,6 +288,7 @@ async function fetchIdPost(searchTerm) {
         <br>
         `;
 
+        console.log(headerInput.value);
         postUpdate.style.display = "block";
         body.style.backgroundColor = "rgba(0, 0, 0,0.5)";
         post.classList.add("blur");
@@ -304,8 +305,8 @@ async function fetchIdPost(searchTerm) {
         const update = document.getElementById("updatePost");
         update.addEventListener("click",async()=>{
             //Add function to update text and sql database
-            const header = document.getElementById("headerInput").value;
-            const message = document.getElementById("messageTextarea").value;
+            const header = document.getElementById("headerInputUpdate").value;
+            const message = document.getElementById("messageTextareaUpdate").value;
             console.log(data.post_id + "," + header + "," + message);
             try {
                 const response = await fetch(`/forum/update/${data.post_id}`, {
@@ -315,7 +316,8 @@ async function fetchIdPost(searchTerm) {
                     },
                     body: JSON.stringify({
                       header: header,
-                      message: message
+                      message: message,
+                      author: username
                     })
                 });
                 if (!response.ok) {

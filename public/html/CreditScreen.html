@@ -38,13 +38,13 @@
       </div>
     </div> 
 
-    <a href="#" class="navbarItem">Forum</a>
-    <a href="#" class="navbarItem">About Us</a>
-    <a href="#" class="navbarItem">Contact us</a>
-    <a href="./credits" class="navbarItem">Credits</a>
+    <a href="/forum" class="navbarItem">Forum</a>
+    <a href="/aboutus" class="navbarItem">About Us</a>
+    <a href="/contactus" class="navbarItem">Contact us</a>
+    <a href="/credits" class="navbarItem">Credits</a>
     <img id="profile_pic_navbar" src="../../images/profile-user.png" alt="Logo">
     <!-- <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a> -->
-  </div>
+</div>
 
   <main>
     <div class="button-container">
@@ -535,6 +535,75 @@
             </div>  
           </div>
 
+          <hr>
+
+          <div>
+            <div class="sub-title">Chatbot API Routes</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Route</th>
+                        <th>CRUD Method</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>/chatbot/history/:userId</td>
+                        <td>POST</td>
+                        <td>Create a new Conversation</td>
+                    </tr>
+                    <tr>
+                        <td>/chatbot/:conversationId</td>
+                        <td>POST</td>
+                        <td>Post a request (prompt) and get the response</td>
+                    </tr>
+                    <tr>
+                        <td>/chatbot/:conversationId</td>
+                        <td>GET</td>
+                        <td>Get all previous dialogs from both user and chatbot</td>
+                    </tr>
+                    <tr>
+                        <td>/chatbot/conversation/:userId</td>
+                        <td>POST</td>
+                        <td>Get the conversation details like conversation id and title</td>
+                    </tr>
+                    <tr>
+                        <td>/chatbot/conversation/:conversationId</td>
+                        <td>PUT</td>
+                        <td>Edit Conversation Title</td>
+                    </tr>
+                    <tr>
+                        <td>/chatbot/conversation/:conversationId</td>
+                        <td>DELETE</td>
+                        <td>Delete Chat</td>
+                    </tr>
+                    <tr>
+                        <td>/chatbot</td>
+                        <td>GET</td>
+                        <td>Display the chatbot page</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="sub-title">Overview of Done Work</div>
+            <div class="personal-description">
+                Implemented various routes for the chatbot functionality including creating, posting, fetching, editing, and deleting conversations.<br>
+                Ensured all routes are functional and integrated with the frontend.<br>
+                Added proper error handling and responses to improve user experience.
+            </div>
+
+            <div class="gignite-pages-images-container">
+              <div>
+                <p>Landing Page</p>
+                <img src="../images/chatbot_empty.png" alt="User Quiz">
+              </div>
+              <div>
+                <p>Started A Chat</p>
+                <img src="../images/chatbot_credits.png" alt="Admin Quiz">
+              </div>            
+            </div>  
+        </div>
+        
 
         </div>
         <div class="card">
@@ -677,5 +746,10 @@
     </section>
     
   </main>
+  <a href="/chatbot" id="chatbotButton">
+    <img src="../images/chatbot.png" alt="Edit">
+</a>
+
+  <script src="../../JavaScript/account.js"></script>
 </body>
 </html>

@@ -1,0 +1,30 @@
+/* File: css/styles.css */
+
+#main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    height: 85vh;
+    width: 80vw;
+    box-sizing: border-box;
+    margin: 0vh 10vw 0vh 10vw;
+    padding: 1% 1% 8% 1%;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #4dffa6;
+    position: relative;
+    background-image: url("../images/PageNotFound.jpg");
+    background-size: cover; 
+    background-position: center; 
+}
+
+#main-content h3 {
+    position: absolute;
+    top: 0%; 
+    left: 50%;
+    transform: translateX(-50%);
+    color: #000;
+    background-color: white;
+    padding: 0.5%;
+    border-radius: 8px;
+}
