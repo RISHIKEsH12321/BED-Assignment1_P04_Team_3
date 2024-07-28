@@ -4,7 +4,9 @@
 const user_id = localStorage.getItem("user_id");
 const admin_id = localStorage.getItem("admin_id");
 const username = localStorage.getItem("username");
-const token = localStorage.getItem("token");
+const role = parseJwt(localStorage.getItem("token"));
+console.log(role);
+ 
 window.onload = fetchPosts();
 
 async function fetchPosts() {
@@ -187,6 +189,9 @@ searchForm.addEventListener("submit", function(event){
 
 async function postDelete(post_id){
     try {
+        if (!parseJwt()){
+            return;
+        }
         await fetch(`/admin/forum/delete/${post_id}`,{method: `DELETE`})
         fetchPosts();
     } catch (error) {
@@ -196,9 +201,34 @@ async function postDelete(post_id){
 
 async function commentDelete(comment_id){
     try {
+        if (!(parseJwt())){
+            return;
+        }
         await fetch(`/admin/forum/comment/delete/${comment_id}`,{method: `DELETE`})
         fetchComments();
     } catch (error) {
         console.error('Error fetching comments:', error);
+    }
+}
+
+function parseJwt() {
+    try {
+        const token = localStorage.getItem("token");
+        console.log("token: ", token);
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        console.log("ROLE: ", JSON.parse(jsonPayload).admin_id);
+        if (JSON.parse(jsonPayload).admin_id){
+            return true;
+        }
+        // return JSON.parse(jsonPayload);
+        return false;
+    } catch (error) {
+        console.error("Invalid token:", error);
+        return null;
     }
 }
