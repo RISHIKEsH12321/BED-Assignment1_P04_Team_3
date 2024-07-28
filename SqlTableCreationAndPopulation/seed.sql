@@ -19,7 +19,7 @@ CREATE TABLE Industry_Challenges (
 CREATE TABLE Questions (
     question_id INT PRIMARY KEY IDENTITY(1,1),
     industry_id INT,
-    question_text VARCHAR(700) NOT NULL,
+    question_text VARCHAR(MAX) NOT NULL,
     FOREIGN KEY (industry_id) REFERENCES Industry_Info(industry_id)
 );
 
@@ -27,7 +27,7 @@ CREATE TABLE Questions (
 CREATE TABLE Options (
     option_id INT PRIMARY KEY IDENTITY(1,1),
     question_id INT,
-    option_text VARCHAR(255) NOT NULL,
+    option_text VARCHAR(MAX) NOT NULL,
     FOREIGN KEY (question_id) REFERENCES Questions(question_id)
 );
 
@@ -39,7 +39,6 @@ CREATE TABLE Correct_Answers (
     FOREIGN KEY (question_id) REFERENCES Questions(question_id),
     FOREIGN KEY (correct_option_id) REFERENCES Options(option_id)
 );
-
 -- Create the Chat table
 CREATE TABLE Chat (
     conversationId INT PRIMARY KEY IDENTITY(1,1), 
@@ -60,6 +59,7 @@ CREATE TABLE ChatHistory (
         REFERENCES Chat(conversationId)
         ON DELETE CASCADE
 );
+
 -- Rishikesh Insert
 INSERT INTO Industry_Info (industry_name, introduction)
 VALUES 
