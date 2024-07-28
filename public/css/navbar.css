@@ -256,3 +256,36 @@ body{
     background-color: #f0f0f0; /* Change background color on hover */
     transform: scale(1.1); /* Slightly enlarge the button on hover */
 }
+
+
+/* Ensure the button is fixed to the bottom right */
+#videoIcon {
+    position: fixed;
+    bottom: 100px; /* Distance from the bottom of the viewport */
+    right: 20px; /* Distance from the right of the viewport */
+    width: 50px; /* Set width of the button */
+    height: 50px; /* Set height of the button */
+    border-radius: 50%; /* Make the button round */
+    background-color: #fff; /* Background color (optional) */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow for better visibility */
+    overflow: hidden; /* Hide any overflow */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+}
+
+/* Ensure the image fills the button */
+#videoIcon img {
+    width: 70%;
+    height: 70%;
+    object-fit: cover; /* Ensure image covers the button */
+}
+
+/* Optional: Hover effect */
+#videoIcon:hover {
+    background-color: #f0f0f0; /* Change background color on hover */
+    transform: scale(1.1); /* Slightly enlarge the button on hover */
+}
+
+
