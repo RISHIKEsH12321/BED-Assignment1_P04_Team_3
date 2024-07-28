@@ -17,7 +17,6 @@ async function loadVideos(query = 'Agriculture') {
             videoElement.innerHTML = `
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <h3>${video.snippet.title}</h3>
-                <p>Video ID: ${video.id.videoId}</p>
                 <button onclick="showPlaylistDialog('${video.id.videoId}', this)">Add to Playlist</button>
 
             `;

@@ -8,7 +8,7 @@
 .video {
     border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: black;
+    background-color: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.5);
     max-width: 580px;
     margin: 0;
@@ -24,7 +24,7 @@ h3{
     text-align: center;
     font-size:14px;
     margin-top:0px;
-    color:whitesmoke;
+    color:black;
     font-family: Verdana;
 }
 
@@ -40,7 +40,8 @@ h3{
 }
 
 .video button{
-    background-color: green;
+    background-color: #007bff;
+    color:whitesmoke;
     padding:10px;
     align-items: center;
     margin: 10px 0;

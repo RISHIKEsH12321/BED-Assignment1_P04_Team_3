@@ -785,6 +785,36 @@
         }
       }
     },
+    "/youtube/remove-video-from-playlist": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "playlistId": {
+                  "example": "any"
+                },
+                "videoId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/Videos": {
       "get": {
         "description": "",

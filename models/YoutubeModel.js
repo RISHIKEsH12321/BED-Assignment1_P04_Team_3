@@ -30,7 +30,7 @@ class YouTubeModel {
                 part: 'snippet',
                 q: query,
                 type: 'video',
-                maxResults: 2
+                maxResults: 6
             });
             return response.data.items;
         } catch (error) {

@@ -935,6 +935,257 @@
             </div>
         </div>
 
+        <div class="card">
+          <div class="main-title">Ye Chyang</div>
+          <div class="title">Features</div>
+      
+          <div>
+              <div class="sub-title">User Account Management</div>
+              <table>
+                  <thead>
+                      <tr>
+                          <th>Route</th>
+                          <th>CRUD Method</th>
+                          <th>Description</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>/users/account</td>
+                          <td>POST</td>
+                          <td>Allow users to create account</td>
+                      </tr>
+                      <tr>
+                          <td>/users/account/login</td>
+                          <td>POST</td>
+                          <td>Allow users to login</td>
+                      </tr>
+                      <tr>
+                          <td>/users/account/:id</td>
+                          <td>GET</td>
+                          <td>Allow users to get their own account</td>
+                        </tr>
+                      <tr>
+                          <td>/users/account/:id</td>
+                          <td>PUT</td>
+                          <td>Allow users to update their own account</td>
+                      </tr>
+                      <tr>
+                          <td>/users/forgotpassword/:user_email</td>
+                          <td>GET</td>
+                          <td>Allow user to forgot password using their email</td>
+                      </tr>
+                      <tr>
+                          <td>/users/check-password</td>
+                          <td>POST</td>
+                          <td>Checking user password</td>
+                      </tr>
+                      <tr>
+                          <td>/account/profile/:id</td>
+                          <td>GET</td>
+                          <td>Getting specific profile details such as about_me and country those details</td>
+                      </tr>
+                      <tr>
+                          <td>/account/profile/:id</td>
+                          <td>PUT</td>
+                          <td>Updating specific profile details</td>
+                      </tr>
+
+                  </tbody>
+              </table>
+              <div class="sub-title">Overview of Done Work</div>
+              <div class="personal-description">
+                  Created the routes and handled the backend logic for account management for user account. Integrated the front-end
+                  and back-end with error handling.<br>
+                  User only can make changes to their own account but they are unable to delete.<br>
+              </div>
+              <div class="gignite-pages-images-container">
+                  <div>
+                      <p>Login Page</p>
+                      <img src="../images/loginuser.png" alt="User Page">
+                  </div>    
+                  <div>
+                      <p>Profile Page</p>
+                      <img src="../images/userprofile.png" alt="User Page">
+                  </div>  
+              </div>  
+          </div>
+      
+          <hr>
+      
+          <div>
+              <div class="sub-title">Admin Account Management</div>
+              <table>
+                  <thead>
+                      <tr>
+                          <th>Route</th>
+                          <th>CRUD Method</th>
+                          <th>Description</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>/admin/account/create</td>
+                          <td>POST</td>
+                          <td>Allow admin to create their own account but with security-code</td>
+                      </tr>
+                      <tr>
+                          <td>/admin/account/login</td>
+                          <td>POST</td>
+                          <td>admin to login to their account</td>
+                      </tr>
+                      <tr>
+                          <td>/admin/account</td>
+                          <td>GET</td>
+                          <td>admin can view all the user and admin account</td>
+                      </tr>
+                      <tr>
+                          <td>/admin/account/:id</td>
+                          <td>GET</td>
+                          <td>admin can get specific profile</td>
+                      </tr>
+                      <tr>
+                          <td>/admin/account/:id</td>
+                          <td>PUT</td>
+                          <td>admin can update accounts except admin account</td>
+                      </tr>
+                      <tr>
+                          <td>/admin/account/:id</td>
+                          <td>DELETE</td>
+                          <td>admin can delete accounts except admin account</td>
+                      </tr>
+                      <tr>
+                          <td>/admin/forgotpassword/:user_email</td>
+                          <td>GET</td>
+                          <td>admin use forgot password to reset their password but security_code is required</td>
+                      </tr>
+                      <tr>
+                          <td>/account/profile/:id</td>
+                          <td>GET</td>
+                          <td>Getting specific profile details such as about_me and country those details</td>
+                      </tr>
+                      <tr>
+                          <td>/account/profile/:id</td>
+                          <td>PUT</td>
+                          <td>Updating specific profile details</td>
+                      </tr>
+                  </tbody>
+              </table>
+      
+              <div class="sub-title">Overview of Done Work</div>
+              <div class="personal-description">
+                Created the routes and handled the backend logic for account management for admin account. Integrated the front-end
+                and back-end with error handling.<br>
+                Admin need a valid security_code to be able to edit other profiles <br>
+                Admin can't delete or update other admin accounts <br>
+              </div>
+      
+              <div class="gignite-pages-images-container">
+                  <div>
+                      <p>Admin Create Account page</p>
+                      <img src="../images/registeradmin.png" alt="">
+                  </div>   
+                  <div>
+                      <p>Admin Login page</p>
+                      <img src="../images/loginadmin.png" alt="">
+                  </div>      
+                  <div>
+                    <p>Admin View account page</p>
+                    <img src="../images/adminviewuser.png" alt="">
+                  </div>   
+                  <div>
+                    <p>Admin edit profile page</p>
+                    <img src="../images/admineditaccount.png" alt="">
+                  </div>          
+              </div>  
+          </div>
+
+          <hr>
+
+          <div>
+            <div class="sub-title">Youtube API Route</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Route</th>
+                        <th>CRUD Method</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>/youtube/video/:videoId</td>
+                        <td>GET</td>
+                        <td>Getting specific video using the videoId</td>
+                    </tr>
+                    <tr>
+                        <td>/youtube/search</td>
+                        <td>GET</td>
+                        <td>Showing a list of videos</td>
+                    </tr>
+                    <tr>
+                        <td>/youtube/playlist</td>
+                        <td>POST</td>
+                        <td>Creating a playlist to contain videos</td>
+                    </tr>
+                    <tr>
+                        <td>/youtube/allplaylist</td>
+                        <td>POST</td>
+                        <td>Getting all the playlist of the user logged in using token</td>
+                    </tr>
+                    <tr>
+                        <td>/youtube/addvideo</td>
+                        <td>POST</td>
+                        <td>User can add videos to playlists</td>
+                    </tr>
+                    <tr>
+                        <td>/youtube/playlist/:playlist_id</td>
+                        <td>GET</td>
+                        <td>Getting all the videos in the specific playlist</td>
+                    </tr>
+                    <tr>
+                        <td>/youtube/playlist/delete</td>
+                        <td>DELETE</td>
+                        <td>Users can delete the playlist</td>
+                    </tr>
+                    <tr>
+                        <td>/youtube/playlist/update</td>
+                        <td>PUT</td>
+                        <td>Users can update the playlist name and description</td>
+                    </tr>
+                    <tr>
+                        <td>/youtube/remove-video-from-playlist</td>
+                        <td>DELETE</td>
+                        <td>Removing the videos from that playlist</td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <div class="sub-title">Overview of Done Work</div>
+            <div class="personal-description">
+              Implemented various routes for the youtube API like GET, POST, PUT and DELETE.<br>
+              Created a playlist to add videos gotten from the youtube API. <br>
+              Proper error handling and responses to improve user experiences. <br>
+            </div>
+    
+            <div class="gignite-pages-images-container">
+                <div>
+                    <p>Videos page with all the videos</p>
+                    <img src="../images/YoutubeVideos.png" alt="">
+                </div>
+                <div>
+                  <p>Specific playlist page</p>
+                  <img src="../images/specificplaylist.png" alt="">
+                </div>  
+                <div>
+                    <p>Playlist page</p>
+                    <img src="../images/Allplaylist.png" alt="">
+                </div>               
+            </div>  
+        </div>
+
+      </div>
+
     </section>
     
   </main>
