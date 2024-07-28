@@ -1,17 +1,17 @@
 # AgriDynamic
 ## BED-Assignment1_P04_Team_3
 
-### Team Members:
+## Team Members:
 1. Vallimuthu Rishikesh
 2. Joseph Kwek Jun Ya
 3. Koh Ye Chyang
 4. Louis Loo Xi Yu
 
-### Description
+## Description
 #### Industrial Relevance
 This topic discusses the relevant development areas in agriculture, which provide substantial growth for a community/country, in view of the challenges arising from technology, political, and climate changes. The industries talked about are Agriculture, Crop-Production, Livestock Farming, Horticulture, and AgroTechnology.
 
-### Features
+## Features
 
 | Name        | Feature                            |
 |-------------|------------------------------------|
