@@ -171,6 +171,7 @@ app.put("/admin/account/email/:id", Admin_Account_Controller.AdminupdateUserwith
 // Profile Routes
 app.get("/account/profile/:id", Profile_Controller.getUserProfile);
 app.put("/account/profile/:id",validateUpdateProfile, Profile_Controller.updateUserProfile);
+// app.put("/account/profile/:id", Profile_Controller.updateUserProfile);
 
 // Youtube
 app.get('/youtube/video/:videoId', YouTubeController.getVideoDetails); 
