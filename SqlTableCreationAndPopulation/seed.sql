@@ -83,7 +83,10 @@ CREATE TABLE Posts(
 	message VARCHAR(300),
 	author VARCHAR(50)
 );
-
+DECLARE @PostID INT;
+INSERT INTO Posts(author, header, message) VALUES
+('Joseph', 'Navigating the Future of Agriculture.', 'Navigating the future of agriculture involves integrating advanced technologies, sustainable practices, and innovative strategies to enhance productivity, conserve resources, and ensure food security in a rapidly changing world.');
+SET @PostID = SCOPE_IDENTITY();
 
 CREATE TABLE Comments(
 	comment_id INT PRIMARY KEY IDENTITY(1,1),
@@ -93,6 +96,10 @@ CREATE TABLE Comments(
 	post_id INT, 
 	FOREIGN KEY (post_id) REFERENCES Posts(post_id)
 );
+
+INSERT INTO Comments(author, message, post_id) VALUES
+('Joseph', 'I love the Future of Agriculture.',@PostID);
+
 
 -- Louis table
 CREATE TABLE Feedback (
