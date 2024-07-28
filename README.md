@@ -25,3 +25,9 @@ With AgriDynamic, users can access a wealth of industry information, engage in i
 | Louis       | Contact / Feedback                 |
 | Ye Chyang   | Login / Register User & Admin Account |
 | Ye Chyang   | YouTube API                        |
+
+## Instructions On Downloading the Database
+1. Create a SQL database with the name of "bed_assignment" or change the dbConfig.js to the correct details.
+2. Download the seed.sql in the SqlTableCreationAndPopulation and run that query.
+3. Download the rishiTableAndData.sql in the SqlTableCreationAndPopulation and run that query.
+4. Make sure to run seed.sql first, before runnning rishiTableAndData.sql
