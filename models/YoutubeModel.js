@@ -108,25 +108,6 @@ class YouTubeModel {
         }
     }
 
-    // Get playlist details by ID
-    // async getPlaylistById(playlistId) {
-    //     const connection = await sql.connect(dbConfig);
-
-    //     try {
-    //         const sqlQuery = `
-    //             SELECT * FROM playlists WHERE id = @playlistId
-    //         `;
-    //         const request = connection.request();
-    //         request.input('playlistId', sql.Int, playlistId);
-            
-    //         const result = await request.query(sqlQuery);
-    //         return result.recordset[0];
-    //     } catch (error) {
-    //         throw new Error('Error fetching playlist: ' + error.message);
-    //     } finally {
-    //         connection.close();
-    //     }
-    // }
     async getPlaylistVideos(playlistId) {
         const connection = await sql.connect(dbConfig);
         
@@ -165,15 +146,12 @@ class YouTubeModel {
         const connection = await sql.connect(dbConfig);
 
         try {
-            // Delete videos associated with the playlist
-            await connection.request().query(`
-                DELETE FROM playlist_videos WHERE playlist_id = @playlistId
-            `, { input: 'playlistId', type: sql.Int, value: playlistId });
+            const sqlQuery = `DELETE * FROM playlists WHERE playlist_id = @playlist_id`;
 
-            // Delete the playlist
-            await connection.request().query(`
-                DELETE FROM playlists WHERE id = @playlistId
-            `, { input: 'playlistId', type: sql.Int, value: playlistId });
+            const request = connection.request();
+            request.input("playlist_id", sql.Int, playlistId);
+
+            await request.query(sqlQuery);
 
             return 'Playlist deleted successfully';
         } catch (error) {

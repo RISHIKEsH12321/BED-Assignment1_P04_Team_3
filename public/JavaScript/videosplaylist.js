@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('playlistModal');
     const closeButton = document.querySelector('.close-button');
     const playlistContainer = document.getElementById('playlistContainer');
+    const smallModal = document.getElementById('smallModal');
+    const smallModalCloseButton = document.querySelector('.small-modal-close-button');
+    let currentPlaylistId = null;
 
     const fetchPlaylists = async () => {
         const token = localStorage.getItem('token');
@@ -47,6 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
             playlistElement.classList.add('playlist-item');
             playlistElement.innerHTML = `
                 <div class="playlist-box">
+                    <div class="menu-button-container">
+                        <button class="menu-button" data-playlist-id="${playlist.playlist_id}">⋮</button>
+                    </div>
                     <h3 class="playlist-title">${playlist.title}</h3>
                     <p class="playlist-description">${playlist.description}</p>
                     <button class="playlist-button" data-playlist-id="${playlist.playlist_id}">View Playlist</button>
@@ -61,7 +67,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = `/playlist/${playlistId}`;
             });
         });
+
+        document.querySelectorAll('.menu-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                currentPlaylistId = event.target.getAttribute('data-playlist-id');
+                showSmallModal(event);
+            });
+        });
     };
+
+    const showSmallModal = (event) => {
+        const rect = event.target.getBoundingClientRect();
+        smallModal.style.top = `${rect.bottom + window.scrollY}px`;
+        smallModal.style.left = `${rect.left + window.scrollX}px`;
+        smallModal.style.display = 'block';
+    };
+
+    const hideSmallModal = () => {
+        smallModal.style.display = 'none';
+    };
+
+    smallModalCloseButton.addEventListener('click', hideSmallModal);
+
+    document.getElementById('editButton').addEventListener('click', () => {
+        alert('Edit playlist with ID: ' + currentPlaylistId);
+        hideSmallModal();
+    });
+
+    document.getElementById('deleteButton').addEventListener('click', () => {
+        alert('Delete playlist with ID: ' + currentPlaylistId);
+        hideSmallModal();
+    });
 
     // Open modal
     openModalButton.addEventListener('click', () => {
@@ -133,3 +169,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetchPlaylists();
 });
+

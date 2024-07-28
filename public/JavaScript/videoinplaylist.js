@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             displayPlaylistDetails(data);
         } catch (error) {
             console.error('Failed to fetch playlist details:', error);
-            alert('Failed to fetch playlist details: ' + error.message);
+            showToast('Failed to fetch playlist details: ' + error.message);
         }
     };
 
@@ -33,9 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 videoElement.classList.add('video-item');
                 videoElement.innerHTML = `
                     <h3>${video.snippet.title || 'No Title'}</h3>
-                    <p>${video.snippet.description || 'No Description'}</p>
-                    <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank">Watch Video</a>
-                    <img src="${video.snippet.thumbnails.medium.url}" alt="${video.snippet.title}" />
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/${video.id}" frameborder="0" allowfullscreen></iframe>
                 `;
                 videoList.appendChild(videoElement);
             });
@@ -48,3 +46,28 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Retrieved Playlist ID:', playlistId); // Log the playlist ID to the console
     fetchPlaylistDetails(playlistId);
 });
+// {/* <p>${video.snippet.description || 'No Description'}</p> */}
+
+function showToast(message) {
+    // Create a new toast element
+    const toast = document.createElement('div');
+    toast.classList.add('toast');
+    toast.textContent = message;
+
+    // Add the toast to the container
+    const toastContainer = document.getElementById('toast-container');
+    toastContainer.appendChild(toast);
+
+    // Fade in the toast
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+
+    // Remove the toast after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            toast.remove();
+        }, 500); // Remove toast after transition ends
+    }, 3000);
+}

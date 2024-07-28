@@ -64,7 +64,7 @@ const getAllPlaylist = async (req, res) => {
 
         // Fetch playlists for the user
         const playlists = await youtubeModel.getAllPlaylist(userId);
-        res.status(200).json(playlists);
+        res.status(200).json(playlists); 
     } catch (error) {
         console.error('Error decoding token or fetching playlists:', error);
         res.status(500).json({ message: 'Internal server error' }); // Updated to 500 for internal server errors
@@ -105,6 +105,8 @@ const getPlaylistVideos = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+
 
 // Export the functions for use in routes
 module.exports = {

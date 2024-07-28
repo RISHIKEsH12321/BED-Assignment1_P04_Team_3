@@ -4,29 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Playlist Details</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .playlist-details {
-            margin: 20px;
-        }
-        .playlist-title {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .playlist-description {
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="../../css/navbar.css">
+    <link rel="stylesheet" href="../../css/videoinplaylist.css">
 </head>
 <body>
-    <h1>Playlist Details</h1>
+    <div class="navbar">
+        <a id = "HomeLogo" href = "/home">
+          <div id = "logo">
+            <img id="navbar_logo" src="../../images/image_transparent_removed_white.png" alt="Logo">
+            <span class="LogoHeader first">Agri</span><span class="LogoHeader second">Dynamic</span>
+          </div>
+        </a>
+    
+        <div class="dropdown">
+          <button class="dropbtn">Agriculture Industries 
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <h1>INDUSTRIES</h1>
+            <a href="/users/industry/1">Agriculture</a>
+            <h1>SUB-INDUSTRIES</h1>
+            <a href="/users/industry/2">Crop Production</a>
+            <a href="/users/industry/3">Livestock Farming</a>
+            <a href="/users/industry/4">Horticulture</a>
+            <a href="/users/industry/5">Agrotechnology</a>
+          </div>
+        </div> 
+    
+        <a href="/forum" class="navbarItem">Forum</a>
+        <a href="/aboutus" class="navbarItem">About Us</a>
+        <a href="/contactus" class="navbarItem">Contact us</a>
+        <a href="./credits" class="navbarItem">Credits</a>
+        <img id="profile_pic_navbar" src="../../images/profile-user.png" alt="Logo">
+        <!-- <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a> -->
+    </div>
+
     <div class="playlist-details">
         <h2 class="playlist-title" id="playlistTitle">Loading...</h2>
-        <p class="playlist-description" id="playlistDescription"></p>
-        <div id="videoList"></div>
+        <div id="videoList" class="video-list"></div>
     </div>
+    <div class="toast-container" id="toast-container"></div>
 
     <script src="../JavaScript/videoinplaylist.js">
     </script>
