@@ -6,6 +6,12 @@
     <title>Playlist Details</title>
     <link rel="stylesheet" href="../../css/navbar.css">
     <link rel="stylesheet" href="../../css/videoinplaylist.css">
+    <link rel="icon" type="image/x-icon" href="../../images/Icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton+SC&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <div class="navbar">
@@ -45,7 +51,17 @@
     </div>
     <div class="toast-container" id="toast-container"></div>
 
-    <script src="../JavaScript/videoinplaylist.js">
+    <div id="modal" class="modal">
+      <div class="modal-content">
+          <span class="close-button" id="closeButton">&times;</span>
+          <p>Do you want to remove this video?</p>
+          <button id="cancelButton">Cancel</button>
+          <button id="removeButton">Remove</button>
+      </div>
+    </div>
+
+    <script src="../JavaScript/videoinplaylist.js"> 
     </script>
+    <script src="../../JavaScript/account.js"></script>
 </body>
 </html>
