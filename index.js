@@ -51,6 +51,7 @@ const staticMiddleware = express.static("public");
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
+
 //Test Page (To delete)
 app.get("/", async  (req,res) =>{
     try {
@@ -357,6 +358,9 @@ app.get("/viewfeedback/:id", async (req,res) => {
     res.sendFile(filePath);
 });
 
+app.use((req, res, next) => {
+    res.status(404).sendFile(path.join(__dirname, "public", "html", "pageNotFound.html"));
+});
 
 app.listen(port, async () => {
     try {
