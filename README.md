@@ -9,11 +9,14 @@
 
 ## Description
 #### Industrial Relevance
-This topic discusses the relevant development areas in agriculture, which provide substantial growth for a community/country, in view of the challenges arising from technology, political, and climate changes. The industries talked about are Agriculture, Crop-Production, Livestock Farming, Horticulture, and AgroTechnology.
+AgriDynamic is a comprehensive platform dedicated to advancing the agricultural sector by addressing the challenges posed by technology, political, and climate changes. Our website provides valuable insights and resources across various industries such as Agriculture, Crop-Production, Livestock Farming, Horticulture, and AgroTechnology.
+
+With AgriDynamic, users can access a wealth of industry information, engage in interactive quizzes, and utilize cutting-edge tools to enhance their agricultural knowledge and practices.
+
 
 ## Features
 
-| Name        | Feature                            |
+| Name        | Features                            |
 |-------------|------------------------------------|
 | Rishikesh   | Industry Information               |
 | Rishikesh   | Quiz                               |
