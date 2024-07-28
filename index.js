@@ -23,6 +23,7 @@ const admin_forumController = require("./controller/admin_Forum_Controller");
 const commentsController = require("./controller/commentsController");
 const feedbackController = require("./controller/feedbackController");
 const rolecontroller = require("./controller/getRoleController");
+const YouTubeController = require('./controller/YoutubeController');
 
 //MiddleWare for each person
 const validateIndustryAndQuiz = require("./middleware/industryAndQuizValidation");
@@ -140,6 +141,32 @@ app.put("/admin/account/email/:id", Admin_Account_Controller.AdminupdateUserwith
 app.get("/account/profile/:id", Profile_Controller.getUserProfile);
 app.put("/account/profile/:id",validateUpdateProfile, Profile_Controller.updateUserProfile);
 
+// Youtube
+app.get('/youtube/video/:videoId', YouTubeController.getVideoDetails); 
+app.get('/youtube/search', YouTubeController.searchVideos);
+app.post('/youtube/playlist', YouTubeController.createPlaylist);
+app.post('/youtube/allplaylist', YouTubeController.getAllPlaylist);
+app.post('/youtube/addvideo', YouTubeController.addVideoToPlaylist);
+app.get('/youtube/playlist/:playlist_id', YouTubeController.getPlaylistVideos);
+
+
+app.get("/Videos", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "videos.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
+
+app.get("/Videos/playlist", (req,res) => {
+    const filePath = path.join(__dirname, "public", "html", "videosplaylist.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+})
+
+app.get("/playlist/:playlist_id", async (req, res) => {
+    const filePath = path.join(__dirname, "public", "html", "videoinplaylist.html");
+    console.log("File path is", filePath);
+    res.sendFile(filePath);
+});
 
 // Route for Users and Admin account (Ye Chyang)
 app.get("/accountselection", (req,res) => {

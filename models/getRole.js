@@ -83,6 +83,18 @@ class Role{
         }
     }
 
+    static async getUserIdByToken(token) {
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECERT);
+            if (!decoded) {
+                throw new Error("Invalid Token");
+            }
+            return decoded.user_id;
+        } catch (err) {
+            console.error("Error getting user ID by token:", err);
+            throw err;
+        }
+    }
 }
 
 module.exports = Role;

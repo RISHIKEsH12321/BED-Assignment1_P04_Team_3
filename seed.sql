@@ -153,6 +153,18 @@ CREATE TABLE Codes (
 	FOREIGN KEY (user_id) REFERENCES User_Account(user_id)
 )
 
+CREATE TABLE playlists (
+    playlist_id INT PRIMARY KEY IDENTITY,
+    user_id INT NOT NULL, 
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+);
+
+CREATE TABLE playlist_video (
+    playlist_video_id INT PRIMARY KEY IDENTITY,
+    playlist_id VARCHAR(255) NOT NULL,
+    video_id VARCHAR(255) NOT NULL
+);
 
 INSERT INTO Codes (user_id, security_code) VALUES 
 	(NULL,	'A1b2C3d4E5'),

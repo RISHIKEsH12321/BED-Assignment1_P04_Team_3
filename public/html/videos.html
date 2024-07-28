@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videos</title>
+    <link rel="stylesheet" href="../../css/videos.css">
+    <link rel="stylesheet" href="../../css/navbar.css">
+</head>
+<body>
+    <div class="navbar">
+        <a id = "HomeLogo" href = "/home">
+          <div id = "logo">
+            <img id="navbar_logo" src="../../images/image_transparent_removed_white.png" alt="Logo">
+            <span class="LogoHeader first">Agri</span><span class="LogoHeader second">Dynamic</span>
+          </div>
+        </a>
+    
+        <div class="dropdown">
+          <button class="dropbtn">Agriculture Industries 
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <h1>INDUSTRIES</h1>
+            <a href="/users/industry/1">Agriculture</a>
+            <h1>SUB-INDUSTRIES</h1>
+            <a href="/users/industry/2">Crop Production</a>
+            <a href="/users/industry/3">Livestock Farming</a>
+            <a href="/users/industry/4">Horticulture</a>
+            <a href="/users/industry/5">Agrotechnology</a>
+          </div>
+        </div> 
+    
+        <a href="/forum" class="navbarItem">Forum</a>
+        <a href="/aboutus" class="navbarItem">About Us</a>
+        <a href="/contactus" class="navbarItem">Contact us</a>
+        <a href="./credits" class="navbarItem">Credits</a>
+        <img id="profile_pic_navbar" src="../../images/profile-user.png" alt="Logo">
+        <!-- <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a> -->
+    </div>
+
+    <div class="navigation-links">
+      <a href="/videos"><span class="nav-link">Home</span></a>
+      <a href="/videos/playlist"><span class="nav-link">Playlist</span></a>
+    </div>
+
+    <div class="search-container">
+      <input type="text" id="searchQuery" placeholder="Search for videos...">
+      <button id="searchButton" onclick="loadVideos()">
+          <img src="../images/search-interface-symbol.png" alt="Search" />
+      </button>
+      <div id="suggestions" class="suggestions-container"></div>
+    </div>
+
+    <div id="videoList" class="video-container"></div>
+
+    <div id="playlistDialog" style="display:none;">
+      <h3 style="color:black">Select a Playlist</h3>
+      <select id="playlistDropdown"></select>
+      <button id="addToPlaylistSubmit">Add Video to Playlist</button>
+      <button onclick="document.getElementById('playlistDialog').style.display='none';">Cancel</button>
+     </div>
+
+    <script src="../JavaScript/videos.js">
+    </script>
+</body>
+</html>

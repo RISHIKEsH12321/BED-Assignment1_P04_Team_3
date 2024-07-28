@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/navbar.css">
+    <link rel="stylesheet" href="../../css/videosplaylist.css">
+</head>
+<body>
+    <div class="navbar">
+        <a id = "HomeLogo" href = "/home">
+          <div id = "logo">
+            <img id="navbar_logo" src="../../images/image_transparent_removed_white.png" alt="Logo">
+            <span class="LogoHeader first">Agri</span><span class="LogoHeader second">Dynamic</span>
+          </div>
+        </a>
+    
+        <div class="dropdown">
+          <button class="dropbtn">Agriculture Industries 
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <h1>INDUSTRIES</h1>
+            <a href="/users/industry/1">Agriculture</a>
+            <h1>SUB-INDUSTRIES</h1>
+            <a href="/users/industry/2">Crop Production</a>
+            <a href="/users/industry/3">Livestock Farming</a>
+            <a href="/users/industry/4">Horticulture</a>
+            <a href="/users/industry/5">Agrotechnology</a>
+          </div>
+        </div> 
+    
+        <a href="/forum" class="navbarItem">Forum</a>
+        <a href="/aboutus" class="navbarItem">About Us</a>
+        <a href="/contactus" class="navbarItem">Contact us</a>
+        <a href="./credits" class="navbarItem">Credits</a>
+        <img id="profile_pic_navbar" src="../../images/profile-user.png" alt="Logo">
+        <!-- <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a> -->
+    </div>
+
+    <div class="navigation-links">
+      <a href="/videos"><span class="nav-link">Home</span></a>
+      <a href="/videos/playlist"><span class="nav-link">Playlist</span></a>
+    </div>
+
+    <h2 style="text-align: center; margin:30px; font-family:verdana;">Playlist</h2>
+    
+    <div id="playlistContainer"></div>
+
+    <button id="openModalButton" class="open-modal-button">+</button>
+
+    <div id="playlistModal" class="modal">
+      <div class="modal-content">
+          <span class="close-button">&times;</span>
+          <h1>Create a New Playlist</h1>
+          <form id="playlistForm">
+              <label for="title">Playlist Title:</label>
+              <input type="text" id="title" name="title" required>
+
+              <label for="description">Description:</label>
+              <textarea id="description" name="description" required></textarea>
+
+              <button type="submit">Create Playlist</button>
+          </form>
+      </div>
+    </div>
+
+    <script src="../JavaScript/videosplaylist.js"></script>
+</body>
+</html>
