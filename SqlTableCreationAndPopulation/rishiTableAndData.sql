@@ -1,3 +1,91 @@
+CREATE TABLE Industry_Info (
+    industry_id int PRIMARY KEY IDENTITY(1,1),
+    industry_name VARCHAR(MAX) NOT NULL,
+    introduction varchar(500) NOT NULL
+);
+
+CREATE TABLE Industry_Challenges (
+    challenge_id int PRIMARY KEY IDENTITY(1,1),
+    industry_id int NOT NULL,
+    challenge_name varchar(MAX) NOT NULL,
+    challenge_description varchar(1000) NOT NULL,
+    challenge_content varchar(1000) NOT NULL,
+    FOREIGN KEY (industry_id) REFERENCES Industry_Info(industry_id)
+);
+
+-- Create Questions table
+CREATE TABLE Questions (
+    question_id INT PRIMARY KEY IDENTITY(1,1),
+    industry_id INT,
+    question_text VARCHAR(MAX) NOT NULL,
+    FOREIGN KEY (industry_id) REFERENCES Industry_Info(industry_id)
+);
+
+-- Create Options table
+CREATE TABLE Options (
+    option_id INT PRIMARY KEY IDENTITY(1,1),
+    question_id INT,
+    option_text VARCHAR(MAX) NOT NULL,
+    FOREIGN KEY (question_id) REFERENCES Questions(question_id)
+);
+
+-- Create Correct_Answers table
+CREATE TABLE Correct_Answers (
+    question_id INT,
+    correct_option_id INT NOT NULL,
+    PRIMARY KEY (question_id, correct_option_id),
+    FOREIGN KEY (question_id) REFERENCES Questions(question_id),
+    FOREIGN KEY (correct_option_id) REFERENCES Options(option_id)
+);
+-- Create the Chat table
+CREATE TABLE Chat (
+    conversationId INT PRIMARY KEY IDENTITY(1,1), 
+    conversationTitle NVARCHAR(255) NOT NULL,    
+    timeStamp DATETIME NOT NULL,                 
+    userId INT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES User_Account(user_id)
+);
+
+-- Create the ChatHistory table
+CREATE TABLE ChatHistory (
+    chatHistoryId INT PRIMARY KEY IDENTITY(1,1),  
+    conversationId INT NOT NULL,                  
+    role NVARCHAR(50) NOT NULL,                   
+    text NVARCHAR(MAX) NOT NULL,                  
+    timeStamp DATETIME DEFAULT GETDATE(),         
+    CONSTRAINT FK_ChatHistory_Chat FOREIGN KEY (conversationId)
+        REFERENCES Chat(conversationId)
+        ON DELETE CASCADE
+);
+
+-- Rishikesh Insert
+INSERT INTO Industry_Info (industry_name, introduction)
+VALUES 
+('Agriculture', 'Agriculture involves the cultivation of crops and the rearing of animals to produce food, fiber, medicinal plants, and other products used to sustain and enhance human life.'),
+('Crop Production', 'Crop production involves the growing of plants for food, fiber, and other uses.'),
+('Livestock Farming', 'Livestock farming involves the rearing of animals for meat, milk, eggs, and other products.'),
+('Horticulture', 'Horticulture involves the cultivation of plants for food, comfort, and beautification purposes, including fruits, vegetables, flowers, and ornamental plants.'),
+('Agrotechnology', 'Agrotechnology refers to the use of technology in agriculture to improve yield, efficiency, and profitability. This includes advancements in machinery, biotechnology, and digital tools to enhance farming practices.');
+
+
+INSERT INTO Industry_Challenges (industry_id, challenge_name, challenge_description, challenge_content)
+VALUES 
+(1, 'Sustainable Agriculture Practices', 'Implementing farming practices that are sustainable and environmentally friendly.', 'Includes challenges such as crop rotation, conservation tillage, and reducing chemical inputs.'),
+(1, 'Labor Shortages', 'Addressing the issue of insufficient labor in agriculture.', 'Challenges include attracting young people to farming, mechanization, and improving labor conditions.'),
+(1, 'Market Access', 'Ensuring farmers have access to markets to sell their produce.', 'Challenges include transportation infrastructure, market information systems, and negotiating fair prices.'),
+(2, 'Pest and Disease Management', 'Managing pests and diseases is crucial for crop health and yield.', 'Challenges include developing resistant crop varieties, using biocontrol methods, and integrated pest management.'),
+(2, 'Climate Change Adaptation', 'Adapting crop production to changing climate conditions.', 'Includes practices such as crop rotation, selecting drought-resistant varieties, and sustainable water management.'),
+(2, 'Soil Fertility Management', 'Maintaining soil fertility for optimal crop growth.', 'Challenges include nutrient management, using organic fertilizers, and preventing soil erosion.'),
+(3, 'Animal Health and Welfare', 'Ensuring the health and welfare of livestock is essential for productivity and ethical farming.', 'Challenges include disease prevention, proper housing, and humane handling practices.'),
+(3, 'Feed and Nutrition', 'Providing adequate and balanced nutrition to livestock.', 'Includes challenges such as formulating balanced diets, managing feed costs, and sourcing high-quality feed.'),
+(3, 'Environmental Impact', 'Mitigating the environmental impact of livestock farming.', 'Challenges include managing waste, reducing greenhouse gas emissions, and sustainable grazing practices.'),
+(4, 'Pest and Disease Control', 'Managing pests and diseases is crucial for the health and yield of horticultural crops.', 'Challenges include developing resistant varieties, using integrated pest management techniques, and applying organic pesticides.'),
+(4, 'Water Management', 'Efficient water use is vital for horticulture.', 'Challenges include optimizing irrigation systems, rainwater harvesting, and using drought-resistant crop varieties.'),
+(4, 'Post-Harvest Handling', 'Proper handling and storage of horticultural products post-harvest.', 'Challenges include maintaining cold chains, reducing post-harvest losses, and ensuring quality control.'),
+(5, 'Adoption of New Technologies', 'Encouraging the adoption of advanced technologies in agriculture.', 'Challenges include training farmers, ensuring affordability, and demonstrating the benefits of new technologies.'),
+(5, 'Data Management', 'Managing and utilizing large amounts of agricultural data.', 'Challenges include developing user-friendly data management systems, ensuring data security, and integrating data from various sources.'),
+(5, 'Automation and Robotics', 'Implementing automation and robotics in farming practices.', 'Challenges include the high initial investment, maintenance of equipment, and training personnel to use these technologies.');;
+
 -- Insert the question and get the question_id
 DECLARE @question_id_1 INT;
 INSERT INTO Questions (industry_id, question_text)

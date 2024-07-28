@@ -8,7 +8,7 @@ const validateSaveIntro = (req, res, next) => {
   
   const schema = Joi.object({
     id: Joi.string().required(),
-    introduction: Joi.string().min(3).required(),
+    introduction: Joi.string().min(3).max(500).required(),
     user_id: Joi.required(),
     admin_id: Joi.required(),
     token: Joi.required()
@@ -33,8 +33,8 @@ const validateSaveChallenge = (req, res, next) => {
   const schema = Joi.object({
     challenge_id: Joi.string().required(),
     challenge_name: Joi.string().min(3).required(),
-    challenge_description: Joi.string().min(3).required(),
-    challenge_content: Joi.string().min(3).required(),
+    challenge_description: Joi.string().min(3).max(1000).required(),
+    challenge_content: Joi.string().min(3).max(1000).required(),
     user_id: Joi.required(),
     admin_id: Joi.required(),
     token: Joi.required()
